@@ -123,8 +123,6 @@
     <Compile Include="Managers\ResourceManager.cs" />
     <Compile Include="Managers\UiManager.cs" />
     <Compile Include="ModComponent.cs" />
-    <Compile Include="Patches\NativeDelegate.cs" />
-    <Compile Include="Patches\NativePatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReAvatar.cs" />
     <Compile Include="UI\ReAvatarList.cs" />
