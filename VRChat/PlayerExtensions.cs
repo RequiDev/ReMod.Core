@@ -19,12 +19,33 @@ namespace ReMod.Core.VRChat
 
         public static Player GetPlayer(this PlayerManager playerManager, string userId)
         {
-            return PlayerManager.Method_Public_Static_Player_String_0(userId);
+            foreach (var player in playerManager.GetPlayers())
+            {
+                if (player == null)
+                    continue;
+
+                var apiUser = player.GetAPIUser();
+                if (apiUser == null)
+                    continue;
+
+                if (apiUser.id == userId)
+                    return player;
+            }
+
+            return null;
         }
 
         public static Player GetPlayer(this PlayerManager playerManager, int playerId)
         {
-            return PlayerManager.Method_Public_Static_Player_Int32_0(playerId);
+            foreach (var player in playerManager.GetPlayers())
+            {
+                if (player == null)
+                    continue;
+                if (player.prop_Int32_0 == playerId)
+                    return player;
+            }
+
+            return null;
         }
 
         public static VRCPlayer GetVRCPlayer(this Player player)
