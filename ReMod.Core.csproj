@@ -102,10 +102,6 @@
       <HintPath>..\3rdparty\ml\Managed\VRCCore-Standalone.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="VRCSDK2">
-      <HintPath>..\3rdparty\ml\Managed\VRCSDK2.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="VRCSDKBase">
       <HintPath>..\3rdparty\ml\Managed\VRCSDKBase.dll</HintPath>
       <Private>False</Private>
@@ -136,7 +132,6 @@
     <Compile Include="VRChat\PopupManagerExtensions.cs" />
     <Compile Include="Unity\UnityExtensions.cs" />
     <Compile Include="VRChat\VRCConfig.cs" />
-    <Compile Include="VRChat\VrcExtensions.cs" />
     <Compile Include="VRChat\VrcUiExtensions.cs" />
     <Compile Include="XrefUtils.cs" />
   </ItemGroup>
