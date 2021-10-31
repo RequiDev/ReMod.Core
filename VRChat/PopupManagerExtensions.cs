@@ -1,7 +1,8 @@
-﻿using System;
+﻿using MelonLoader.Preferences;
+using ReMod.Core.UI;
+using System;
 using System.Linq;
 using System.Reflection;
-using ReMod.Core.UI;
 using UnhollowerRuntimeLib.XrefScans;
 using UnityEngine;
 using UnityEngine.UI;
@@ -118,6 +119,27 @@ namespace ReMod.Core.VRChat
                     configValue.SetValue(color);
 
                     button.Text = $"<color=#{configValue.Value.ToHex()}>{who}</color> Color";
+                }, null);
+        }
+
+        public static void ShowFloatInputPopup(this VRCUiPopupManager popupManager, ReMenuButton button, string who, ConfigValue<float> configValue, ValueRange<float> range = null)
+        {
+            VRCUiPopupManager.prop_VRCUiPopupManager_0.ShowInputPopupWithCancel($"Input {who} {(range!=null ? $"Range: {range.MinValue}-{range.MaxValue}" : string.Empty)}",
+                $"{configValue.Value}", InputField.InputType.Standard, false, "Submit",
+                (s, k, t) =>
+                {
+                    if (string.IsNullOrEmpty(s))
+                        return;
+
+                    if (!float.TryParse(s, out var parsedFloat))
+                        return;
+
+                    if (range != null && !range.IsValid(parsedFloat))
+                        return;
+
+                    configValue.SetValue(parsedFloat);
+
+                    button.Text = $"{who}: {parsedFloat}";
                 }, null);
         }
     }
