@@ -26,7 +26,7 @@ namespace ReMod.Core.UI
             }
         }
 
-        private TextMeshProUGUI _text;
+        private readonly TextMeshProUGUI _text;
         public string Title
         {
             get => _text.text;
@@ -80,7 +80,7 @@ namespace ReMod.Core.UI
         }
     }
 
-    public class ReMenuCategory
+    public class ReMenuCategory : IButtonPage
     {
         public ReMenuHeader Header;
         private readonly ReMenuButtonContainer _buttonContainer;
@@ -145,7 +145,7 @@ namespace ReMod.Core.UI
             return menu;
         }
 
-        public ReCategoryPage AddCategoryPage(string text, string tooltip = "")
+        public ReCategoryPage AddCategoryPage(string text, string tooltip = "", Sprite sprite = null)
         {
             var existingPage = GetCategoryPage(text);
             if (existingPage != null)
@@ -154,7 +154,7 @@ namespace ReMod.Core.UI
             }
 
             var menu = new ReCategoryPage(text);
-            AddButton(text, string.IsNullOrEmpty(tooltip) ? $"Open the {text} menu" : tooltip, menu.Open);
+            AddButton(text, string.IsNullOrEmpty(tooltip) ? $"Open the {text} menu" : tooltip, menu.Open, sprite);
             _subCategoryPages.Add(menu);
             return menu;
         }

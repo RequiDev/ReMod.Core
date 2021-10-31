@@ -9,8 +9,8 @@ namespace ReMod.Core.Managers
 {
     public class UiManager
     {
-        public ReMenuPage MainMenu { get; }
-        public ReMenuCategory TargetMenu { get; }
+        public IButtonPage MainMenu { get; }
+        public IButtonPage TargetMenu { get; }
 
         private static UiManager _instance;
         public UiManager(string menuName, Sprite menuSprite)

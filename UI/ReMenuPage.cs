@@ -11,7 +11,7 @@ using Object = UnityEngine.Object;
 
 namespace ReMod.Core.UI
 {
-    public class ReMenuPage : UiElement
+    public class ReMenuPage : UiElement, IButtonPage
     {
         private static GameObject _menuPrefab;
 

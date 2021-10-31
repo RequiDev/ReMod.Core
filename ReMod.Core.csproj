@@ -108,6 +108,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UI\IButtonPage.cs" />
     <Compile Include="Unity\ColorExtensions.cs" />
     <Compile Include="ConfigValue.cs" />
     <Compile Include="Managers\ResourceManager.cs" />
