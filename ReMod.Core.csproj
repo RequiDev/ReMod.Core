@@ -56,10 +56,6 @@
       <HintPath>..\3rdparty\ml\MelonLoader.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Photon-DotNet">
       <HintPath>..\3rdparty\ml\Managed\Photon-DotNet.dll</HintPath>
       <Private>False</Private>
@@ -116,15 +112,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BinaryGZipSerializer.cs" />
     <Compile Include="Unity\ColorExtensions.cs" />
     <Compile Include="ConfigValue.cs" />
-    <Compile Include="Unity\DynamicContractResolver.cs" />
     <Compile Include="Managers\ResourceManager.cs" />
     <Compile Include="Managers\UiManager.cs" />
     <Compile Include="ModComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReAvatar.cs" />
     <Compile Include="UI\ReAvatarList.cs" />
     <Compile Include="UI\ReCategoryMenu.cs" />
     <Compile Include="UI\ReMenuButton.cs" />
@@ -139,7 +132,6 @@
     <Compile Include="Unity\EnableDisableListener.cs" />
     <Compile Include="Unity\RenderObjectListener.cs" />
     <Compile Include="VRChat\ExtendedQuickMenu.cs" />
-    <Compile Include="VRChat\PhotonHashtable.cs" />
     <Compile Include="VRChat\PlayerExtensions.cs" />
     <Compile Include="VRChat\PopupManagerExtensions.cs" />
     <Compile Include="Unity\UnityExtensions.cs" />
@@ -147,9 +139,6 @@
     <Compile Include="VRChat\VrcExtensions.cs" />
     <Compile Include="VRChat\VrcUiExtensions.cs" />
     <Compile Include="XrefUtils.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
