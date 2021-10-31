@@ -40,6 +40,12 @@ namespace ReMod.Core.Unity
 
             return returnArray;
         }
+
+        public static bool IsAbsurd(this float f)
+        {
+            return !(f > MaxAllowedValueBottom && f < MaxAllowedValueTop);
+        }
+
         public static bool IsBad(this Vector3 v3)
         {
             return float.IsNaN(v3.x) || float.IsNaN(v3.y) || float.IsNaN(v3.z) ||
