@@ -88,26 +88,29 @@ namespace ReMod.Core
 
         public static void DumpXRefs(this Type type)
         {
+            MelonLogger.Msg($"{type.Name} XRefs:");
             foreach (var m in AccessTools.GetDeclaredMethods(type))
             {
-                m.DumpXRefs();
+                m.DumpXRefs(1);
             }
         }
 
-        public static void DumpXRefs(this MethodInfo method)
+        public static void DumpXRefs(this MethodInfo method, int depth = 0)
         {
+            var indent = new string('\t', depth);
+            MelonLogger.Msg($"{indent}{method.Name} XRefs:");
             foreach (var x in XrefScanner.XrefScan(method))
             {
                 if (x.Type == XrefType.Global)
                 {
-                    MelonLogger.Msg($"{method.Name} - {x.ReadAsObject()?.ToString()}");
+                    MelonLogger.Msg($"\tString = {x.ReadAsObject()?.ToString()}");
                 }
                 else
                 {
                     var resolvedMethod = x.TryResolve();
                     if (resolvedMethod != null)
                     {
-                        MelonLogger.Msg($"{method.Name} -> {resolvedMethod.DeclaringType.Name}.{resolvedMethod.Name}");
+                        MelonLogger.Msg($"{indent}\tMethod -> {resolvedMethod.DeclaringType?.Name}.{resolvedMethod.Name}");
                     }
                 }
             }
