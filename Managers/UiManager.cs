@@ -26,18 +26,17 @@ namespace ReMod.Core.Managers
             MainMenu = new ReMenuPage(menuName, true);
             ReTabButton.Create(menuName, $"Open the {menuName} menu.", menuName, menuSprite);
 
-            TargetMenu = new ReMenuCategory($"{menuName}", ExtendedQuickMenu.Instance.field_Private_UIPage_1.transform.Find("ScrollRect").GetComponent<ScrollRect>().content);
+            TargetMenu = new ReMenuCategory($"{menuName}", QuickMenuEx.Instance.field_Private_UIPage_1.transform.Find("ScrollRect").GetComponent<ScrollRect>().content);
         }
 
         private void FixLaunchpadScrolling()
         {
-            var dashboard = ExtendedQuickMenu.Instance.field_Public_Transform_0.Find("Window/QMParent/Menu_Dashboard").GetComponent<UIPage>();
+            var dashboard = QuickMenuEx.Instance.field_Public_Transform_0.Find("Window/QMParent/Menu_Dashboard").GetComponent<UIPage>();
             var scrollRect = dashboard.GetComponentInChildren<ScrollRect>();
             var dashboardScrollbar = scrollRect.transform.Find("Scrollbar").GetComponent<Scrollbar>();
 
             var dashboardContent = scrollRect.content;
             dashboardContent.GetComponent<VerticalLayoutGroup>().childControlHeight = true;
-            dashboardContent.Find("Carousel_Banners").gameObject.SetActive(false);
 
             scrollRect.enabled = true;
             scrollRect.verticalScrollbar = dashboardScrollbar;

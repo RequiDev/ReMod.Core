@@ -15,7 +15,7 @@ namespace ReMod.Core.UI
             {
                 if (_tabButtonPrefab == null)
                 {
-                    _tabButtonPrefab = ExtendedQuickMenu.Instance.field_Public_GameObject_4;
+                    _tabButtonPrefab = QuickMenuEx.Instance.field_Public_GameObject_4;
                 }
                 return _tabButtonPrefab;
             }
@@ -25,7 +25,7 @@ namespace ReMod.Core.UI
         {
             var menuTab = RectTransform.GetComponent<MenuTab>();
             menuTab.field_Public_String_0 = GetCleanName($"QuickMenuReMod{pageName}");
-            menuTab.field_Private_MenuStateController_0 = ExtendedQuickMenu.MenuStateCtrl;
+            menuTab.field_Private_MenuStateController_0 = QuickMenuEx.MenuStateCtrl;
 
             var button = GameObject.GetComponent<Button>();
             button.onClick = new Button.ButtonClickedEvent();

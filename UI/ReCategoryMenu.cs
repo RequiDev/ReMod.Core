@@ -21,13 +21,13 @@ namespace ReMod.Core.UI
             {
                 if (_menuPrefab == null)
                 {
-                    _menuPrefab = ExtendedQuickMenu.Instance.field_Public_Transform_0.Find("Window/QMParent/Menu_Dashboard").gameObject;
+                    _menuPrefab = QuickMenuEx.Instance.field_Public_Transform_0.Find("Window/QMParent/Menu_Dashboard").gameObject;
                 }
                 return _menuPrefab;
             }
         }
 
-        private static int SiblingIndex => ExtendedQuickMenu.Instance.field_Public_Transform_0.Find("Window/QMParent/Modal_AddMessage").GetSiblingIndex();
+        private static int SiblingIndex => QuickMenuEx.Instance.field_Public_Transform_0.Find("Window/QMParent/Modal_AddMessage").GetSiblingIndex();
 
         private readonly List<ReMenuCategory> _categories = new List<ReMenuCategory>();
 
@@ -76,17 +76,17 @@ namespace ReMod.Core.UI
             UiPage = GameObject.AddComponent<UIPage>();
             UiPage.field_Public_String_0 = $"QuickMenuReMod{_menuName}";
             UiPage.field_Private_Boolean_1 = true;
-            UiPage.field_Private_MenuStateController_0 = ExtendedQuickMenu.MenuStateCtrl;
+            UiPage.field_Private_MenuStateController_0 = QuickMenuEx.MenuStateCtrl;
             UiPage.field_Private_List_1_UIPage_0 = new Il2CppSystem.Collections.Generic.List<UIPage>();
             UiPage.field_Private_List_1_UIPage_0.Add(UiPage);
 
-            ExtendedQuickMenu.MenuStateCtrl.field_Private_Dictionary_2_String_UIPage_0.Add(UiPage.field_Public_String_0, UiPage);
+            QuickMenuEx.MenuStateCtrl.field_Private_Dictionary_2_String_UIPage_0.Add(UiPage.field_Public_String_0, UiPage);
 
             if (isRoot)
             {
-                var rootPages = ExtendedQuickMenu.MenuStateCtrl.field_Public_ArrayOf_UIPage_0.ToList();
+                var rootPages = QuickMenuEx.MenuStateCtrl.field_Public_ArrayOf_UIPage_0.ToList();
                 rootPages.Add(UiPage);
-                ExtendedQuickMenu.MenuStateCtrl.field_Public_ArrayOf_UIPage_0 = rootPages.ToArray();
+                QuickMenuEx.MenuStateCtrl.field_Public_ArrayOf_UIPage_0 = rootPages.ToArray();
             }
         }
 
@@ -94,11 +94,11 @@ namespace ReMod.Core.UI
         {
             if (_isRoot)
             {
-                ExtendedQuickMenu.MenuStateCtrl.SwitchToRootPage($"QuickMenuReMod{_menuName}");
+                QuickMenuEx.MenuStateCtrl.SwitchToRootPage($"QuickMenuReMod{_menuName}");
             }
             else
             {
-                ExtendedQuickMenu.MenuStateCtrl.PushPage($"QuickMenuReMod{_menuName}");
+                QuickMenuEx.MenuStateCtrl.PushPage($"QuickMenuReMod{_menuName}");
             }
 
             OnOpen?.Invoke();

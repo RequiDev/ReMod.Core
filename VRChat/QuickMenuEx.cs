@@ -5,7 +5,7 @@ using Object = UnityEngine.Object;
 
 namespace ReMod.Core.VRChat
 {
-    public static class ExtendedQuickMenu
+    public static class QuickMenuEx
     {
         private static QuickMenu _quickMenuInstance;
 

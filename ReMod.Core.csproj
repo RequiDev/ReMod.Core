@@ -128,12 +128,13 @@
     <Compile Include="UI\UiElement.cs" />
     <Compile Include="Unity\EnableDisableListener.cs" />
     <Compile Include="Unity\RenderObjectListener.cs" />
-    <Compile Include="VRChat\ExtendedQuickMenu.cs" />
+    <Compile Include="VRChat\QuickMenuEx.cs" />
     <Compile Include="VRChat\PlayerExtensions.cs" />
     <Compile Include="VRChat\PopupManagerExtensions.cs" />
     <Compile Include="Unity\UnityExtensions.cs" />
     <Compile Include="VRChat\VRCConfig.cs" />
     <Compile Include="VRChat\VrcUiExtensions.cs" />
+    <Compile Include="VRChat\VRCUiManagerEx.cs" />
     <Compile Include="XrefUtils.cs" />
   </ItemGroup>
   <ItemGroup />

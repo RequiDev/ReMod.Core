@@ -17,7 +17,7 @@ namespace ReMod.Core.UI
             {
                 if (_togglePrefab == null)
                 {
-                    _togglePrefab = ExtendedQuickMenu.Instance.field_Public_Transform_0
+                    _togglePrefab = QuickMenuEx.Instance.field_Public_Transform_0
                         .Find("Window/QMParent/Menu_Settings/Panel_QM_ScrollRect").GetComponent<ScrollRect>().content
                         .Find("Buttons_UI_Elements_Row_1/Button_ToggleQMInfo").gameObject;
                 }
@@ -33,7 +33,7 @@ namespace ReMod.Core.UI
             {
                 if (_onIconSprite == null)
                 {
-                    _onIconSprite = ExtendedQuickMenu.Instance.field_Public_Transform_0
+                    _onIconSprite = QuickMenuEx.Instance.field_Public_Transform_0
                         .Find("Window/QMParent/Menu_Notifications/Panel_NoNotifications_Message/Icon").GetComponent<Image>().sprite;
                 }
                 return _onIconSprite;

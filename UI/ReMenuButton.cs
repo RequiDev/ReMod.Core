@@ -18,7 +18,7 @@ namespace ReMod.Core.UI
             {
                 if (_buttonPrefab == null)
                 {
-                    _buttonPrefab = ExtendedQuickMenu.Instance.field_Public_Transform_0
+                    _buttonPrefab = QuickMenuEx.Instance.field_Public_Transform_0
                         .Find("Window/QMParent/Menu_Dashboard/ScrollRect").GetComponent<ScrollRect>().content
                         .Find("Buttons_QuickActions/Button_Respawn").gameObject;
                 }

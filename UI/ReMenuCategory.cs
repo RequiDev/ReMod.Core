@@ -18,7 +18,7 @@ namespace ReMod.Core.UI
             {
                 if (_headerPrefab == null)
                 {
-                    _headerPrefab = ExtendedQuickMenu.Instance.field_Public_Transform_0
+                    _headerPrefab = QuickMenuEx.Instance.field_Public_Transform_0
                         .Find("Window/QMParent/Menu_Dashboard/ScrollRect").GetComponent<ScrollRect>().content
                         .Find("Header_QuickActions").gameObject;
                 }
@@ -33,7 +33,7 @@ namespace ReMod.Core.UI
             set => _text.text = value;
         }
 
-        public ReMenuHeader(string name, string title, Transform parent) : base(HeaderPrefab, (parent == null ? HeaderPrefab.transform.parent : parent), $"Header_{name}")
+        public ReMenuHeader(string title, Transform parent) : base(HeaderPrefab, (parent == null ? HeaderPrefab.transform.parent : parent), $"Header_{title}")
         {
             _text = GameObject.GetComponentInChildren<TextMeshProUGUI>();
             _text.text = title;
@@ -52,7 +52,7 @@ namespace ReMod.Core.UI
             {
                 if (_containerPrefab == null)
                 {
-                    _containerPrefab = ExtendedQuickMenu.Instance.field_Public_Transform_0
+                    _containerPrefab = QuickMenuEx.Instance.field_Public_Transform_0
                         .Find("Window/QMParent/Menu_Dashboard/ScrollRect").GetComponent<ScrollRect>().content
                         .Find("Buttons_QuickActions").gameObject;
                 }
@@ -109,7 +109,7 @@ namespace ReMod.Core.UI
         public ReMenuCategory(string title, Transform parent = null)
         {
             Name = UiElement.GetCleanName(title);
-            Header = new ReMenuHeader(Name, title, parent);
+            Header = new ReMenuHeader(title, parent);
             _buttonContainer = new ReMenuButtonContainer(Name, parent);
         }
 

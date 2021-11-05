@@ -26,7 +26,7 @@ namespace ReMod.Core.UI
             {
                 if (_wingMenuPrefab == null)
                 {
-                    _wingMenuPrefab = ExtendedQuickMenu.LeftWing.field_Public_RectTransform_0.Find("WingMenu").gameObject;
+                    _wingMenuPrefab = QuickMenuEx.LeftWing.field_Public_RectTransform_0.Find("WingMenu").gameObject;
                 }
                 return _wingMenuPrefab;
             }
@@ -36,10 +36,10 @@ namespace ReMod.Core.UI
         private readonly string _menuName;
         private readonly Transform _container;
         
-        public ReWingMenu(string text, bool left = true) : base(WingMenuPrefab, (left ? ExtendedQuickMenu.LeftWing : ExtendedQuickMenu.RightWing).field_Public_RectTransform_0, text, false)
+        public ReWingMenu(string text, bool left = true) : base(WingMenuPrefab, (left ? QuickMenuEx.LeftWing : QuickMenuEx.RightWing).field_Public_RectTransform_0, text, false)
         {
             _menuName = GetCleanName(text);
-            _wing = left ? ExtendedQuickMenu.LeftWing : ExtendedQuickMenu.RightWing;
+            _wing = left ? QuickMenuEx.LeftWing : QuickMenuEx.RightWing;
 
             var headerTransform = RectTransform.GetChild(0);
             var titleText = headerTransform.GetComponentInChildren<TextMeshProUGUI>();
@@ -110,14 +110,14 @@ namespace ReMod.Core.UI
             {
                 if (_wingButtonPrefab == null)
                 {
-                    _wingButtonPrefab = ExtendedQuickMenu.LeftWing.transform.Find("Container/InnerContainer/WingMenu/ScrollRect/Viewport/VerticalLayoutGroup/Button_Profile").gameObject;
+                    _wingButtonPrefab = QuickMenuEx.LeftWing.transform.Find("Container/InnerContainer/WingMenu/ScrollRect/Viewport/VerticalLayoutGroup/Button_Profile").gameObject;
                 }
                 return _wingButtonPrefab;
             }
         }
 
         public ReWingButton(string text, string tooltip, Action onClick, Sprite sprite = null, bool left = true, bool arrow = true, bool background = true,
-            bool separator = false) : base(WingButtonPrefab, (left ? ExtendedQuickMenu.LeftWing : ExtendedQuickMenu.RightWing).field_Public_RectTransform_0.Find("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup"), $"Button_{text}")
+            bool separator = false) : base(WingButtonPrefab, (left ? QuickMenuEx.LeftWing : QuickMenuEx.RightWing).field_Public_RectTransform_0.Find("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup"), $"Button_{text}")
         {
             var container = RectTransform.Find("Container").transform;
             container.Find("Background").gameObject.SetActive(background);
