@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using MelonLoader;
+using ReMod.Core.Managers;
 
 namespace ReMod.Core
 {
@@ -14,7 +15,7 @@ namespace ReMod.Core
 
         public ConfigValue(string name, T defaultValue, string displayName = null, string description = null, bool isHidden = false)
         {
-            var category = MelonPreferences.CreateCategory("ReMod");
+            var category = MelonPreferences.CreateCategory(ConfigManager.Instance.CategoryName);
 
             var entryName = string.Concat(name.Where(c => char.IsLetter(c) || char.IsNumber(c)));
             _entry = category.GetEntry<T>(entryName) ?? category.CreateEntry(entryName, defaultValue, displayName, description, isHidden);
