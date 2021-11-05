@@ -4,7 +4,6 @@ using ReMod.Core.VRChat;
 using UnityEngine;
 using UnityEngine.UI;
 using VRC;
-using Category = UiAvatarList.EnumNPublicSealedvaInPuMiFaSpClPuLi11Unique;
 using AvatarList = Il2CppSystem.Collections.Generic.List<VRC.Core.ApiAvatar>;
 
 namespace ReMod.Core.UI
@@ -70,8 +69,7 @@ namespace ReMod.Core.UI
 
             _avatarList = GameObject.GetComponent<UiAvatarList>();
             _avatarList.clearUnseenListOnCollapse = false;
-            _avatarList.field_Public_EnumNPublicSealedvaInPuMiFaSpClPuLi11Unique_0 =
-                Category.SpecificList;
+            _avatarList.field_Public_Category_0 = UiAvatarList.Category.SpecificList;
 
             GameObject.transform.SetSiblingIndex(0);
 

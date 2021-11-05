@@ -162,7 +162,7 @@ namespace ReMod.Core.VRChat
                     {
                         id = avatarId
                     };
-                    pageAvatar.field_Public_SimpleAvatarPedestal_0.field_Private_ApiAvatar_0 = apiAvatar;
+                    pageAvatar.field_Public_SimpleAvatarPedestal_0.field_Internal_ApiAvatar_0 = apiAvatar;
                     pageAvatar.ChangeToSelectedAvatar();
                 })
             };

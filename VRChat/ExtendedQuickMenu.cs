@@ -7,15 +7,15 @@ namespace ReMod.Core.VRChat
 {
     public static class ExtendedQuickMenu
     {
-        private static VRC.UI.Elements.QuickMenu _quickMenuInstance;
+        private static QuickMenu _quickMenuInstance;
 
-        public static VRC.UI.Elements.QuickMenu Instance
+        public static QuickMenu Instance
         {
             get
             {
                 if (_quickMenuInstance == null)
                 {
-                    _quickMenuInstance = Object.FindObjectOfType<VRC.UI.Elements.QuickMenu>();
+                    _quickMenuInstance = Object.FindObjectOfType<QuickMenu>();
                 }
                 return _quickMenuInstance;
             }

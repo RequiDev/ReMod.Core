@@ -71,7 +71,7 @@ namespace ReMod.Core.VRChat
 
         public static void HideCurrentPopup(this VRCUiPopupManager vrcUiPopupManager)
         {
-            VRCUiManager.prop_VRCUiManager_0.HideScreen("POPUP");
+            VRCUiManager.field_Private_Static_VRCUiManager_0.HideScreen("POPUP");
         }
 
         public static void ShowAlert(this VRCUiPopupManager popupManager, string title, string body, float timeout = 0f)
