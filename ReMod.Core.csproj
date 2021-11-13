@@ -129,6 +129,7 @@
     <Compile Include="UI\UiElement.cs" />
     <Compile Include="Unity\EnableDisableListener.cs" />
     <Compile Include="Unity\RenderObjectListener.cs" />
+    <Compile Include="VRChat\ActionMenuExtensions.cs" />
     <Compile Include="VRChat\QuickMenuEx.cs" />
     <Compile Include="VRChat\PlayerExtensions.cs" />
     <Compile Include="VRChat\PopupManagerExtensions.cs" />
