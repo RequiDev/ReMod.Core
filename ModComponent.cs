@@ -44,6 +44,7 @@ namespace ReMod.Core
         public virtual void OnAvatarChanged(VRCPlayer vrcPlayer, ApiAvatar apiAvatar) { }
         public virtual void OnEnterWorld(ApiWorld world, ApiWorldInstance instance){}
         public virtual void OnSelectUser(IUser user, bool isRemote){ }
+        public virtual void OnSetupUserInfo(APIUser apiUser){ }
 
         // return value determines whether it found something malicious and should block the original function
         public virtual bool ExecuteEvent(Player player, VRC_EventHandler.VrcEvent evt, VRC_EventHandler.VrcBroadcastType broadcastType, int instagatorId, float fastForward) { return false; }
