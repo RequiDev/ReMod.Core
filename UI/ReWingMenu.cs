@@ -32,10 +32,11 @@ namespace ReMod.Core.UI
             }
         }
 
+        public Transform Container { get; }
+
         private readonly Wing _wing;
         private readonly string _menuName;
-        private readonly Transform _container;
-        
+
         public ReWingMenu(string text, bool left = true) : base(WingMenuPrefab, (left ? QuickMenuEx.LeftWing : QuickMenuEx.RightWing).field_Public_RectTransform_0, text, false)
         {
             _menuName = GetCleanName(text);
@@ -71,7 +72,7 @@ namespace ReMod.Core.UI
                 Object.Destroy(control.gameObject);
             }
 
-            _container = content;
+            Container = content;
 
             var uiPage = GameObject.GetComponent<UIPage>();
             uiPage.field_Public_String_0 = _menuName;
@@ -88,9 +89,9 @@ namespace ReMod.Core.UI
             _wing.field_Private_MenuStateController_0.Method_Public_Void_String_UIContext_Boolean_0(_menuName);
         }
 
-        public ReWingButton AddButton(string text, string tooltip, Action onClick, bool arrow = true, bool background = true, bool separator = false)
+        public ReWingButton AddButton(string text, string tooltip, Action onClick, Sprite sprite = null, bool arrow = true, bool background = true, bool separator = false)
         {
-            return new ReWingButton(text, tooltip, onClick, _container, arrow, background, separator);
+            return new ReWingButton(text, tooltip, onClick, sprite, Container, arrow, background, separator);
         }
 
         public ReWingMenu AddSubMenu(string text, string tooltip)
@@ -123,6 +124,7 @@ namespace ReMod.Core.UI
             container.Find("Background").gameObject.SetActive(background);
             container.Find("Icon_Arrow").gameObject.SetActive(arrow);
             RectTransform.Find("Separator").gameObject.SetActive(separator);
+
             var iconImage = container.Find("Icon").GetComponent<Image>();
             if (sprite != null)
             {
@@ -147,14 +149,24 @@ namespace ReMod.Core.UI
             uiTooltip.field_Public_String_1 = tooltip;
         }
 
-        public ReWingButton(string text, string tooltip, Action onClick, Transform parent, bool arrow = true, bool background = true,
+        public ReWingButton(string text, string tooltip, Action onClick, Transform parent, Sprite sprite = null, bool arrow = true, bool background = true,
             bool separator = false) : base(WingButtonPrefab, parent, $"Button_{text}")
         {
             var container = RectTransform.Find("Container").transform;
             container.Find("Background").gameObject.SetActive(background);
             container.Find("Icon_Arrow").gameObject.SetActive(arrow);
             RectTransform.Find("Separator").gameObject.SetActive(separator);
-            container.Find("Icon").gameObject.SetActive(false);
+
+            var iconImage = container.Find("Icon").GetComponent<Image>();
+            if (sprite != null)
+            {
+                iconImage.sprite = sprite;
+                iconImage.overrideSprite = sprite;
+            }
+            else
+            {
+                iconImage.gameObject.SetActive(false);
+            }
 
             var tmp = container.GetComponentInChildren<TextMeshProUGUI>();
             tmp.text = text;
@@ -172,15 +184,57 @@ namespace ReMod.Core.UI
         public static void Create(string text, string tooltip, Action onClick, Sprite sprite = null,
             WingSide wingSide = WingSide.Both, bool arrow = true, bool background = true, bool separator = true)
         {
-            if ((wingSide & WingSide.Left)==WingSide.Left)
+            if ((wingSide & WingSide.Left) == WingSide.Left)
             {
                 new ReWingButton(text, tooltip, onClick, sprite, true, arrow, background, separator);
             }
 
-            if ((wingSide & WingSide.Right)==WingSide.Right)
+            if ((wingSide & WingSide.Right) == WingSide.Right)
             {
                 new ReWingButton(text, tooltip, onClick, sprite, false, arrow, background, separator);
             }
+        }
+        public static void Create(string text, string tooltip, Action onClick, Transform parent, Sprite sprite = null, bool arrow = true, bool background = true, bool separator = true)
+        {
+            new ReWingButton(text, tooltip, onClick, parent, sprite, arrow, background, separator);
+        }
+    }
+
+    public class ReMirroredWingMenu
+    {
+        private readonly ReWingMenu _leftMenu;
+        private readonly ReWingMenu _rightMenu;
+
+        public ReMirroredWingMenu(string text, string tooltip, Transform leftParent, Transform rightParent, Sprite sprite = null, bool arrow = true, bool background = true, bool separator = false)
+        {
+            _leftMenu = new ReWingMenu(text);
+            _rightMenu = new ReWingMenu(text, false);
+
+            ReWingButton.Create(text, tooltip, _leftMenu.Open, leftParent, sprite, arrow, background, separator);
+            ReWingButton.Create(text, tooltip, _rightMenu.Open, rightParent, sprite, arrow, background, separator);
+        }
+
+        public static ReMirroredWingMenu Create(string text, string tooltip, Sprite sprite = null, bool arrow = true,
+            bool background = true, bool separator = false)
+        {
+            return new ReMirroredWingMenu(text, tooltip,
+                QuickMenuEx.LeftWing.field_Public_RectTransform_0.Find("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup"),
+                QuickMenuEx.RightWing.field_Public_RectTransform_0.Find("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup"),
+                sprite, arrow, background, separator);
+        }
+
+        public void AddButton(string text, string tooltip, Action onClick, Sprite sprite = null, bool arrow = true, bool background = true,
+            bool separator = false)
+        {
+            _rightMenu.AddButton(text, tooltip, onClick, sprite, arrow, background, separator);
+            _leftMenu.AddButton(text, tooltip, onClick, sprite, arrow, background, separator);
+        }
+
+        public ReMirroredWingMenu AddSubMenu(string text, string tooltip, Sprite sprite = null, bool arrow = true,
+            bool background = true, bool separator = false)
+        {
+            return new ReMirroredWingMenu(text, tooltip, _leftMenu.Container, _rightMenu.Container, sprite, arrow,
+                background, separator);
         }
     }
 }
