@@ -109,7 +109,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Managers\ConfigManager.cs" />
-    <Compile Include="UI\IButtonPage.cs" />
+    <Compile Include="UI\QuickMenu\IButtonPage.cs" />
+    <Compile Include="UI\Wings\ReMirroredWingMenu.cs" />
+    <Compile Include="UI\Wings\ReWingButton.cs" />
+    <Compile Include="UI\Wings\ReWingToggle.cs" />
     <Compile Include="Unity\ColorExtensions.cs" />
     <Compile Include="ConfigValue.cs" />
     <Compile Include="Managers\ResourceManager.cs" />
@@ -117,15 +120,15 @@
     <Compile Include="ModComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\ReAvatarList.cs" />
-    <Compile Include="UI\ReCategoryPage.cs" />
-    <Compile Include="UI\ReMenuButton.cs" />
-    <Compile Include="UI\ReMenuCategory.cs" />
-    <Compile Include="UI\ReMenuPage.cs" />
-    <Compile Include="UI\ReMenuToggle.cs" />
-    <Compile Include="UI\ReTabButton.cs" />
+    <Compile Include="UI\QuickMenu\ReCategoryPage.cs" />
+    <Compile Include="UI\QuickMenu\ReMenuButton.cs" />
+    <Compile Include="UI\QuickMenu\ReMenuCategory.cs" />
+    <Compile Include="UI\QuickMenu\ReMenuPage.cs" />
+    <Compile Include="UI\QuickMenu\ReMenuToggle.cs" />
+    <Compile Include="UI\QuickMenu\ReTabButton.cs" />
     <Compile Include="UI\ReUiButton.cs" />
     <Compile Include="UI\ReUiText.cs" />
-    <Compile Include="UI\ReWingMenu.cs" />
+    <Compile Include="UI\Wings\ReWingMenu.cs" />
     <Compile Include="UI\UiElement.cs" />
     <Compile Include="Unity\EnableDisableListener.cs" />
     <Compile Include="Unity\RenderObjectListener.cs" />

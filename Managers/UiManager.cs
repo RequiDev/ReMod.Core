@@ -1,5 +1,6 @@
 ﻿using System;
 using ReMod.Core.UI;
+using ReMod.Core.UI.QuickMenu;
 using ReMod.Core.VRChat;
 using UnityEngine;
 using UnityEngine.UI;

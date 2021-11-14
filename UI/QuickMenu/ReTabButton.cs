@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using VRC.UI.Elements.Controls;
 
-namespace ReMod.Core.UI
+namespace ReMod.Core.UI.QuickMenu
 {
     public class ReTabButton : UiElement
     {

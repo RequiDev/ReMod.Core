@@ -6,40 +6,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using VRC.UI.Elements.Controls;
 
-namespace ReMod.Core.UI
+namespace ReMod.Core.UI.QuickMenu
 {
     public class ReMenuToggle : UiElement
     {
-        private static GameObject _togglePrefab;
-        private static GameObject TogglePrefab
-        {
-            get
-            {
-                if (_togglePrefab == null)
-                {
-                    _togglePrefab = QuickMenuEx.Instance.field_Public_Transform_0
-                        .Find("Window/QMParent/Menu_Settings/Panel_QM_ScrollRect").GetComponent<ScrollRect>().content
-                        .Find("Buttons_UI_Elements_Row_1/Button_ToggleQMInfo").gameObject;
-                }
-                return _togglePrefab;
-            }
-        }
-
-        private static Sprite _onIconSprite;
-
-        private static Sprite OnIconSprite
-        {
-            get
-            {
-                if (_onIconSprite == null)
-                {
-                    _onIconSprite = QuickMenuEx.Instance.field_Public_Transform_0
-                        .Find("Window/QMParent/Menu_Notifications/Panel_NoNotifications_Message/Icon").GetComponent<Image>().sprite;
-                }
-                return _onIconSprite;
-            }
-        }
-
         private readonly Toggle _toggleComponent;
         private readonly ToggleIcon _toggleIcon;
 
@@ -51,10 +21,10 @@ namespace ReMod.Core.UI
 
         private bool _valueHolder;
 
-        public ReMenuToggle(string text, string tooltip, Action<bool> onToggle, Transform parent, bool defaultValue = false) : base(TogglePrefab, parent, $"Button_Toggle{text}")
+        public ReMenuToggle(string text, string tooltip, Action<bool> onToggle, Transform parent, bool defaultValue = false) : base(QuickMenuEx.TogglePrefab, parent, $"Button_Toggle{text}")
         {
             var iconOn = RectTransform.Find("Icon_On").GetComponent<Image>();
-            iconOn.sprite = OnIconSprite;
+            iconOn.sprite = QuickMenuEx.OnIconSprite;
 
             _toggleIcon = GameObject.GetComponent<ToggleIcon>();
 

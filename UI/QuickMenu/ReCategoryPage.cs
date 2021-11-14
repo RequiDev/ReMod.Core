@@ -9,7 +9,7 @@ using VRC.UI.Elements;
 using VRC.UI.Elements.Menus;
 using Object = UnityEngine.Object;
 
-namespace ReMod.Core.UI
+namespace ReMod.Core.UI.QuickMenu
 {
     public class ReCategoryPage : UiElement
     {

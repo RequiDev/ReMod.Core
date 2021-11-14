@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using VRC.UI.Core.Styles;
 using Object = UnityEngine.Object;
 
-namespace ReMod.Core.UI
+namespace ReMod.Core.UI.QuickMenu
 {
     public class ReMenuButton : UiElement
     {

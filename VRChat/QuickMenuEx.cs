@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 using VRC.UI.Elements;
 using Object = UnityEngine.Object;
 
@@ -78,5 +79,46 @@ namespace ReMod.Core.VRChat
             }
         }
 
+        private static Sprite _onIconSprite;
+        public static Sprite OnIconSprite
+        {
+            get
+            {
+                if (_onIconSprite == null)
+                {
+                    _onIconSprite = Instance.field_Public_Transform_0
+                        .Find("Window/QMParent/Menu_Notifications/Panel_NoNotifications_Message/Icon").GetComponent<Image>().sprite;
+                }
+                return _onIconSprite;
+            }
+        }
+
+        private static Sprite _offIconSprite;
+        public static Sprite OffIconSprite
+        {
+            get
+            {
+                if (_offIconSprite == null)
+                {
+                    _offIconSprite = TogglePrefab.transform.Find("Icon_Off").GetComponent<Image>().sprite;
+                }
+                return _offIconSprite;
+            }
+        }
+
+        private static GameObject _togglePrefab;
+        public static GameObject TogglePrefab
+        {
+            get
+            {
+                if (_togglePrefab == null)
+                {
+                    _togglePrefab = QuickMenuEx.Instance.field_Public_Transform_0
+                        .Find("Window/QMParent/Menu_Settings/Panel_QM_ScrollRect").GetComponent<ScrollRect>().content
+                        .Find("Buttons_UI_Elements_Row_1/Button_ToggleQMInfo").gameObject;
+                }
+                return _togglePrefab;
+            }
+        }
     }
 }

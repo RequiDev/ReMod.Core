@@ -3,6 +3,8 @@ using ReMod.Core.UI;
 using System;
 using System.Linq;
 using System.Reflection;
+using ReMod.Core.UI.QuickMenu;
+using ReMod.Core.Unity;
 using UnhollowerRuntimeLib.XrefScans;
 using UnityEngine;
 using UnityEngine.UI;
@@ -107,7 +109,7 @@ namespace ReMod.Core.VRChat
         public static void ShowColorInputPopup(this VRCUiPopupManager popupManager, ReMenuButton button, string who, ConfigValue<Color> configValue)
         {
             popupManager.ShowInputPopupWithCancel("Input hex color code",
-                $"#{configValue.Value.ToHex()}", InputField.InputType.Standard, false, "Submit",
+                $"#{ColorExtensions.ToHex(configValue.Value)}", InputField.InputType.Standard, false, "Submit",
                 (s, k, t) =>
                 {
                     if (string.IsNullOrEmpty(s))
@@ -118,7 +120,7 @@ namespace ReMod.Core.VRChat
 
                     configValue.SetValue(color);
 
-                    button.Text = $"<color=#{configValue.Value.ToHex()}>{who}</color> Color";
+                    button.Text = $"<color=#{ColorExtensions.ToHex(configValue.Value)}>{who}</color> Color";
                 }, null);
         }
 

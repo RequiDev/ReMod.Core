@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
-namespace ReMod.Core.UI
+namespace ReMod.Core.UI.QuickMenu
 {
     public class ReMenuHeader : UiElement
     {

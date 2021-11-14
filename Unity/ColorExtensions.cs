@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace ReMod.Core
+namespace ReMod.Core.Unity
 {
     public static class ColorExtensions
     {
