@@ -54,7 +54,7 @@ namespace ReMod.Core.UI.Wings
         {
             _leftToggle = new ReWingToggle(text, tooltip, b =>
             {
-                _rightToggle.Toggle(b, false);
+                _rightToggle?.Toggle(b, false);
                 onToggle(b);
             }, leftParent, defaultValue);
             _rightToggle = new ReWingToggle(text, tooltip, b =>
