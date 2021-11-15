@@ -50,7 +50,7 @@ namespace ReMod.Core.UI.Wings
         private readonly ReWingToggle _rightToggle;
 
         public ReMirroredWingToggle(string text, string tooltip, Action<bool> onToggle, Transform leftParent,
-            Transform rightParent, bool defaultValue)
+            Transform rightParent, bool defaultValue = false)
         {
             _leftToggle = new ReWingToggle(text, tooltip, b =>
             {
