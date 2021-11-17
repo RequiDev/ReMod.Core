@@ -108,6 +108,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EnumExtensions.cs" />
     <Compile Include="Managers\ConfigManager.cs" />
     <Compile Include="UI\QuickMenu\IButtonPage.cs" />
     <Compile Include="UI\Wings\ReMirroredWingMenu.cs" />
