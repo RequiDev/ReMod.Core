@@ -76,11 +76,6 @@ namespace ReMod.Core.Unity
             v3.w = Mathf.Clamp(v3.w, -512000f, 512000f);
         }
 
-        public static string ToHex(this Color color)
-        {
-            return ColorUtility.ToHtmlStringRGB(color);
-        }
-
         public static string ToCleanString(this Vector3 v3, string format="F4")
         {
             return v3.ToString(format).Replace(" ", string.Empty).Trim('(', ')');
