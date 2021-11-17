@@ -11,9 +11,9 @@ namespace ReMod.Core.Managers
         private static readonly Dictionary<string, Texture2D> Textures = new Dictionary<string, Texture2D>();
         private static readonly Dictionary<string, Sprite> Sprites = new Dictionary<string, Sprite>();
 
-        public static Texture2D LoadTexture(string resourceName, byte[] bytes)
+        public static Texture2D LoadTexture(string prefix, string resourceName, byte[] bytes)
         {
-            if (Textures.ContainsKey(resourceName))
+            if (Textures.ContainsKey($"{prefix}.{resourceName}"))
             {
                 throw new ArgumentException("Resource already exists", nameof(resourceName));
             }
@@ -23,7 +23,7 @@ namespace ReMod.Core.Managers
             texture.hideFlags |= HideFlags.DontUnloadUnusedAsset;
             texture.wrapMode = TextureWrapMode.Clamp;
 
-            Textures.Add(resourceName, texture);
+            Textures.Add($"{prefix}.{resourceName}", texture);
 
             return texture;
         }
@@ -33,12 +33,12 @@ namespace ReMod.Core.Managers
             return Textures.ContainsKey(resourceName) ? Textures[resourceName] : null;
         }
 
-        public static Sprite LoadSprite(string resourceName, byte[] bytes)
+        public static Sprite LoadSprite(string prefix, string resourceName, byte[] bytes)
         {
-            var texture = GetTexture(resourceName);
+            var texture = GetTexture($"{prefix}.{resourceName}");
             if (texture == null)
             {
-                texture = LoadTexture(resourceName, bytes);
+                texture = LoadTexture(prefix, resourceName, bytes);
             }
 
             var rect = new Rect(0.0f, 0.0f, texture.width, texture.height);
@@ -47,7 +47,7 @@ namespace ReMod.Core.Managers
             var sprite = Sprite.CreateSprite_Injected(texture, ref rect, ref pivot, 100.0f, 0, SpriteMeshType.Tight, ref border, false);
             sprite.hideFlags |= HideFlags.DontUnloadUnusedAsset;
 
-            Sprites.Add(resourceName, sprite);
+            Sprites.Add($"{prefix}.{resourceName}", sprite);
 
             return sprite;
         }
