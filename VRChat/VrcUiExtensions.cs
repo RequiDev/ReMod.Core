@@ -101,7 +101,7 @@ namespace ReMod.Core.VRChat
             if (_closeMenu == null)
             {
                 _closeMenu = (CloseMenuDelegate)Delegate.CreateDelegate(typeof(CloseMenuDelegate),
-                    typeof(VRCUiManager).GetMethods().FirstOrDefault(m => m.Name.StartsWith("Method_Public_Void_Boolean_Boolean") && XrefUtils.CheckUsing(m,"TrimCache")));
+                    typeof(VRCUiManager).GetMethods().FirstOrDefault(m => m.Name.StartsWith("Method_Public_Void_Boolean_Boolean") && !m.Name.Contains("PDM") && XrefUtils.CheckUsing(m,"TrimCache")));
             }
 
             _closeMenu(uiManager,true,false);
