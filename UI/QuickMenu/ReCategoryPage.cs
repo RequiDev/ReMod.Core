@@ -14,7 +14,6 @@ namespace ReMod.Core.UI.QuickMenu
     public class ReCategoryPage : UiElement
     {
         private static GameObject _menuPrefab;
-
         private static GameObject MenuPrefab
         {
             get
@@ -41,6 +40,12 @@ namespace ReMod.Core.UI.QuickMenu
 
         public ReCategoryPage(string text, bool isRoot = false) : base(MenuPrefab, MenuPrefab.transform.parent, $"Menu_ReMod{text}", false)
         {
+            if (!_fixedLaunchpad)
+            {
+                FixLaunchpadScrolling();
+                _fixedLaunchpad = true;
+            }
+
             Object.DestroyImmediate(GameObject.GetComponent<LaunchPadQMMenu>());
 
             RectTransform.SetSiblingIndex(SiblingIndex);
@@ -125,6 +130,21 @@ namespace ReMod.Core.UI.QuickMenu
         public static ReCategoryPage Create(string text, bool isRoot)
         {
             return new ReCategoryPage(text, isRoot);
+        }
+
+        private static bool _fixedLaunchpad;
+        private static void FixLaunchpadScrolling()
+        {
+            var dashboard = QuickMenuEx.Instance.field_Public_Transform_0.Find("Window/QMParent/Menu_Dashboard").GetComponent<UIPage>();
+            var scrollRect = dashboard.GetComponentInChildren<ScrollRect>();
+            var dashboardScrollbar = scrollRect.transform.Find("Scrollbar").GetComponent<Scrollbar>();
+
+            var dashboardContent = scrollRect.content;
+            dashboardContent.GetComponent<VerticalLayoutGroup>().childControlHeight = true;
+
+            scrollRect.enabled = true;
+            scrollRect.verticalScrollbar = dashboardScrollbar;
+            scrollRect.viewport.GetComponent<RectMask2D>().enabled = true;
         }
     }
 }
