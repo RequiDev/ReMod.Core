@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using VRC.UI.Elements;
+using VRC.UI.Elements.Menus;
 using Object = UnityEngine.Object;
 
 namespace ReMod.Core.VRChat
@@ -16,13 +17,41 @@ namespace ReMod.Core.VRChat
             {
                 if (_quickMenuInstance == null)
                 {
-                    _quickMenuInstance = Object.FindObjectOfType<VRC.UI.Elements.QuickMenu>();
+                    _quickMenuInstance = GameObject.Find("UserInterface").GetComponentInChildren<VRC.UI.Elements.QuickMenu>(true);
                 }
                 return _quickMenuInstance;
             }
         }
 
-        public static MenuStateController MenuStateCtrl => Instance.field_Protected_MenuStateController_0;
+        private static MenuStateController _menuStateCtrl;
+
+        public static MenuStateController MenuStateCtrl
+        {
+            get
+            {
+                if (_menuStateCtrl == null)
+                {
+                    _menuStateCtrl = Instance.transform.GetComponent<MenuStateController>();
+                }
+
+                return _menuStateCtrl;
+            }
+        }
+
+        private static SelectedUserMenuQM _selectedUserLocal;
+
+        public static SelectedUserMenuQM SelectedUserLocal
+        {
+            get
+            {
+                if (_selectedUserLocal == null)
+                {
+                    _selectedUserLocal = Instance.field_Public_Transform_0.Find("Window/QMParent/Menu_SelectedUser_Local").GetComponent<SelectedUserMenuQM>();
+                }
+
+                return _selectedUserLocal;
+            }
+        }
 
         private static Wing[] _wings;
         private static Wing _leftWing;
@@ -36,7 +65,7 @@ namespace ReMod.Core.VRChat
             {
                 if (_wings == null || _wings.Length == 0)
                 {
-                    _wings = Object.FindObjectsOfType<Wing>();
+                    _wings = GameObject.Find("UserInterface").GetComponentsInChildren<Wing>(true);
                 }
 
                 return _wings;

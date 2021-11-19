@@ -74,14 +74,16 @@ namespace ReMod.Core.UI.Wings
 
             Container = content;
 
+            var menuStateCtrl = _wing.GetComponent<MenuStateController>();
+
             var uiPage = GameObject.GetComponent<UIPage>();
             uiPage.field_Public_String_0 = _menuName;
             uiPage.field_Private_Boolean_1 = true;
-            uiPage.field_Private_MenuStateController_0 = _wing.field_Private_MenuStateController_0;
+            uiPage.field_Private_MenuStateController_0 = menuStateCtrl;
             uiPage.field_Private_List_1_UIPage_0 = new Il2CppSystem.Collections.Generic.List<UIPage>();
             uiPage.field_Private_List_1_UIPage_0.Add(uiPage);
 
-            _wing.field_Private_MenuStateController_0.field_Private_Dictionary_2_String_UIPage_0.Add(uiPage.field_Public_String_0, uiPage);
+            menuStateCtrl.field_Private_Dictionary_2_String_UIPage_0.Add(uiPage.field_Public_String_0, uiPage);
         }
 
         public void Open()
