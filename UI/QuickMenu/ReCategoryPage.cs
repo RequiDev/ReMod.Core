@@ -44,6 +44,13 @@ namespace ReMod.Core.UI.QuickMenu
             {
                 FixLaunchpadScrolling();
                 _fixedLaunchpad = true;
+
+                // We just instantiated a possibly non-scrollable ui page. Let's fix it for our new one just in case.
+                var scrollRect = RectTransform.GetComponentInChildren<ScrollRect>();
+                scrollRect.content.GetComponent<VerticalLayoutGroup>().childControlHeight = true;
+                scrollRect.enabled = true;
+                scrollRect.verticalScrollbar = scrollRect.transform.Find("Scrollbar").GetComponent<Scrollbar>();
+                scrollRect.viewport.GetComponent<RectMask2D>().enabled = true;
             }
 
             Object.DestroyImmediate(GameObject.GetComponent<LaunchPadQMMenu>());
