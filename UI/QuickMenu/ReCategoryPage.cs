@@ -144,13 +144,10 @@ namespace ReMod.Core.UI.QuickMenu
         {
             var dashboard = QuickMenuEx.Instance.field_Public_Transform_0.Find("Window/QMParent/Menu_Dashboard").GetComponent<UIPage>();
             var scrollRect = dashboard.GetComponentInChildren<ScrollRect>();
-            var dashboardScrollbar = scrollRect.transform.Find("Scrollbar").GetComponent<Scrollbar>();
-
-            var dashboardContent = scrollRect.content;
-            dashboardContent.GetComponent<VerticalLayoutGroup>().childControlHeight = true;
-
+            
+            scrollRect.content.GetComponent<VerticalLayoutGroup>().childControlHeight = true;
             scrollRect.enabled = true;
-            scrollRect.verticalScrollbar = dashboardScrollbar;
+            scrollRect.verticalScrollbar = scrollRect.transform.Find("Scrollbar").GetComponent<Scrollbar>(); ;
             scrollRect.viewport.GetComponent<RectMask2D>().enabled = true;
         }
     }
