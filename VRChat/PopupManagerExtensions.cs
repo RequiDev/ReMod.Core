@@ -109,7 +109,7 @@ namespace ReMod.Core.VRChat
         public static void ShowColorInputPopup(this VRCUiPopupManager popupManager, ReMenuButton button, string who, ConfigValue<Color> configValue)
         {
             popupManager.ShowInputPopupWithCancel("Input hex color code",
-                $"#{ColorExtensions.ToHex(configValue.Value)}", InputField.InputType.Standard, false, "Submit",
+                $"#{configValue.Value.ToHex()}", InputField.InputType.Standard, false, "Submit",
                 (s, k, t) =>
                 {
                     if (string.IsNullOrEmpty(s))
