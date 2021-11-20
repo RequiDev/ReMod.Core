@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using UnhollowerRuntimeLib.XrefScans;
+using VRC.UI;
+using VRC.UI.Core;
 using VRC.UI.Elements;
 
 namespace ReMod.Core.VRChat
@@ -30,7 +33,11 @@ namespace ReMod.Core.VRChat
                 return _showConfirmDialogDelegate;
             }
         }
-        
+
+        public static bool IsActive(this VRC.UI.Elements.QuickMenu quickMenu)
+        {
+            return quickMenu.gameObject.activeSelf;
+        }
         public delegate void ShowConfirmDialogWithCancelDelegate(UIMenu uiMenu, string title, string body, string yesLabel, string noLabel, string cancelLabel, Il2CppSystem.Action onYes, Il2CppSystem.Action onNo, Il2CppSystem.Action onCancel);
         private static ShowConfirmDialogWithCancelDelegate _showConfirmDialogWithCancelDelegate;
         
@@ -50,7 +57,6 @@ namespace ReMod.Core.VRChat
                 });
 
                 _showConfirmDialogWithCancelDelegate = (ShowConfirmDialogWithCancelDelegate)Delegate.CreateDelegate(typeof(ShowConfirmDialogWithCancelDelegate), showConfirmDialogWithCancelFn);
-
                 return _showConfirmDialogWithCancelDelegate;
             }
         }
@@ -63,6 +69,20 @@ namespace ReMod.Core.VRChat
         public static void ShowConfirmDialogWithCancel(this UIMenu uiMenu, string title, string body, string yesLabel, string noLabel, string cancelLabel, Action onYes, Action onNo, Action onCancel)
         {
             ShowConfirmDialogWithCancelFn.Invoke(uiMenu, title, body, yesLabel, noLabel, cancelLabel, onYes, onNo, onCancel);
+        }
+        
+        private static MethodInfo _closeQuickMenuMethod;
+        public static void CloseQuickMenu(this UIManagerImpl uiManager)
+        {
+            if (_closeQuickMenuMethod == null)
+            {
+                var closeMenuMethod = typeof(UIManagerImpl).GetMethods()
+                    .First(method => method.Name.StartsWith("Method_Public_Virtual_Final_New_Void_") && XrefScanner.XrefScan(method).Count() == 2);
+                _closeQuickMenuMethod = typeof(UIManagerImpl).GetMethods()
+                    .First(method => method.Name.StartsWith("Method_Public_Void_Boolean_") && XrefUtils.CheckUsedBy(method, closeMenuMethod.Name));
+            }
+
+            _closeQuickMenuMethod.Invoke(uiManager, new object[1] { false });
         }
     }
 }

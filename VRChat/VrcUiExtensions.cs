@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using MelonLoader;
 using UnityEngine;
@@ -7,6 +8,7 @@ using VRC.Core;
 using VRC.UI.Core;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Controls;
+using BigMenuIndex = QuickMenu.EnumNPublicSealedvaUnWoAvSoSeUsDeSaCuUnique;
 
 namespace ReMod.Core.VRChat
 {
@@ -93,18 +95,59 @@ namespace ReMod.Core.VRChat
             _switchToRootPage(menuStateCtrl, pageName, uiContext, clearPageStack, inPlace);
         }
 
-        private delegate void CloseMenuDelegate(VRCUiManager uiManager, bool what, bool what2);
-        private static CloseMenuDelegate _closeMenu;
+        private delegate void CloseUiDelegate(VRCUiManager uiManager, bool what, bool what2);
+        private static CloseUiDelegate _closeUi;
         
-        public static void CloseMenu(this VRCUiManager uiManager)
+        public static void CloseUi(this VRCUiManager uiManager)
         {
-            if (_closeMenu == null)
+            if (_closeUi == null)
             {
-                _closeMenu = (CloseMenuDelegate)Delegate.CreateDelegate(typeof(CloseMenuDelegate),
-                    typeof(VRCUiManager).GetMethods().FirstOrDefault(m => m.Name.StartsWith("Method_Public_Void_Boolean_Boolean") && !m.Name.Contains("PDM") && XrefUtils.CheckUsing(m,"TrimCache")));
+                _closeUi = (CloseUiDelegate)Delegate.CreateDelegate(typeof(CloseUiDelegate),
+                    typeof(VRCUiManager).GetMethods().FirstOrDefault(m => m.Name.StartsWith("Method_Public_Void_Boolean_Boolean") && !m.Name.Contains("PDM") && XrefUtils.CheckUsing(m, "TrimCache")));
             }
 
-            _closeMenu(uiManager,true,false);
+            _closeUi(uiManager, true, false);
         }
+
+        private delegate void ShowUiDelegate(VRCUiManager uiManager, bool showDefaultScreen, bool showBackdrop);
+        private static ShowUiDelegate _showUi;
+
+        public static void ShowUi(this VRCUiManager uiManager, bool showDefaultScreen = true, bool showBackdrop = true)
+        {
+            if (_showUi == null)
+            {
+                _showUi = (ShowUiDelegate)Delegate.CreateDelegate(typeof(ShowUiDelegate), typeof(VRCUiManager).GetMethods()
+                    .First(mb => mb.Name.StartsWith("Method_Public_Void_Boolean_Boolean_") && !mb.Name.Contains("_PDM_") && XrefUtils.CheckMethod(mb, "UserInterface/MenuContent/Backdrop/Backdrop")));
+            }
+
+            _showUi(uiManager, showDefaultScreen, showBackdrop);
+        }
+
+        public static void ShowScreen(this VRCUiManager uiManager, string screen, bool addToScreenStack = false)
+        {
+            uiManager.Method_Public_Void_String_Boolean_0(screen, addToScreenStack);
+        }
+
+        public static void ShowScreen(this VRCUiManager uiMasnager, BigMenuIndex menuIndex,
+            bool addToScreenStack = false)
+        {
+            ShowScreen(uiMasnager, BigMenuIndexToPathTable[menuIndex], addToScreenStack);
+        }
+
+        private static readonly Dictionary<BigMenuIndex, string> BigMenuIndexToPathTable = new Dictionary<BigMenuIndex, string>()
+        {
+            { BigMenuIndex.Unknown, "" },
+            { BigMenuIndex.WorldsMenu, "UserInterface/MenuContent/Screens/WorldInfo" },
+            { BigMenuIndex.AvatarMenu, "UserInterface/MenuContent/Screens/Avatar" },
+            { BigMenuIndex.SocialMenu, "UserInterface/MenuContent/Screens/Social" },
+            { BigMenuIndex.SettingsMenu, "UserInterface/MenuContent/Screens/Settings" },
+            { BigMenuIndex.UserDetailsMenu, "UserInterface/MenuContent/Screens/UserInfo" },
+            { BigMenuIndex.DetailsMenu_Obsolete, "UserInterface/MenuContent/Screens/ImageDetails" },
+            { BigMenuIndex.SafetyMenu, "UserInterface/MenuContent/Screens/Settings_Safety" },
+            { BigMenuIndex.CurrentUserPlaylistsMenu, "UserInterface/MenuContent/Screens/Playlists" },
+            { BigMenuIndex.OtherUserPlaylistsMenu, "UserInterface/MenuContent/Screens/Playlists" },
+            { BigMenuIndex.VRCPlusMenu, "UserInterface/MenuContent/Screens/VRC+" },
+            { BigMenuIndex.GalleryMenu, "UserInterface/MenuContent/Screens/Gallery" },
+        };
     }
 }
