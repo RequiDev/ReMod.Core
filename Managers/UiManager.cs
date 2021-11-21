@@ -13,15 +13,8 @@ namespace ReMod.Core.Managers
         public IButtonPage MainMenu { get; }
         public IButtonPage TargetMenu { get; }
 
-        private static UiManager _instance;
         public UiManager(string menuName, Sprite menuSprite)
         {
-            if (_instance != null)
-            {
-                throw new Exception("UiManager already exists.");
-            }
-            _instance = this;
-
             MainMenu = new ReMenuPage(menuName, true);
             ReTabButton.Create(menuName, $"Open the {menuName} menu.", menuName, menuSprite);
 
