@@ -36,8 +36,8 @@ namespace ReMod.Core
         public virtual void OnApplicationQuit(){}
         public virtual void OnPreferencesSaved(){}
         public virtual void OnPreferencesLoaded(){ }
-        public virtual void OnPhotonPlayerJoined(Il2CppSystem.Collections.Hashtable propertiesTable) { }
-        public virtual void OnPhotonPlayerLeft(Photon.Realtime.Player player) { }
+        public virtual void OnPhotonPlayerJoined(int actorNr, Il2CppSystem.Collections.Hashtable propertiesTable) { }
+        public virtual void OnPhotonPlayerLeft(int actorNr, Photon.Realtime.Player player) { }
         public virtual void OnPlayerJoined(Player player){}
         public virtual void OnPlayerLeft(Player player){}
         public virtual void OnAvatarIsReady(VRCPlayer player){ }

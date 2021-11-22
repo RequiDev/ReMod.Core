@@ -9,6 +9,16 @@ namespace ReMod.Core.UI.Wings
         private readonly ReWingMenu _leftMenu;
         private readonly ReWingMenu _rightMenu;
 
+        public bool Active
+        {
+            get => _leftMenu.Active && _rightMenu.Active;
+            set
+            {
+                _leftMenu.Active = value;
+                _rightMenu.Active = value;
+            }
+        }
+
         public ReMirroredWingMenu(string text, string tooltip, Transform leftParent, Transform rightParent, Sprite sprite = null, bool arrow = true, bool background = true, bool separator = false)
         {
             _leftMenu = new ReWingMenu(text);
@@ -27,11 +37,10 @@ namespace ReMod.Core.UI.Wings
                 sprite, arrow, background, separator);
         }
 
-        public void AddButton(string text, string tooltip, Action onClick, Sprite sprite = null, bool arrow = true, bool background = true,
+        public ReMirroredWingButton AddButton(string text, string tooltip, Action onClick, Sprite sprite = null, bool arrow = true, bool background = true,
             bool separator = false)
         {
-            _rightMenu.AddButton(text, tooltip, onClick, sprite, arrow, background, separator);
-            _leftMenu.AddButton(text, tooltip, onClick, sprite, arrow, background, separator);
+            return new ReMirroredWingButton(text, tooltip, onClick, _leftMenu.Container, _rightMenu.Container, sprite, arrow, background, separator);
         }
 
         public ReMirroredWingToggle AddToggle(string text, string tooltip, Action<bool> onToggle, bool defaultValue)

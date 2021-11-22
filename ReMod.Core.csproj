@@ -111,7 +111,9 @@
     <Compile Include="EnumExtensions.cs" />
     <Compile Include="Managers\ConfigManager.cs" />
     <Compile Include="UI\QuickMenu\IButtonPage.cs" />
+    <Compile Include="UI\Wings\ReMirroredWingButton.cs" />
     <Compile Include="UI\Wings\ReMirroredWingMenu.cs" />
+    <Compile Include="UI\Wings\ReMirroredWingToggle.cs" />
     <Compile Include="UI\Wings\ReWingButton.cs" />
     <Compile Include="UI\Wings\ReWingToggle.cs" />
     <Compile Include="Unity\ColorExtensions.cs" />

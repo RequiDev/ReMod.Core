@@ -66,6 +66,12 @@ namespace ReMod.Core.UI.Wings
             var uiTooltip = GameObject.GetComponent<VRC.UI.Elements.Tooltips.UiTooltip>();
             uiTooltip.field_Public_String_0 = tooltip;
             uiTooltip.field_Public_String_1 = tooltip;
+
+            if (sprite == null && !arrow)
+            {
+                container.gameObject.AddComponent<HorizontalLayoutGroup>();
+                tmp.enableAutoSizing = true;
+            }
         }
 
         public static void Create(string text, string tooltip, Action onClick, Sprite sprite = null,
