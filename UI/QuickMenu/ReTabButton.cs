@@ -15,7 +15,7 @@ namespace ReMod.Core.UI.QuickMenu
             {
                 if (_tabButtonPrefab == null)
                 {
-                    _tabButtonPrefab = QuickMenuEx.Instance.field_Public_GameObject_4;
+                    _tabButtonPrefab = QuickMenuEx.Instance.field_Public_Transform_0.Find("Window/Page_Buttons_QM/HorizontalLayoutGroup/Page_Settings").gameObject;
                 }
                 return _tabButtonPrefab;
             }
