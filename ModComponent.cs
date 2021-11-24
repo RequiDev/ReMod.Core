@@ -50,11 +50,10 @@ namespace ReMod.Core
         public virtual bool ExecuteEvent(Player player, VRC_EventHandler.VrcEvent evt, VRC_EventHandler.VrcBroadcastType broadcastType, int instagatorId, float fastForward) { return false; }
         public virtual bool OnPhotonEvent(LoadBalancingClient loadBalancingClient, ref EventData eventData) { return false; }
         public virtual bool VRCNetworkingClientOnPhotonEvent(EventData eventData) { return false; }
-        public virtual bool VRC_EventLogOnPhotonEvent(EventData eventData) { return false; }
         public virtual bool OnDownloadAvatar(ApiAvatar apiAvatar) { return false; }
         public virtual bool OnRaiseEvent(byte eventCode, ref Il2CppSystem.Object content, RaiseEventOptions raiseEventOptions, SendOptions sendOptions) { return false; }
         
-        public virtual void OnOwnershipTransfered(Photon.Realtime.Player player, PhotonView photonView, bool isMaster, bool isRequest){}
+        public virtual void OnOwnershipTransferred(Photon.Realtime.Player player, PhotonView photonView, bool isMaster, bool isRequest){}
         public virtual void OnBlockStateChange(Photon.Realtime.Player instigator, bool blocked){ }
         public virtual void OnMuteStateChange(Photon.Realtime.Player instigator, bool muted) { }
         public virtual void OnModUserListUpdated() { }
