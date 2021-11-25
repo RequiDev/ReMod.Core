@@ -34,11 +34,16 @@ namespace ReMod.Core.UI.QuickMenu
             set => _text.SetText(value);
         }
 
+        private readonly StyleElement _styleElement;
         private readonly Button _button;
         public bool Interactable
         {
             get => _button.interactable;
-            set => _button.interactable = value;
+            set
+            {
+                _button.interactable = value;
+                _styleElement.Method_Private_Void_Boolean_0(value);
+            }
         }
 
         public ReMenuButton(string text, string tooltip, Action onClick, Transform parent, Sprite sprite = null) : base(ButtonPrefab, parent,
@@ -72,6 +77,8 @@ namespace ReMod.Core.UI.QuickMenu
                 iconImage.sprite = sprite;
                 iconImage.overrideSprite = sprite;
             }
+
+            _styleElement = GameObject.GetComponent<StyleElement>();
 
             Object.DestroyImmediate(RectTransform.Find("Icon_Secondary").gameObject);
             Object.DestroyImmediate(RectTransform.Find("Badge_Close").gameObject);
