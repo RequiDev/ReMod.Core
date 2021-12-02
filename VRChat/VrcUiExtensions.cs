@@ -8,7 +8,6 @@ using VRC.Core;
 using VRC.UI.Core;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Controls;
-using BigMenuIndex = QuickMenu.EnumNPublicSealedvaUnWoAvSoSeUsDeSaCuUnique;
 
 namespace ReMod.Core.VRChat
 {
@@ -128,26 +127,26 @@ namespace ReMod.Core.VRChat
             uiManager.Method_Public_Void_String_Boolean_0(screen, addToScreenStack);
         }
 
-        public static void ShowScreen(this VRCUiManager uiMasnager, BigMenuIndex menuIndex,
+        public static void ShowScreen(this VRCUiManager uiManager, QuickMenu.MainMenuScreenIndex menuIndex,
             bool addToScreenStack = false)
         {
-            ShowScreen(uiMasnager, BigMenuIndexToPathTable[menuIndex], addToScreenStack);
+            ShowScreen(uiManager, BigMenuIndexToPathTable[menuIndex], addToScreenStack);
         }
 
-        private static readonly Dictionary<BigMenuIndex, string> BigMenuIndexToPathTable = new Dictionary<BigMenuIndex, string>()
+        private static readonly Dictionary<QuickMenu.MainMenuScreenIndex, string> BigMenuIndexToPathTable = new Dictionary<QuickMenu.MainMenuScreenIndex, string>()
         {
-            { BigMenuIndex.Unknown, "" },
-            { BigMenuIndex.WorldsMenu, "UserInterface/MenuContent/Screens/WorldInfo" },
-            { BigMenuIndex.AvatarMenu, "UserInterface/MenuContent/Screens/Avatar" },
-            { BigMenuIndex.SocialMenu, "UserInterface/MenuContent/Screens/Social" },
-            { BigMenuIndex.SettingsMenu, "UserInterface/MenuContent/Screens/Settings" },
-            { BigMenuIndex.UserDetailsMenu, "UserInterface/MenuContent/Screens/UserInfo" },
-            { BigMenuIndex.DetailsMenu_Obsolete, "UserInterface/MenuContent/Screens/ImageDetails" },
-            { BigMenuIndex.SafetyMenu, "UserInterface/MenuContent/Screens/Settings_Safety" },
-            { BigMenuIndex.CurrentUserPlaylistsMenu, "UserInterface/MenuContent/Screens/Playlists" },
-            { BigMenuIndex.OtherUserPlaylistsMenu, "UserInterface/MenuContent/Screens/Playlists" },
-            { BigMenuIndex.VRCPlusMenu, "UserInterface/MenuContent/Screens/VRC+" },
-            { BigMenuIndex.GalleryMenu, "UserInterface/MenuContent/Screens/Gallery" },
+            { QuickMenu.MainMenuScreenIndex.Unknown, "" },
+            { QuickMenu.MainMenuScreenIndex.WorldsMenu, "UserInterface/MenuContent/Screens/WorldInfo" },
+            { QuickMenu.MainMenuScreenIndex.AvatarMenu, "UserInterface/MenuContent/Screens/Avatar" },
+            { QuickMenu.MainMenuScreenIndex.SocialMenu, "UserInterface/MenuContent/Screens/Social" },
+            { QuickMenu.MainMenuScreenIndex.SettingsMenu, "UserInterface/MenuContent/Screens/Settings" },
+            { QuickMenu.MainMenuScreenIndex.UserDetailsMenu, "UserInterface/MenuContent/Screens/UserInfo" },
+            { QuickMenu.MainMenuScreenIndex.DetailsMenu_Obsolete, "UserInterface/MenuContent/Screens/ImageDetails" },
+            { QuickMenu.MainMenuScreenIndex.SafetyMenu, "UserInterface/MenuContent/Screens/Settings_Safety" },
+            { QuickMenu.MainMenuScreenIndex.CurrentUserPlaylistsMenu, "UserInterface/MenuContent/Screens/Playlists" },
+            { QuickMenu.MainMenuScreenIndex.OtherUserPlaylistsMenu, "UserInterface/MenuContent/Screens/Playlists" },
+            { QuickMenu.MainMenuScreenIndex.VRCPlusMenu, "UserInterface/MenuContent/Screens/VRC+" },
+            { QuickMenu.MainMenuScreenIndex.GalleryMenu, "UserInterface/MenuContent/Screens/Gallery" },
         };
     }
 }
