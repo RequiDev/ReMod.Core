@@ -163,12 +163,12 @@ namespace ReMod.Core.UI.QuickMenu
 
         public ReMenuPage GetMenuPage(string name)
         {
-            return _subMenuPages.FirstOrDefault(m => m.Name == UiElement.GetCleanName($"Menu_{name}"));
+            return _subMenuPages.FirstOrDefault(m => m.Name == UiElement.GetCleanName($"Menu_ReMod{name}"));
         }
 
         public ReCategoryPage GetCategoryPage(string name)
         {
-            return _subCategoryPages.FirstOrDefault(m => m.Name == UiElement.GetCleanName($"Menu_{name}"));
+            return _subCategoryPages.FirstOrDefault(m => m.Name == UiElement.GetCleanName($"Menu_ReMod{name}"));
         }
     }
 }
