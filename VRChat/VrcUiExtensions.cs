@@ -20,20 +20,15 @@ namespace ReMod.Core.VRChat
 
         public static void StartRenderElementsCoroutine(this UiVRCList instance, Il2CppSystem.Collections.Generic.List<ApiAvatar> avatarList, int offset = 0, bool endOfPickers = true, VRCUiContentButton contentHeaderElement = null)
         {
-            MelonCoroutines.Start(RenderElements(0.1f));
+            if (!instance.gameObject.activeInHierarchy || !instance.isActiveAndEnabled || instance.isOffScreen ||
+                !instance.enabled)
+                return;
 
-            IEnumerator RenderElements(float delay)
+            if (instance.scrollRect != null)
             {
-                while (!instance.gameObject.activeInHierarchy || !instance.isActiveAndEnabled || instance.isOffScreen ||
-                    !instance.enabled)
-                    yield return new WaitForSeconds(delay);
-
-                if (instance.scrollRect != null)
-                {
-                    instance.scrollRect.normalizedPosition = new Vector2(0f, 0f);
-                }
-                instance.Method_Protected_Void_List_1_T_Int32_Boolean_VRCUiContentButton_0(avatarList, offset, endOfPickers, contentHeaderElement);
-            };
+                instance.scrollRect.normalizedPosition = new Vector2(0f, 0f);
+            }
+            instance.Method_Protected_Void_List_1_T_Int32_Boolean_VRCUiContentButton_0(avatarList, offset, endOfPickers, contentHeaderElement);
         }
 
         private delegate void OnValueChangedDelegate(ToggleIcon toggleIcon, bool arg0);
