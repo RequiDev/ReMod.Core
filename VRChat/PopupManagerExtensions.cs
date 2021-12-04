@@ -1,6 +1,7 @@
 ﻿using MelonLoader.Preferences;
 using ReMod.Core.UI;
 using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using ReMod.Core.UI.QuickMenu;
@@ -123,25 +124,54 @@ namespace ReMod.Core.VRChat
                     button.Text = $"<color=#{ColorExtensions.ToHex(configValue.Value)}>{who}</color> Color";
                 }, null);
         }
-
-        public static void ShowFloatInputPopup(this VRCUiPopupManager popupManager, ReMenuButton button, string who, ConfigValue<float> configValue, ValueRange<float> range = null)
+        
+        public static void ShowInputPopup<T>(this VRCUiPopupManager popupManager, string popupText, T oldValue, Action<T> callback, ReMenuButton menuButton = null, string buttonText = null, ValueRange<T> range = null) where T : IComparable
         {
-            VRCUiPopupManager.prop_VRCUiPopupManager_0.ShowInputPopupWithCancel($"Input {who} {(range!=null ? $"Range: {range.MinValue}-{range.MaxValue}" : string.Empty)}",
-                $"{configValue.Value}", InputField.InputType.Standard, false, "Submit",
-                (s, k, t) =>
+            popupManager.ShowInputPopupWithCancel($"{popupText} {(range!=null ? $"Range: {range.MinValue}-{range.MaxValue}" : string.Empty)}",
+                $"{oldValue}", InputField.InputType.Standard, false, "Submit",
+                (s, _, _) =>
                 {
                     if (string.IsNullOrEmpty(s))
                         return;
 
-                    if (!float.TryParse(s, out var parsedFloat))
+                    TypeConverter converter = TypeDescriptor.GetConverter(typeof(T));
+                    if (!converter.IsValid(s)) return;
+                    
+                    T value = (T) converter.ConvertFromInvariantString(s);
+
+                    if (range != null && !range.IsValid(value))
                         return;
 
-                    if (range != null && !range.IsValid(parsedFloat))
+                    if (menuButton != null)
+                    {
+                        menuButton.Text = $"{buttonText ?? "Value"}: {value}";
+                    }
+                    callback(value);
+                }, null);
+        }
+        
+        public static void ShowInputPopup<T>(this VRCUiPopupManager popupManager, string popupText, ConfigValue<T> configValue, ReMenuButton menuButton = null, string buttonText = null, ValueRange<T> range = null) where T : IComparable
+        {
+            popupManager.ShowInputPopupWithCancel($"{popupText} {(range!=null ? $"Range: {range.MinValue}-{range.MaxValue}" : string.Empty)}",
+                $"{configValue.Value}", InputField.InputType.Standard, false, "Submit",
+                (s, _, _) =>
+                {
+                    if (string.IsNullOrEmpty(s))
                         return;
 
-                    configValue.SetValue(parsedFloat);
+                    TypeConverter converter = TypeDescriptor.GetConverter(typeof(T));
+                    if (!converter.IsValid(s)) return;
+                    
+                    T value = (T) converter.ConvertFromInvariantString(s);
 
-                    button.Text = $"{who}: {parsedFloat}";
+                    if (range != null && !range.IsValid(value))
+                        return;
+                    
+                    if (menuButton != null)
+                    {
+                        menuButton.Text = $"{buttonText ?? "Value"}: {value}";
+                    }
+                    configValue.SetValue(value);
                 }, null);
         }
     }
