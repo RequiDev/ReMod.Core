@@ -15,8 +15,8 @@ namespace ReMod.Core.VRChat
     public static class PopupManagerExtensions
     {
         public delegate void ShowAlertDelegate(VRCUiPopupManager popupManager, string title, string body, float timeout);
-        public delegate void ShowStandardPopupV2Fn(string title, string body, string leftButtonText, Il2CppSystem.Action leftButtonAction, string rightButtonText, Il2CppSystem.Action rightButtonAction, Il2CppSystem.Action<VRCUiPopup> additionalSetup = null);
-        public delegate void ShowStandardPopupV21Fn(string title, string body, string buttonText, Il2CppSystem.Action onClick, Il2CppSystem.Action<VRCUiPopup> additionalSetup = null);
+        public delegate void ShowStandardPopupV2Fn(VRCUiPopupManager popupManager, string title, string body, string leftButtonText, Il2CppSystem.Action leftButtonAction, string rightButtonText, Il2CppSystem.Action rightButtonAction, Il2CppSystem.Action<VRCUiPopup> additionalSetup = null);
+        public delegate void ShowStandardPopupV21Fn(VRCUiPopupManager popupManager, string title, string body, string buttonText, Il2CppSystem.Action onClick, Il2CppSystem.Action<VRCUiPopup> additionalSetup = null);
 
         private static ShowStandardPopupV21Fn _showStandardPopupV21Fn;
 
@@ -67,7 +67,7 @@ namespace ReMod.Core.VRChat
                     }
                     return false;
                 });
-                _showStandardPopupV21Fn = (ShowStandardPopupV21Fn)Delegate.CreateDelegate(typeof(ShowStandardPopupV21Fn), VRCUiPopupManager.prop_VRCUiPopupManager_0, methodInfo);
+                _showStandardPopupV21Fn = (ShowStandardPopupV21Fn)Delegate.CreateDelegate(typeof(ShowStandardPopupV21Fn), methodInfo);
                 return _showStandardPopupV21Fn;
             }
         }
@@ -82,13 +82,46 @@ namespace ReMod.Core.VRChat
             ShowAlertFn(popupManager, title, body, timeout);
         }
 
+        private delegate void ShowInputPopupWithCancelDelegate(VRCUiPopupManager popupManager, string title,
+            string preFilledText,
+            InputField.InputType inputType, bool useNumericKeypad, string submitButtonText,
+            Il2CppSystem.Action<string, Il2CppSystem.Collections.Generic.List<KeyCode>, Text> submitButtonAction,
+            Il2CppSystem.Action cancelButtonAction, string placeholderText = "Enter text....", bool hidePopupOnSubmit = true,
+            Il2CppSystem.Action<VRCUiPopup> additionalSetup = null, bool param_11 = false, int param_12 = 0);
+
+        private static ShowInputPopupWithCancelDelegate _showInputPopupWithCancelDelegate;
+
+        private static ShowInputPopupWithCancelDelegate ShowInputPopupWithCancelFn
+        {
+            get
+            {
+                if (_showInputPopupWithCancelDelegate != null)
+                    return _showInputPopupWithCancelDelegate;
+
+                var method = typeof(VRCUiPopupManager).GetMethods().Single(m =>
+                {
+                    if (!m.Name.StartsWith(
+                            "Method_Public_Void_String_String_InputType_Boolean_String_Action_3_String_List_1_KeyCode_Text_Action_String_Boolean_Action_1_VRCUiPopup_Boolean_Int32_") ||
+                        m.Name.Contains("PDM"))
+                        return false;
+
+                    return XrefScanner.XrefScan(m).Any(x => x.Type == XrefType.Global && x.ReadAsObject()?.ToString() ==
+                        "UserInterface/MenuContent/Popups/InputKeypadPopup");
+                });
+
+                _showInputPopupWithCancelDelegate = (ShowInputPopupWithCancelDelegate)Delegate.CreateDelegate(typeof(ShowInputPopupWithCancelDelegate), method);
+
+                return _showInputPopupWithCancelDelegate;
+            }
+        }
+
         public static void ShowInputPopupWithCancel(this VRCUiPopupManager popupManager, string title, string preFilledText,
             InputField.InputType inputType, bool useNumericKeypad, string submitButtonText,
             Action<string, Il2CppSystem.Collections.Generic.List<KeyCode>, Text> submitButtonAction,
             Action cancelButtonAction, string placeholderText = "Enter text....", bool hidePopupOnSubmit = true,
             Action<VRCUiPopup> additionalSetup = null)
         {
-            popupManager.Method_Public_Void_String_String_InputType_Boolean_String_Action_3_String_List_1_KeyCode_Text_Action_String_Boolean_Action_1_VRCUiPopup_Boolean_Int32_0(
+            ShowInputPopupWithCancelFn(popupManager,
                     title,
                     preFilledText,
                     inputType, useNumericKeypad, submitButtonText, submitButtonAction, cancelButtonAction, placeholderText, hidePopupOnSubmit, additionalSetup);
@@ -104,7 +137,7 @@ namespace ReMod.Core.VRChat
         public static void ShowStandardPopupV2(this VRCUiPopupManager popupManager, string title, string body, string buttonText,
             Action onClick, Action<VRCUiPopup> onCreated=null)
         {
-            ShowUiStandardPopupV21.Invoke(title, body, buttonText, onClick, onCreated);
+            ShowUiStandardPopupV21(popupManager, title, body, buttonText, onClick, onCreated);
         }
 
         public static void ShowColorInputPopup(this VRCUiPopupManager popupManager, ReMenuButton button, string who, ConfigValue<Color> configValue)
