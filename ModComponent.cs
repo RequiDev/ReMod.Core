@@ -49,7 +49,6 @@ namespace ReMod.Core
         // return value determines whether it found something malicious and should block the original function
         public virtual bool ExecuteEvent(Player player, VRC_EventHandler.VrcEvent evt, VRC_EventHandler.VrcBroadcastType broadcastType, int instagatorId, float fastForward) { return false; }
         public virtual bool OnPhotonEvent(LoadBalancingClient loadBalancingClient, ref EventData eventData) { return false; }
-        public virtual bool VRCNetworkingClientOnPhotonEvent(EventData eventData) { return false; }
         public virtual bool OnDownloadAvatar(ApiAvatar apiAvatar) { return false; }
         public virtual bool OnRaiseEvent(byte eventCode, ref Il2CppSystem.Object content, RaiseEventOptions raiseEventOptions, SendOptions sendOptions) { return false; }
         
