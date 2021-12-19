@@ -152,6 +152,7 @@ namespace ReMod.Core.VRChat
                     if (!ColorUtility.TryParseHtmlString(s, out var color))
                         return;
 
+                    color.a = 1f;
                     configValue.SetValue(color);
 
                     button.Text = $"<color=#{ColorExtensions.ToHex(configValue.Value)}>{who}</color> Color";
