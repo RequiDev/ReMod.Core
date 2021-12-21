@@ -46,7 +46,7 @@ namespace ReMod.Core.UI.QuickMenu
             }
         }
 
-        public ReMenuButton(string text, string tooltip, Action onClick, Transform parent, Sprite sprite = null) : base(ButtonPrefab, parent,
+        public ReMenuButton(string text, string tooltip, Action onClick, Transform parent, Sprite sprite = null, bool resizeTextNoSprite = true) : base(ButtonPrefab, parent,
             $"Button_{text}")
         {
             _text = GameObject.GetComponentInChildren<TextMeshProUGUI>();
@@ -54,22 +54,31 @@ namespace ReMod.Core.UI.QuickMenu
             _text.richText = true;
             if (sprite == null)
             {
-                _text.fontSize = 35;
-                _text.enableAutoSizing = true;
-                _text.color = new Color(0.4157f, 0.8902f, 0.9765f, 1f);
-                _text.m_fontColor = new Color(0.4157f, 0.8902f, 0.9765f, 1f);
-                _text.m_htmlColor = new Color(0.4157f, 0.8902f, 0.9765f, 1f);
-                _text.transform.localPosition = new Vector3(_text.transform.localPosition.x, -30f);
+                if (resizeTextNoSprite)
+                {
+                    _text.fontSize = 35;
+                    _text.enableAutoSizing = true;
+                    _text.color = new Color(0.4157f, 0.8902f, 0.9765f, 1f);
+                    _text.m_fontColor = new Color(0.4157f, 0.8902f, 0.9765f, 1f);
+                    _text.m_htmlColor = new Color(0.4157f, 0.8902f, 0.9765f, 1f);
+                    _text.transform.localPosition = new Vector3(_text.transform.localPosition.x, -30f);
 
-                var layoutElement = RectTransform.Find("Background").gameObject.AddComponent<LayoutElement>();
-                layoutElement.ignoreLayout = true;
+                    var layoutElement = RectTransform.Find("Background").gameObject.AddComponent<LayoutElement>();
+                    layoutElement.ignoreLayout = true;
 
-                var horizontalLayout = GameObject.AddComponent<HorizontalLayoutGroup>();
-                horizontalLayout.padding.right = 10;
-                horizontalLayout.padding.left = 10;
-                var styleElement = _text.GetComponent<StyleElement>();
-                styleElement.field_Public_String_1 = "H1";
-                Object.DestroyImmediate(RectTransform.Find("Icon").gameObject);
+                    var horizontalLayout = GameObject.AddComponent<HorizontalLayoutGroup>();
+                    horizontalLayout.padding.right = 10;
+                    horizontalLayout.padding.left = 10;
+                    var styleElement = _text.GetComponent<StyleElement>();
+                    styleElement.field_Public_String_1 = "H1";
+                    Object.DestroyImmediate(RectTransform.Find("Icon").gameObject);
+                }
+                else
+                {
+                    var iconImage = RectTransform.Find("Icon").GetComponent<Image>();
+                    iconImage.sprite = null;
+                    iconImage.overrideSprite = null;
+                }
             }
             else
             {
