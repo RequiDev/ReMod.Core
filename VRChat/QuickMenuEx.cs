@@ -23,6 +23,20 @@ namespace ReMod.Core.VRChat
             }
         }
 
+        private static Transform _menuParent;
+
+        public static Transform MenuParent
+        {
+            get
+            {
+                if (_menuParent == null)
+                {
+                    _menuParent = Instance.field_Public_Transform_0.Find("Window/QMParent");
+                }
+                return _menuParent;
+            }
+        }
+
         private static MenuStateController _menuStateCtrl;
 
         public static MenuStateController MenuStateCtrl

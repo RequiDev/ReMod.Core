@@ -18,7 +18,9 @@ namespace ReMod.Core.Managers
             MainMenu = new ReMenuPage(menuName, true);
             ReTabButton.Create(menuName, $"Open the {menuName} menu.", menuName, menuSprite);
 
-            TargetMenu = new ReMenuCategory($"{menuName}", QuickMenuEx.SelectedUserLocal.transform.Find("ScrollRect").GetComponent<ScrollRect>().content);
+            var localMenu = new ReCategoryPage(QuickMenuEx.SelectedUserLocal.transform);
+            TargetMenu = localMenu.AddCategory($"{menuName}");
+            // TargetMenu = new ReMenuCategory($"{menuName}", QuickMenuEx.SelectedUserLocal.transform.Find("ScrollRect").GetComponent<ScrollRect>().content);
         }
     }
 }

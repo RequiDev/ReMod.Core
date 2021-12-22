@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -20,6 +21,16 @@ namespace ReMod.Core.UI
         {
             get => GameObject.activeSelf;
             set => GameObject.SetActive(value);
+        }
+
+        public UiElement(Transform transform)
+        {
+            RectTransform = transform.GetComponent<RectTransform>();
+            if (RectTransform == null)
+                throw new ArgumentException("Transform has to be a RectTransform.", nameof(transform));
+
+            GameObject = transform.gameObject;
+            Name = GameObject.name;
         }
 
         public UiElement(GameObject original, Transform parent, Vector3 pos, string name, bool defaultState = true) : this(original, parent, name, defaultState)

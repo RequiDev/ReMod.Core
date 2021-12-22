@@ -102,6 +102,13 @@ namespace ReMod.Core.UI.QuickMenu
             _button.onClick.AddListener(new Action(onClick));
         }
 
+        public ReMenuButton(Transform transform) : base(transform)
+        {
+            _text = GameObject.GetComponentInChildren<TextMeshProUGUI>();
+            _styleElement = GameObject.GetComponent<StyleElement>();
+            _button = GameObject.GetComponent<Button>();
+        }
+
         public static ReMenuButton Create(string text, string tooltip, Action onClick, Transform parent, Sprite sprite = null)
         {
             return new ReMenuButton(text, tooltip, onClick, parent, sprite);

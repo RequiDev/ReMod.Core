@@ -41,6 +41,11 @@ namespace ReMod.Core.UI.QuickMenu
 
             _text.transform.parent.GetComponent<HorizontalLayoutGroup>().childControlWidth = true;
         }
+
+        public ReMenuHeader(Transform transform) : base(transform)
+        {
+            _text = GameObject.GetComponentInChildren<TextMeshProUGUI>();
+        }
     }
 
     public class ReMenuButtonContainer : UiElement
@@ -78,17 +83,16 @@ namespace ReMod.Core.UI.QuickMenu
             gridLayout.padding.top = 8;
             gridLayout.padding.left = 64;
         }
+
+        public ReMenuButtonContainer(Transform transform) : base(transform)
+        {
+        }
     }
 
     public class ReMenuCategory : IButtonPage
     {
         public ReMenuHeader Header;
         private readonly ReMenuButtonContainer _buttonContainer;
-
-        private readonly List<ReMenuPage> _subMenuPages = new List<ReMenuPage>();
-        private readonly List<ReCategoryPage> _subCategoryPages = new List<ReCategoryPage>();
-        
-        public string Name { get; }
 
         public string Title
         {
@@ -108,9 +112,14 @@ namespace ReMod.Core.UI.QuickMenu
 
         public ReMenuCategory(string title, Transform parent = null)
         {
-            Name = UiElement.GetCleanName(title);
             Header = new ReMenuHeader(title, parent);
-            _buttonContainer = new ReMenuButtonContainer(Name, parent);
+            _buttonContainer = new ReMenuButtonContainer(title, parent);
+        }
+
+        public ReMenuCategory(ReMenuHeader header, ReMenuButtonContainer container)
+        {
+            Header = header;
+            _buttonContainer = container;
         }
 
         public ReMenuButton AddButton(string text, string tooltip, Action onClick, Sprite sprite = null)
@@ -141,7 +150,6 @@ namespace ReMod.Core.UI.QuickMenu
 
             var menu = new ReMenuPage(text);
             AddButton(text, string.IsNullOrEmpty(tooltip) ? $"Open the {text} menu" : tooltip, menu.Open, sprite);
-            _subMenuPages.Add(menu);
             return menu;
         }
 
@@ -155,7 +163,6 @@ namespace ReMod.Core.UI.QuickMenu
 
             var menu = new ReCategoryPage(text);
             AddButton(text, string.IsNullOrEmpty(tooltip) ? $"Open the {text} menu" : tooltip, menu.Open, sprite);
-            _subCategoryPages.Add(menu);
             return menu;
         }
 
@@ -163,12 +170,14 @@ namespace ReMod.Core.UI.QuickMenu
 
         public ReMenuPage GetMenuPage(string name)
         {
-            return _subMenuPages.FirstOrDefault(m => m.Name == UiElement.GetCleanName($"Menu_ReMod{name}"));
+            var transform = QuickMenuEx.MenuParent.Find(UiElement.GetCleanName($"Menu_{name}"));
+            return transform == null ? null : new ReMenuPage(transform);
         }
 
         public ReCategoryPage GetCategoryPage(string name)
         {
-            return _subCategoryPages.FirstOrDefault(m => m.Name == UiElement.GetCleanName($"Menu_ReMod{name}"));
+            var transform = QuickMenuEx.MenuParent.Find(UiElement.GetCleanName($"Menu_{name}"));
+            return transform == null ? null : new ReCategoryPage(transform);
         }
     }
 }

@@ -51,6 +51,11 @@ namespace ReMod.Core.UI.QuickMenu
             edl.OnEnableEvent += UpdateToggleIfNeeded;
         }
 
+        public ReMenuToggle(Transform transform) : base(transform)
+        {
+            _toggleIcon = GameObject.GetComponent<ToggleIcon>();
+            _toggleComponent = GameObject.GetComponent<Toggle>();
+        }
 
         public void Toggle(bool value, bool callback = true, bool updateVisually = false)
         {

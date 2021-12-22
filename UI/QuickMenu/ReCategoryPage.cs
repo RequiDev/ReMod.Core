@@ -28,17 +28,14 @@ namespace ReMod.Core.UI.QuickMenu
 
         private static int SiblingIndex => QuickMenuEx.Instance.field_Public_Transform_0.Find("Window/QMParent/Modal_AddMessage").GetSiblingIndex();
 
-        private readonly List<ReMenuCategory> _categories = new List<ReMenuCategory>();
-
         public event Action OnOpen;
-        private readonly string _menuName;
         private readonly bool _isRoot;
 
         private readonly Transform _container;
 
         public UIPage UiPage { get; }
 
-        public ReCategoryPage(string text, bool isRoot = false) : base(MenuPrefab, MenuPrefab.transform.parent, $"Menu_ReMod{text}", false)
+        public ReCategoryPage(string text, bool isRoot = false) : base(MenuPrefab, QuickMenuEx.MenuParent, $"Menu_{text}", false)
         {
             if (!_fixedLaunchpad)
             {
@@ -56,8 +53,7 @@ namespace ReMod.Core.UI.QuickMenu
             Object.DestroyImmediate(GameObject.GetComponent<LaunchPadQMMenu>());
 
             RectTransform.SetSiblingIndex(SiblingIndex);
-
-            _menuName = GetCleanName(text);
+            
             _isRoot = isRoot;
             var headerTransform = RectTransform.GetChild(0);
             Object.DestroyImmediate(headerTransform.Find("RightItemContainer/Button_QM_Expand").gameObject);
@@ -86,7 +82,7 @@ namespace ReMod.Core.UI.QuickMenu
 
             // Set up UIPage
             UiPage = GameObject.AddComponent<UIPage>();
-            UiPage.field_Public_String_0 = $"QuickMenuReMod{_menuName}";
+            UiPage.field_Public_String_0 = $"QuickMenuReMod{GetCleanName(text)}";
             UiPage.field_Private_Boolean_1 = true;
             UiPage.field_Private_MenuStateController_0 = QuickMenuEx.MenuStateCtrl;
             UiPage.field_Private_List_1_UIPage_0 = new Il2CppSystem.Collections.Generic.List<UIPage>();
@@ -102,15 +98,22 @@ namespace ReMod.Core.UI.QuickMenu
             }
         }
 
+        public ReCategoryPage(Transform transform) : base(transform)
+        {
+            UiPage = GameObject.GetComponent<UIPage>();
+            _isRoot = QuickMenuEx.MenuStateCtrl.field_Public_ArrayOf_UIPage_0.Contains(UiPage);
+            _container = RectTransform.GetComponentInChildren<ScrollRect>().content;
+        }
+
         public void Open()
         {
             if (_isRoot)
             {
-                QuickMenuEx.MenuStateCtrl.SwitchToRootPage($"QuickMenuReMod{_menuName}");
+                QuickMenuEx.MenuStateCtrl.SwitchToRootPage(UiPage.field_Public_String_0);
             }
             else
             {
-                QuickMenuEx.MenuStateCtrl.PushPage($"QuickMenuReMod{_menuName}");
+                QuickMenuEx.MenuStateCtrl.PushPage(UiPage.field_Public_String_0);
             }
 
             OnOpen?.Invoke();
@@ -118,20 +121,17 @@ namespace ReMod.Core.UI.QuickMenu
 
         public ReMenuCategory AddCategory(string title)
         {
-            var existingCategory = GetCategory(title);
-            if (existingCategory != null)
-            {
-                return existingCategory;
-            }
-
-            var category = new ReMenuCategory(title, _container);
-            _categories.Add(category);
-            return category;
+            return GetCategory(title) ?? new ReMenuCategory(title, _container);
         }
 
         public ReMenuCategory GetCategory(string name)
         {
-            return _categories.FirstOrDefault(c => c.Name == GetCleanName(name));
+            var headerTransform = _container.Find($"Header_{GetCleanName(name)}");
+            if (headerTransform == null) return null;
+
+            var header = new ReMenuHeader(headerTransform);
+            var buttonContainer = new ReMenuButtonContainer(_container.Find($"Buttons_{GetCleanName(name)}"));
+            return new ReMenuCategory(header, buttonContainer);
         }
 
         public static ReCategoryPage Create(string text, bool isRoot)
