@@ -26,6 +26,8 @@ namespace ReMod.Core.UI.QuickMenu
             var iconOn = RectTransform.Find("Icon_On").GetComponent<Image>();
             iconOn.sprite = QuickMenuEx.OnIconSprite;
 
+            GameObject.DestroyImmediate(GameObject.GetComponent<UIInvisibleGraphic>()); // Fix for having clickable area overlap main quickmenu ui
+            
             _toggleIcon = GameObject.GetComponent<ToggleIcon>();
 
             _toggleComponent = GameObject.GetComponent<Toggle>();
