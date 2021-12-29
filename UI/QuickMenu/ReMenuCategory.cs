@@ -10,7 +10,51 @@ using Object = UnityEngine.Object;
 
 namespace ReMod.Core.UI.QuickMenu
 {
-    public class ReMenuHeader : UiElement
+    public interface IReMenuHeader
+    {
+        public string Title { get; set; }
+    }
+
+    public class ReMenuHeaderNormal : UiElement, IReMenuHeader
+    {
+        private static GameObject _headerPrefab;
+        private static GameObject HeaderPrefab
+        {
+            get
+            {
+                if (_headerPrefab == null)
+                {
+                    _headerPrefab = QuickMenuEx.Instance.field_Public_Transform_0
+                        .Find("Window/QMParent/Menu_Dashboard/ScrollRect").GetComponent<ScrollRect>().content
+                        .Find("Header_QuickActions").gameObject;
+                }
+                return _headerPrefab;
+            }
+        }
+
+        private readonly TextMeshProUGUI _text;
+        public string Title
+        {
+            get => _text.text;
+            set => _text.text = value;
+        }
+
+        public ReMenuHeaderNormal(string title, Transform parent) : base(HeaderPrefab, (parent == null ? HeaderPrefab.transform.parent : parent), $"Header_{title}")
+        {
+            _text = GameObject.GetComponentInChildren<TextMeshProUGUI>();
+            _text.text = title;
+            _text.richText = true;
+
+            _text.transform.parent.GetComponent<HorizontalLayoutGroup>().childControlWidth = true;
+        }
+
+        public ReMenuHeaderNormal(Transform transform) : base(transform)
+        {
+            _text = GameObject.GetComponentInChildren<TextMeshProUGUI>();
+        }
+    }
+
+    public class ReMenuHeaderCollapsible : UiElement, IReMenuHeader
     {
         private static GameObject _headerPrefab;
         private static GameObject HeaderPrefab
@@ -36,19 +80,18 @@ namespace ReMod.Core.UI.QuickMenu
 
         public Action<bool> OnToggle;
 
-        public ReMenuHeader(string title, Transform parent) : base(HeaderPrefab, (parent == null ? HeaderPrefab.transform.parent : parent), $"Header_{title}")
+        public ReMenuHeaderCollapsible(string title, Transform parent) : base(HeaderPrefab, (parent == null ? HeaderPrefab.transform.parent : parent), $"Header_{title}")
         {
             _text = GameObject.GetComponentInChildren<TextMeshProUGUI>();
             _text.text = title;
             _text.richText = true;
 
-            //_text.transform.parent.GetComponent<HorizontalLayoutGroup>().childControlWidth = true;
             var foldout = GameObject.GetComponent<QMFoldout>();
             foldout.field_Private_String_0 = $"UI.ReMod.{GetCleanName(title)}";
             foldout.field_Private_Action_1_Boolean_0 = new Action<bool>(b => OnToggle?.Invoke(b));
         }
 
-        public ReMenuHeader(Transform transform) : base(transform)
+        public ReMenuHeaderCollapsible(Transform transform) : base(transform)
         {
             _text = GameObject.GetComponentInChildren<TextMeshProUGUI>();
         }
@@ -97,13 +140,14 @@ namespace ReMod.Core.UI.QuickMenu
 
     public class ReMenuCategory : IButtonPage
     {
-        public ReMenuHeader Header;
+        private readonly IReMenuHeader _header;
+        public readonly UiElement Header;
         private readonly ReMenuButtonContainer _buttonContainer;
 
         public string Title
         {
-            get => Header.Title;
-            set => Header.Title = value;
+            get => _header.Title;
+            set => _header.Title = value;
         }
 
         public bool Active
@@ -116,17 +160,30 @@ namespace ReMod.Core.UI.QuickMenu
             }
         }
 
-        public ReMenuCategory(string title, Transform parent = null)
+        public ReMenuCategory(string title, Transform parent = null, bool collapsible = true)
         {
-            Header = new ReMenuHeader(title, parent);
+            if (collapsible)
+            {
+                var header = new ReMenuHeaderCollapsible(title, parent);
+                Header = header;
+                _header = header;
+                header.OnToggle += b => _buttonContainer.GameObject.SetActive(b);
+            }
+
+            else
+            {
+                var header = new ReMenuHeaderNormal(title, parent);
+                Header = header;
+                _header = header;
+            }
             _buttonContainer = new ReMenuButtonContainer(title, parent);
 
-            Header.OnToggle += _buttonContainer.GameObject.SetActive;
         }
 
-        public ReMenuCategory(ReMenuHeader header, ReMenuButtonContainer container)
+        public ReMenuCategory(ReMenuHeaderNormal headerElement, ReMenuButtonContainer container)
         {
-            Header = header;
+            _header = headerElement;
+            Header = headerElement;
             _buttonContainer = container;
         }
 
