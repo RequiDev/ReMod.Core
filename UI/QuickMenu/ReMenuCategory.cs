@@ -5,6 +5,7 @@ using ReMod.Core.VRChat;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using VRC.UI.Elements;
 using Object = UnityEngine.Object;
 
 namespace ReMod.Core.UI.QuickMenu
@@ -19,8 +20,8 @@ namespace ReMod.Core.UI.QuickMenu
                 if (_headerPrefab == null)
                 {
                     _headerPrefab = QuickMenuEx.Instance.field_Public_Transform_0
-                        .Find("Window/QMParent/Menu_Dashboard/ScrollRect").GetComponent<ScrollRect>().content
-                        .Find("Header_QuickActions").gameObject;
+                        .Find("Window/QMParent/Menu_Settings/Panel_QM_ScrollRect").GetComponent<ScrollRect>().content
+                        .Find("QM_Foldout_UI_Elements").gameObject;
                 }
                 return _headerPrefab;
             }
@@ -33,13 +34,18 @@ namespace ReMod.Core.UI.QuickMenu
             set => _text.text = value;
         }
 
+        public Action<bool> OnToggle;
+
         public ReMenuHeader(string title, Transform parent) : base(HeaderPrefab, (parent == null ? HeaderPrefab.transform.parent : parent), $"Header_{title}")
         {
             _text = GameObject.GetComponentInChildren<TextMeshProUGUI>();
             _text.text = title;
             _text.richText = true;
 
-            _text.transform.parent.GetComponent<HorizontalLayoutGroup>().childControlWidth = true;
+            //_text.transform.parent.GetComponent<HorizontalLayoutGroup>().childControlWidth = true;
+            var foldout = GameObject.GetComponent<QMFoldout>();
+            foldout.field_Private_String_0 = $"UI.ReMod.{GetCleanName(title)}";
+            foldout.field_Private_Action_1_Boolean_0 = new Action<bool>(b => OnToggle?.Invoke(b));
         }
 
         public ReMenuHeader(Transform transform) : base(transform)
@@ -65,7 +71,7 @@ namespace ReMod.Core.UI.QuickMenu
             }
         }
 
-        public ReMenuButtonContainer(string name, Transform parent = null) : base(ContainerPrefab, (parent == null ? ContainerPrefab.transform.parent : parent), $"Buttons_{name}")
+        public ReMenuButtonContainer(string name, Transform parent = null) : base(ContainerPrefab, parent == null ? ContainerPrefab.transform.parent : parent, $"Buttons_{name}")
         {
             foreach (var obj in RectTransform)
             {
@@ -114,6 +120,8 @@ namespace ReMod.Core.UI.QuickMenu
         {
             Header = new ReMenuHeader(title, parent);
             _buttonContainer = new ReMenuButtonContainer(title, parent);
+
+            Header.OnToggle += _buttonContainer.GameObject.SetActive;
         }
 
         public ReMenuCategory(ReMenuHeader header, ReMenuButtonContainer container)
