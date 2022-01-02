@@ -10,12 +10,7 @@ using Object = UnityEngine.Object;
 
 namespace ReMod.Core.UI.QuickMenu
 {
-    public interface IReMenuHeader
-    {
-        public string Title { get; set; }
-    }
-
-    public class ReMenuHeaderNormal : UiElement, IReMenuHeader
+    public class ReMenuHeader : UiElement
     {
         private static GameObject _headerPrefab;
         private static GameObject HeaderPrefab
@@ -32,29 +27,32 @@ namespace ReMod.Core.UI.QuickMenu
             }
         }
 
-        private readonly TextMeshProUGUI _text;
+        protected TextMeshProUGUI TextComponent;
         public string Title
         {
-            get => _text.text;
-            set => _text.text = value;
+            get => TextComponent.text;
+            set => TextComponent.text = value;
         }
 
-        public ReMenuHeaderNormal(string title, Transform parent) : base(HeaderPrefab, (parent == null ? HeaderPrefab.transform.parent : parent), $"Header_{title}")
+        public ReMenuHeader(string title, Transform parent) : base(HeaderPrefab, (parent == null ? HeaderPrefab.transform.parent : parent), $"Header_{title}")
         {
-            _text = GameObject.GetComponentInChildren<TextMeshProUGUI>();
-            _text.text = title;
-            _text.richText = true;
+            TextComponent = GameObject.GetComponentInChildren<TextMeshProUGUI>();
+            TextComponent.text = title;
+            TextComponent.richText = true;
 
-            _text.transform.parent.GetComponent<HorizontalLayoutGroup>().childControlWidth = true;
+            TextComponent.transform.parent.GetComponent<HorizontalLayoutGroup>().childControlWidth = true;
         }
 
-        public ReMenuHeaderNormal(Transform transform) : base(transform)
+        public ReMenuHeader(Transform transform) : base(transform)
         {
-            _text = GameObject.GetComponentInChildren<TextMeshProUGUI>();
+            TextComponent = GameObject.GetComponentInChildren<TextMeshProUGUI>();
         }
+
+        protected ReMenuHeader(GameObject original, Transform parent, Vector3 pos, string name, bool defaultState = true) : base(original, parent, pos, name, defaultState) { }
+        protected ReMenuHeader(GameObject original, Transform parent, string name, bool defaultState = true) : base(original, parent, name, defaultState){}
     }
 
-    public class ReMenuHeaderCollapsible : UiElement, IReMenuHeader
+    public class ReMenuHeaderCollapsible : ReMenuHeader
     {
         private static GameObject _headerPrefab;
         private static GameObject HeaderPrefab
@@ -71,20 +69,13 @@ namespace ReMod.Core.UI.QuickMenu
             }
         }
 
-        private readonly TextMeshProUGUI _text;
-        public string Title
-        {
-            get => _text.text;
-            set => _text.text = value;
-        }
-
         public Action<bool> OnToggle;
 
         public ReMenuHeaderCollapsible(string title, Transform parent) : base(HeaderPrefab, (parent == null ? HeaderPrefab.transform.parent : parent), $"Header_{title}")
         {
-            _text = GameObject.GetComponentInChildren<TextMeshProUGUI>();
-            _text.text = title;
-            _text.richText = true;
+            TextComponent = GameObject.GetComponentInChildren<TextMeshProUGUI>();
+            TextComponent.text = title;
+            TextComponent.richText = true;
 
             var foldout = GameObject.GetComponent<QMFoldout>();
             foldout.field_Private_String_0 = $"UI.ReMod.{GetCleanName(title)}";
@@ -93,7 +84,7 @@ namespace ReMod.Core.UI.QuickMenu
 
         public ReMenuHeaderCollapsible(Transform transform) : base(transform)
         {
-            _text = GameObject.GetComponentInChildren<TextMeshProUGUI>();
+            TextComponent = GameObject.GetComponentInChildren<TextMeshProUGUI>();
         }
     }
 
@@ -140,14 +131,13 @@ namespace ReMod.Core.UI.QuickMenu
 
     public class ReMenuCategory : IButtonPage
     {
-        private readonly IReMenuHeader _header;
-        public readonly UiElement Header;
+        public readonly ReMenuHeader Header;
         private readonly ReMenuButtonContainer _buttonContainer;
 
         public string Title
         {
-            get => _header.Title;
-            set => _header.Title = value;
+            get => Header.Title;
+            set => Header.Title = value;
         }
 
         public bool Active
@@ -165,24 +155,21 @@ namespace ReMod.Core.UI.QuickMenu
             if (collapsible)
             {
                 var header = new ReMenuHeaderCollapsible(title, parent);
+                header.OnToggle += b => _buttonContainer!.GameObject.SetActive(b);
                 Header = header;
-                _header = header;
-                header.OnToggle += b => _buttonContainer.GameObject.SetActive(b);
             }
 
             else
             {
-                var header = new ReMenuHeaderNormal(title, parent);
+                var header = new ReMenuHeader(title, parent);
                 Header = header;
-                _header = header;
             }
             _buttonContainer = new ReMenuButtonContainer(title, parent);
 
         }
 
-        public ReMenuCategory(ReMenuHeaderNormal headerElement, ReMenuButtonContainer container)
+        public ReMenuCategory(ReMenuHeader headerElement, ReMenuButtonContainer container)
         {
-            _header = headerElement;
             Header = headerElement;
             _buttonContainer = container;
         }

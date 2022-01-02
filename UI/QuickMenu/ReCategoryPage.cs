@@ -129,7 +129,7 @@ namespace ReMod.Core.UI.QuickMenu
             var headerTransform = _container.Find($"Header_{GetCleanName(name)}");
             if (headerTransform == null) return null;
 
-            var header = new ReMenuHeaderNormal(headerTransform);
+            var header = new ReMenuHeader(headerTransform);
             var buttonContainer = new ReMenuButtonContainer(_container.Find($"Buttons_{GetCleanName(name)}"));
             return new ReMenuCategory(header, buttonContainer);
         }
