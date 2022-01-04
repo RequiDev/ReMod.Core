@@ -3,7 +3,6 @@ using System.Linq;
 using System.Reflection;
 using UnhollowerRuntimeLib.XrefScans;
 using VRC.UI;
-using VRC.UI.Core;
 using VRC.UI.Elements;
 
 namespace ReMod.Core.VRChat

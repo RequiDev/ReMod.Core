@@ -1,5 +1,4 @@
 ﻿using MelonLoader.Preferences;
-using ReMod.Core.UI;
 using System;
 using System.ComponentModel;
 using System.Linq;
