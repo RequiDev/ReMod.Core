@@ -134,6 +134,21 @@ namespace ReMod.Core.UI.QuickMenu
             return new ReMenuCategory(header, buttonContainer);
         }
 
+        public ReMenuSliderCategory AddSliderCategory(string title)
+        {
+            return GetSliderCategory(title) ?? new ReMenuSliderCategory(title, _container);
+        }
+
+        public ReMenuSliderCategory GetSliderCategory(string name)
+        {
+            var headerTransform = _container.Find($"Header_{GetCleanName(name)}");
+            if (headerTransform == null) return null;
+
+            var header = new ReMenuHeader(headerTransform);
+            var sliderContainer = new ReMenuSliderContainer(_container.Find($"Buttons_{GetCleanName(name)}"));
+            return new ReMenuSliderCategory(header, sliderContainer);
+        }
+
         public static ReCategoryPage Create(string text, bool isRoot)
         {
             return new ReCategoryPage(text, isRoot);

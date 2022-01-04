@@ -41,76 +41,61 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\3rdparty\ml\Managed\Assembly-CSharp.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\Program Files (x86)\Steam\steamapps\common\VRChat\MelonLoader\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="DataModel">
-      <HintPath>..\3rdparty\ml\Managed\DataModel.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\Program Files (x86)\Steam\steamapps\common\VRChat\MelonLoader\Managed\DataModel.dll</HintPath>
     </Reference>
     <Reference Include="Il2Cppmscorlib">
-      <HintPath>..\3rdparty\ml\Managed\Il2Cppmscorlib.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\Program Files (x86)\Steam\steamapps\common\VRChat\MelonLoader\Managed\Il2Cppmscorlib.dll</HintPath>
     </Reference>
     <Reference Include="MelonLoader">
-      <HintPath>..\3rdparty\ml\MelonLoader.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\Program Files (x86)\Steam\steamapps\common\VRChat\MelonLoader\MelonLoader.dll</HintPath>
     </Reference>
     <Reference Include="Photon-DotNet">
-      <HintPath>..\3rdparty\ml\Managed\Photon-DotNet.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\Program Files (x86)\Steam\steamapps\common\VRChat\MelonLoader\Managed\Photon-DotNet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="UnhollowerBaseLib">
-      <HintPath>..\3rdparty\ml\Managed\UnhollowerBaseLib.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\Program Files (x86)\Steam\steamapps\common\VRChat\MelonLoader\Managed\UnhollowerBaseLib.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>..\3rdparty\ml\Managed\Unity.TextMeshPro.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\Program Files (x86)\Steam\steamapps\common\VRChat\MelonLoader\Managed\Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>..\3rdparty\ml\Managed\UnityEngine.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\Program Files (x86)\Steam\steamapps\common\VRChat\MelonLoader\Managed\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\3rdparty\ml\Managed\UnityEngine.CoreModule.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\Program Files (x86)\Steam\steamapps\common\VRChat\MelonLoader\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ImageConversionModule">
-      <HintPath>..\3rdparty\ml\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\Program Files (x86)\Steam\steamapps\common\VRChat\MelonLoader\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
-      <HintPath>..\3rdparty\ml\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\Program Files (x86)\Steam\steamapps\common\VRChat\MelonLoader\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>..\3rdparty\ml\Managed\UnityEngine.UI.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\Program Files (x86)\Steam\steamapps\common\VRChat\MelonLoader\Managed\UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="VRC.UI.Core">
-      <HintPath>..\3rdparty\ml\Managed\VRC.UI.Core.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\Program Files (x86)\Steam\steamapps\common\VRChat\MelonLoader\Managed\VRC.UI.Core.dll</HintPath>
     </Reference>
     <Reference Include="VRC.UI.Elements">
-      <HintPath>..\3rdparty\ml\Managed\VRC.UI.Elements.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\Program Files (x86)\Steam\steamapps\common\VRChat\MelonLoader\Managed\VRC.UI.Elements.dll</HintPath>
     </Reference>
     <Reference Include="VRCCore-Standalone">
-      <HintPath>..\3rdparty\ml\Managed\VRCCore-Standalone.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\Program Files (x86)\Steam\steamapps\common\VRChat\MelonLoader\Managed\VRCCore-Standalone.dll</HintPath>
     </Reference>
     <Reference Include="VRCSDKBase">
-      <HintPath>..\3rdparty\ml\Managed\VRCSDKBase.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\Program Files (x86)\Steam\steamapps\common\VRChat\MelonLoader\Managed\VRCSDKBase.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EnumExtensions.cs" />
     <Compile Include="Managers\ConfigManager.cs" />
     <Compile Include="UI\QuickMenu\IButtonPage.cs" />
+    <Compile Include="UI\QuickMenu\ReSliderCategory.cs" />
     <Compile Include="UI\Wings\ReMirroredWingButton.cs" />
     <Compile Include="UI\Wings\ReMirroredWingMenu.cs" />
     <Compile Include="UI\Wings\ReMirroredWingToggle.cs" />
@@ -128,6 +113,7 @@
     <Compile Include="UI\QuickMenu\ReMenuCategory.cs" />
     <Compile Include="UI\QuickMenu\ReMenuPage.cs" />
     <Compile Include="UI\QuickMenu\ReMenuToggle.cs" />
+    <Compile Include="UI\QuickMenu\ReMenuSlider.cs" />
     <Compile Include="UI\QuickMenu\ReTabButton.cs" />
     <Compile Include="UI\ReUiButton.cs" />
     <Compile Include="UI\ReUiText.cs" />

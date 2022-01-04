@@ -192,6 +192,18 @@ namespace ReMod.Core.UI.QuickMenu
             return toggle;
         }
 
+        public ReMenuSlider AddSlider(string text, string tooltip, Action<float> onSlide, float defaultValue = 0, float minValue = 0, float maxValue = 10)
+        {
+            var slider = new ReMenuSlider(text, tooltip, onSlide, _buttonContainer.RectTransform, defaultValue, minValue, maxValue);
+            return slider;
+        }
+
+        public ReMenuSlider AddSlider(string text, string tooltip, ConfigValue<float> configValue, float defaultValue = 0, float minValue = 0, float maxValue = 10)
+        {
+            var slider = new ReMenuSlider(text, tooltip, configValue.SetValue, _buttonContainer.RectTransform, configValue, minValue, maxValue);
+            return slider;
+        }
+
         public ReMenuPage AddMenuPage(string text, string tooltip = "", Sprite sprite = null)
         {
             var existingPage = GetMenuPage(text);
