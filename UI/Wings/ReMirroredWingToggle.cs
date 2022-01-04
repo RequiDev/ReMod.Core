@@ -7,6 +7,16 @@ namespace ReMod.Core.UI.Wings
     {
         private readonly ReWingToggle _leftToggle;
         private readonly ReWingToggle _rightToggle;
+        
+        public bool Interactable
+        {
+            get => _leftToggle.Interactable;
+            set
+            {
+                _leftToggle.Interactable = value;
+                _rightToggle.Interactable = value;
+            }
+        }
 
         public ReMirroredWingToggle(string text, string tooltip, Action<bool> onToggle, Transform leftParent,
             Transform rightParent, bool defaultValue = false)

@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ReMod.Core.Managers;
 using ReMod.Core.VRChat;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ReMod.Core.UI.Wings
 {
@@ -15,6 +11,12 @@ namespace ReMod.Core.UI.Wings
         private readonly Action<bool> _onToggle;
 
         private bool _state;
+        
+        public bool Interactable
+        {
+            get => _button.Interactable;
+            set => _button.Interactable = value;
+        }
         
         public ReWingToggle(string text, string tooltip, Action<bool> onToggle, Transform parent, bool defaultValue = false)
         {

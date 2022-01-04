@@ -3,6 +3,7 @@ using ReMod.Core.VRChat;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using VRC.UI.Core.Styles;
 
 namespace ReMod.Core.UI.Wings
 {
@@ -36,6 +37,19 @@ namespace ReMod.Core.UI.Wings
             }
         }
 
+        private readonly StyleElement _styleElement;
+        private readonly Button _button;
+        public bool Interactable
+        {
+            get => _button.interactable;
+            set
+            {
+                _button.interactable = value;
+                _styleElement.Method_Private_Void_Boolean_0(value);
+            }
+        }
+
+        
         public ReWingButton(string text, string tooltip, Action onClick, Sprite sprite = null, bool left = true,
             bool arrow = true, bool background = true, bool separator = false) :
             this(text, tooltip, onClick,
@@ -59,9 +73,11 @@ namespace ReMod.Core.UI.Wings
             tmp.text = text;
             tmp.richText = true;
 
-            var button = GameObject.GetComponent<Button>();
-            button.onClick = new Button.ButtonClickedEvent();
-            button.onClick.AddListener(new Action(onClick));
+            _styleElement = GameObject.GetComponent<StyleElement>();
+
+            _button = GameObject.GetComponent<Button>();
+            _button.onClick = new Button.ButtonClickedEvent();
+            _button.onClick.AddListener(new Action(onClick));
 
             var uiTooltip = GameObject.GetComponent<VRC.UI.Elements.Tooltips.UiTooltip>();
             uiTooltip.field_Public_String_0 = tooltip;
