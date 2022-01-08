@@ -20,7 +20,7 @@ namespace ReMod.Core.UI.QuickMenu
                 if (_ContainerPrefab == null)
                 {
                     _ContainerPrefab = QuickMenuEx.Instance.field_Public_Transform_0
-                        .Find("Window/QMParent/Menu_AudioSettings/Content/Audio").gameObject;
+                        .Find("Window/QMParent/Menu_AudioSettings/Content").gameObject;
                 }
                 return _ContainerPrefab;
             }
@@ -38,11 +38,8 @@ namespace ReMod.Core.UI.QuickMenu
                 Object.Destroy(control.gameObject);
             }
 
-            var vertLayout = GameObject.GetComponent<VerticalLayoutGroup>();
-
-            vertLayout.childAlignment = TextAnchor.UpperLeft;
-            vertLayout.padding.top = 8;
-            vertLayout.padding.left = 64;
+            var vlg = GameObject.GetComponent<VerticalLayoutGroup>();
+            vlg.m_Padding = new RectOffset(64, 64, 0, 0);
         }
 
         public ReMenuSliderContainer(Transform transform) : base(transform)
