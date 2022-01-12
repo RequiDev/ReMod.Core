@@ -97,9 +97,11 @@ namespace ReMod.Core.UI.QuickMenu
             uiTooltip.field_Public_String_0 = tooltip;
             uiTooltip.field_Public_String_1 = tooltip;
 
-            _button = GameObject.GetComponent<Button>();
-            _button.onClick = new Button.ButtonClickedEvent();
-            _button.onClick.AddListener(new Action(onClick));
+            if (onClick != null) {
+                _button = GameObject.GetComponent<Button>();
+                _button.onClick = new Button.ButtonClickedEvent();
+                _button.onClick.AddListener(new Action(onClick));
+            }
         }
 
         public ReMenuButton(Transform transform) : base(transform)
