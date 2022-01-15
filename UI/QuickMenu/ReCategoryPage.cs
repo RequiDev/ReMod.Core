@@ -123,6 +123,11 @@ namespace ReMod.Core.UI.QuickMenu
             return GetCategory(title) ?? new ReMenuCategory(title, _container, collapsible);
         }
 
+        public ReMenuCategory AddCategory(string title)
+        {
+            return GetCategory(title) ?? new ReMenuCategory(title, _container);
+        }
+
         public ReMenuCategory GetCategory(string name)
         {
             var headerTransform = _container.Find($"Header_{GetCleanName(name)}");
