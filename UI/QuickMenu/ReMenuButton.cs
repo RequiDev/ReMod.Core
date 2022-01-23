@@ -46,12 +46,17 @@ namespace ReMod.Core.UI.QuickMenu
             }
         }
 
+        public Image Background { get; }
+
         public ReMenuButton(string text, string tooltip, Action onClick, Transform parent, Sprite sprite = null, bool resizeTextNoSprite = true) : base(ButtonPrefab, parent,
             $"Button_{text}")
         {
             _text = GameObject.GetComponentInChildren<TextMeshProUGUI>();
             _text.text = text;
             _text.richText = true;
+
+            Background = RectTransform.Find("Background").GetComponent<Image>();
+
             if (sprite == null)
             {
                 if (resizeTextNoSprite)
@@ -63,7 +68,7 @@ namespace ReMod.Core.UI.QuickMenu
                     _text.m_htmlColor = new Color(0.4157f, 0.8902f, 0.9765f, 1f);
                     _text.transform.localPosition = new Vector3(_text.transform.localPosition.x, -30f);
 
-                    var layoutElement = RectTransform.Find("Background").gameObject.AddComponent<LayoutElement>();
+                    var layoutElement = Background.gameObject.AddComponent<LayoutElement>();
                     layoutElement.ignoreLayout = true;
 
                     var horizontalLayout = GameObject.AddComponent<HorizontalLayoutGroup>();
@@ -96,10 +101,13 @@ namespace ReMod.Core.UI.QuickMenu
             var uiTooltip = GameObject.GetComponent<VRC.UI.Elements.Tooltips.UiTooltip>();
             uiTooltip.field_Public_String_0 = tooltip;
             uiTooltip.field_Public_String_1 = tooltip;
-
-            _button = GameObject.GetComponent<Button>();
-            _button.onClick = new Button.ButtonClickedEvent();
-            _button.onClick.AddListener(new Action(onClick));
+            
+            if (onClick != null)
+            {
+                _button = GameObject.GetComponent<Button>();
+                _button.onClick = new Button.ButtonClickedEvent();
+                _button.onClick.AddListener(new Action(onClick));
+            }
         }
 
         public ReMenuButton(Transform transform) : base(transform)
@@ -107,6 +115,7 @@ namespace ReMod.Core.UI.QuickMenu
             _text = GameObject.GetComponentInChildren<TextMeshProUGUI>();
             _styleElement = GameObject.GetComponent<StyleElement>();
             _button = GameObject.GetComponent<Button>();
+            Background = RectTransform.Find("Background").GetComponent<Image>();
         }
 
         public static ReMenuButton Create(string text, string tooltip, Action onClick, Transform parent, Sprite sprite = null)

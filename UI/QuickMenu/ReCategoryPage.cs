@@ -118,6 +118,11 @@ namespace ReMod.Core.UI.QuickMenu
             OnOpen?.Invoke();
         }
 
+        public ReMenuCategory AddCategory(string title, bool collapsible = true)
+        {
+            return GetCategory(title) ?? new ReMenuCategory(title, _container, collapsible);
+        }
+
         public ReMenuCategory AddCategory(string title)
         {
             return GetCategory(title) ?? new ReMenuCategory(title, _container);
