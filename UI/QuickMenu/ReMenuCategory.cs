@@ -47,7 +47,7 @@ namespace ReMod.Core.UI.QuickMenu
         }
 
         protected ReMenuHeader(GameObject original, Transform parent, Vector3 pos, string name, bool defaultState = true) : base(original, parent, pos, name, defaultState) { }
-        protected ReMenuHeader(GameObject original, Transform parent, string name, bool defaultState = true) : base(original, parent, name, defaultState){}
+        protected ReMenuHeader(GameObject original, Transform parent, string name, bool defaultState = true) : base(original, parent, name, defaultState) { }
     }
 
     public class ReMenuHeaderCollapsible : ReMenuHeader
@@ -188,18 +188,6 @@ namespace ReMod.Core.UI.QuickMenu
         {
             var toggle = new ReMenuToggle(text, tooltip, configValue.SetValue, _buttonContainer.RectTransform, configValue);
             return toggle;
-        }
-
-        public ReMenuSlider AddSlider(string text, string tooltip, Action<float> onSlide, float defaultValue = 0, float minValue = 0, float maxValue = 10)
-        {
-            var slider = new ReMenuSlider(text, tooltip, onSlide, _buttonContainer.RectTransform, defaultValue, minValue, maxValue);
-            return slider;
-        }
-
-        public ReMenuSlider AddSlider(string text, string tooltip, ConfigValue<float> configValue, float defaultValue = 0, float minValue = 0, float maxValue = 10)
-        {
-            var slider = new ReMenuSlider(text, tooltip, configValue.SetValue, _buttonContainer.RectTransform, configValue, minValue, maxValue);
-            return slider;
         }
 
         public ReMenuPage AddMenuPage(string text, string tooltip = "", Sprite sprite = null)

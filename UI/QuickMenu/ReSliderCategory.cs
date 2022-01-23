@@ -47,7 +47,7 @@ namespace ReMod.Core.UI.QuickMenu
         }
     }
 
-    public class ReMenuSliderCategory : IButtonPage
+    public class ReMenuSliderCategory
     {
         public readonly ReMenuHeader Header;
         private readonly ReMenuSliderContainer _sliderContainer;
@@ -56,16 +56,6 @@ namespace ReMod.Core.UI.QuickMenu
         {
             get => Header.Title;
             set => Header.Title = value;
-        }
-
-        public bool Active
-        {
-            get => _sliderContainer.GameObject.activeInHierarchy;
-            set
-            {
-                Header.Active = value;
-                _sliderContainer.Active = value;
-            }
         }
 
         public ReMenuSliderCategory(string title, Transform parent = null, bool collapsible = true)
@@ -92,24 +82,6 @@ namespace ReMod.Core.UI.QuickMenu
             _sliderContainer = container;
         }
 
-        public ReMenuButton AddButton(string text, string tooltip, Action onClick, Sprite sprite = null)
-        {
-            var button = new ReMenuButton(text, tooltip, onClick, _sliderContainer.RectTransform, sprite);
-            return button;
-        }
-
-        public ReMenuToggle AddToggle(string text, string tooltip, Action<bool> onToggle, bool defaultValue = false)
-        {
-            var toggle = new ReMenuToggle(text, tooltip, onToggle, _sliderContainer.RectTransform, defaultValue);
-            return toggle;
-        }
-
-        public ReMenuToggle AddToggle(string text, string tooltip, ConfigValue<bool> configValue)
-        {
-            var toggle = new ReMenuToggle(text, tooltip, configValue.SetValue, _sliderContainer.RectTransform, configValue);
-            return toggle;
-        }
-
         public ReMenuSlider AddSlider(string text, string tooltip, Action<float> onSlide, float defaultValue = 0, float minValue = 0, float maxValue = 10)
         {
             var slider = new ReMenuSlider(text, tooltip, onSlide, _sliderContainer.RectTransform, defaultValue, minValue, maxValue);
@@ -122,44 +94,5 @@ namespace ReMod.Core.UI.QuickMenu
             return slider;
         }
 
-        public ReMenuPage AddMenuPage(string text, string tooltip = "", Sprite sprite = null)
-        {
-            var existingPage = GetMenuPage(text);
-            if (existingPage != null)
-            {
-                return existingPage;
-            }
-
-            var menu = new ReMenuPage(text);
-            AddButton(text, string.IsNullOrEmpty(tooltip) ? $"Open the {text} menu" : tooltip, menu.Open, sprite);
-            return menu;
-        }
-
-        public ReCategoryPage AddCategoryPage(string text, string tooltip = "", Sprite sprite = null)
-        {
-            var existingPage = GetCategoryPage(text);
-            if (existingPage != null)
-            {
-                return existingPage;
-            }
-
-            var menu = new ReCategoryPage(text);
-            AddButton(text, string.IsNullOrEmpty(tooltip) ? $"Open the {text} menu" : tooltip, menu.Open, sprite);
-            return menu;
-        }
-
-        public RectTransform RectTransform => _sliderContainer.RectTransform;
-
-        public ReMenuPage GetMenuPage(string name)
-        {
-            var transform = QuickMenuEx.MenuParent.Find(UiElement.GetCleanName($"Menu_{name}"));
-            return transform == null ? null : new ReMenuPage(transform);
-        }
-
-        public ReCategoryPage GetCategoryPage(string name)
-        {
-            var transform = QuickMenuEx.MenuParent.Find(UiElement.GetCleanName($"Menu_{name}"));
-            return transform == null ? null : new ReCategoryPage(transform);
-        }
     }
 }

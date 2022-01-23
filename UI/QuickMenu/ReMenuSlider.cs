@@ -12,12 +12,6 @@ namespace ReMod.Core.UI.QuickMenu
     {
         private readonly Slider _sliderComponent;
 
-        public bool Interactable
-        {
-            get => _sliderComponent.interactable;
-            set => _sliderComponent.interactable = value;
-        }
-
         private float _valueHolder;
 
         public ReMenuSlider(string text, string tooltip, Action<float> onSlide, Transform parent, float defaultValue = 0, float minValue = 0, float maxValue = 10) : base(QuickMenuEx.SliderPrefab, parent, $"Slider_{text}")
@@ -46,11 +40,6 @@ namespace ReMod.Core.UI.QuickMenu
 
             EnableDisableListener.RegisterSafe();
             var edl = GameObject.AddComponent<EnableDisableListener>();
-        }
-
-        public ReMenuSlider(Transform transform) : base(transform)
-        {
-            _sliderComponent = GameObject.GetComponent<Slider>();
         }
 
         public void Slide(float value, bool callback = true)

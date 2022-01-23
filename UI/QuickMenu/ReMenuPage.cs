@@ -78,7 +78,7 @@ namespace ReMod.Core.UI.QuickMenu
             // Get scroll stuff
             var scrollRect = RectTransform.Find("Scrollrect").GetComponent<ScrollRect>();
             _container = scrollRect.content;
-            
+
             // copy properties of old grid layout
             var gridLayoutGroup = _container.Find("Buttons").GetComponent<GridLayoutGroup>();
 
@@ -160,18 +160,6 @@ namespace ReMod.Core.UI.QuickMenu
         public ReMenuToggle AddToggle(string text, string tooltip, ConfigValue<bool> configValue)
         {
             return new ReMenuToggle(text, tooltip, configValue.SetValue, _container, configValue);
-        }
-
-        public ReMenuSlider AddSlider(string text, string tooltip, Action<float> onSlide, float defaultValue = 0, float minValue = 0, float maxValue = 10)
-        {
-            var slider = new ReMenuSlider(text, tooltip, onSlide, _container, defaultValue, minValue, maxValue);
-            return slider;
-        }
-
-        public ReMenuSlider AddSlider(string text, string tooltip, ConfigValue<float> configValue, float defaultValue = 0, float minValue = 0, float maxValue = 10)
-        {
-            var slider = new ReMenuSlider(text, tooltip, configValue.SetValue, _container, configValue, minValue, maxValue);
-            return slider;
         }
 
         public ReMenuPage AddMenuPage(string text, string tooltip = "", Sprite sprite = null)
