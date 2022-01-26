@@ -162,5 +162,20 @@ namespace ReMod.Core.VRChat
                 return _togglePrefab;
             }
         }
+
+        private static GameObject _sliderPrefab;
+        public static GameObject SliderPrefab
+        {
+            get
+            {
+                if (_sliderPrefab == null)
+                {
+                    _sliderPrefab = QuickMenuEx.Instance.field_Public_Transform_0
+                        //UserInterface/Canvas_QuickMenu(Clone)/Container/Window/QMParent/Menu_AudioSettings/Content/Audio/VolumeSlider_Master/Slider/
+                        .Find("Window/QMParent/Menu_AudioSettings/Content/Audio/VolumeSlider_Master").gameObject;
+                }
+                return _sliderPrefab;
+            }
+        }
     }
 }

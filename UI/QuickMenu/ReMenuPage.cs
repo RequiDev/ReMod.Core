@@ -78,7 +78,7 @@ namespace ReMod.Core.UI.QuickMenu
             // Get scroll stuff
             var scrollRect = RectTransform.Find("Scrollrect").GetComponent<ScrollRect>();
             _container = scrollRect.content;
-            
+
             // copy properties of old grid layout
             var gridLayoutGroup = _container.Find("Buttons").GetComponent<GridLayoutGroup>();
 

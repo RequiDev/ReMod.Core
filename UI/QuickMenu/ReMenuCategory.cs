@@ -47,7 +47,7 @@ namespace ReMod.Core.UI.QuickMenu
         }
 
         protected ReMenuHeader(GameObject original, Transform parent, Vector3 pos, string name, bool defaultState = true) : base(original, parent, pos, name, defaultState) { }
-        protected ReMenuHeader(GameObject original, Transform parent, string name, bool defaultState = true) : base(original, parent, name, defaultState){}
+        protected ReMenuHeader(GameObject original, Transform parent, string name, bool defaultState = true) : base(original, parent, name, defaultState) { }
     }
 
     public class ReMenuHeaderCollapsible : ReMenuHeader
