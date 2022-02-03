@@ -24,7 +24,6 @@ namespace ReMod.Core
 
         public ConfigValue(string categoryName, string name, T defaultValue)
         {
-            categoryName = categoryName == null ? ConfigManager.Instance.CategoryName : categoryName;
             var category = MelonPreferences.CreateCategory(categoryName);
 
             var entryName = string.Concat(name.Where(c => char.IsLetter(c) || char.IsNumber(c)));
