@@ -22,6 +22,16 @@ namespace ReMod.Core
             _entry.OnValueChangedUntyped += () => OnValueChanged?.Invoke();
         }
 
+        public ConfigValue(string categoryName, string name, T defaultValue)
+        {
+            categoryName = categoryName == null ? ConfigManager.Instance.CategoryName : categoryName;
+            var category = MelonPreferences.CreateCategory(categoryName);
+
+            var entryName = string.Concat(name.Where(c => char.IsLetter(c) || char.IsNumber(c)));
+            _entry = category.GetEntry<T>(entryName) ?? category.CreateEntry(entryName, defaultValue);
+            _entry.OnValueChangedUntyped += () => OnValueChanged?.Invoke();
+        }
+
         public static implicit operator T(ConfigValue<T> conf)
         {
             return conf._entry.Value;
