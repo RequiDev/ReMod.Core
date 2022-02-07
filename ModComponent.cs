@@ -55,7 +55,6 @@ namespace ReMod.Core
         public virtual void OnOwnershipTransferred(Photon.Realtime.Player player, PhotonView photonView, bool isMaster, bool isRequest){}
         public virtual void OnBlockStateChange(Photon.Realtime.Player instigator, bool blocked){ }
         public virtual void OnMuteStateChange(Photon.Realtime.Player instigator, bool muted) { }
-        public virtual void OnModUserListUpdated() { }
         public virtual void OnRenderObject() { }
         public virtual void OnOperationResponse(LoadBalancingClient loadBalancingClient, OperationResponse operationResponse) { }
         public virtual void OnJoinedRoom() { }
