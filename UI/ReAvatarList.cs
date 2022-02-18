@@ -155,7 +155,7 @@ namespace ReMod.Core.UI
                 _prevPageButton.Interactable = _currentPage > 0;
                 _nextPageButton.Interactable = _currentPage < pagesCount;
 
-                Title = $"{_title} ({cutDown.Count}/{avatars.Count})";
+                Title = $"{_title} ({cutDown.Count * (_currentPage + 1)}/{avatars.Count})";
 
                 _avatarList.StartRenderElementsCoroutine(cutDown);
             }
