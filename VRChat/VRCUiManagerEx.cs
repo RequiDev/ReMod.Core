@@ -18,5 +18,7 @@ namespace ReMod.Core.VRChat
                 return _uiManagerInstance;
             }
         }
+
+        public static bool IsOpen => Instance.field_Private_Boolean_0;
     }
 }

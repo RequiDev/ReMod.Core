@@ -126,6 +126,14 @@ namespace ReMod.Core.VRChat
             ShowScreen(uiManager, BigMenuIndexToPathTable[menuIndex], addToScreenStack);
         }
 
+        public static Transform GetScreen(this VRCUiManager uiManager, QuickMenu.MainMenuScreenIndex menuIndex)
+        {
+            if (!BigMenuIndexToPathTable.ContainsKey(menuIndex))
+                return null;
+
+            return uiManager.MenuContent().transform.Find($"Screens/{BigMenuIndexToNameTable[menuIndex]}");
+        }
+
         private static readonly Dictionary<QuickMenu.MainMenuScreenIndex, string> BigMenuIndexToPathTable = new Dictionary<QuickMenu.MainMenuScreenIndex, string>()
         {
             { QuickMenu.MainMenuScreenIndex.Unknown, "" },
@@ -140,6 +148,23 @@ namespace ReMod.Core.VRChat
             { QuickMenu.MainMenuScreenIndex.OtherUserPlaylistsMenu, "UserInterface/MenuContent/Screens/Playlists" },
             { QuickMenu.MainMenuScreenIndex.VRCPlusMenu, "UserInterface/MenuContent/Screens/VRC+" },
             { QuickMenu.MainMenuScreenIndex.GalleryMenu, "UserInterface/MenuContent/Screens/Gallery" },
+        };
+
+
+        private static readonly Dictionary<QuickMenu.MainMenuScreenIndex, string> BigMenuIndexToNameTable = new Dictionary<QuickMenu.MainMenuScreenIndex, string>()
+        {
+            { QuickMenu.MainMenuScreenIndex.Unknown, "" },
+            { QuickMenu.MainMenuScreenIndex.WorldsMenu, "WorldInfo" },
+            { QuickMenu.MainMenuScreenIndex.AvatarMenu, "Avatar" },
+            { QuickMenu.MainMenuScreenIndex.SocialMenu, "Social" },
+            { QuickMenu.MainMenuScreenIndex.SettingsMenu, "Settings" },
+            { QuickMenu.MainMenuScreenIndex.UserDetailsMenu, "UserInfo" },
+            { QuickMenu.MainMenuScreenIndex.DetailsMenu_Obsolete, "ImageDetails" },
+            { QuickMenu.MainMenuScreenIndex.SafetyMenu, "Settings_Safety" },
+            { QuickMenu.MainMenuScreenIndex.CurrentUserPlaylistsMenu, "Playlists" },
+            { QuickMenu.MainMenuScreenIndex.OtherUserPlaylistsMenu, "Playlists" },
+            { QuickMenu.MainMenuScreenIndex.VRCPlusMenu, "VRC+" },
+            { QuickMenu.MainMenuScreenIndex.GalleryMenu, "Gallery" },
         };
     }
 }
