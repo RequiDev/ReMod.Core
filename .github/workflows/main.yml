@@ -40,9 +40,12 @@ jobs:
       run: dotnet build --no-restore -c Release
       
     - name: Publish a release
-      uses: softprops/action-gh-release@v1
+      uses: ncipollo/release-action@v1
       with:
-        files: |
+        artifacts: |
           .build/Release (x64)/Modules/ReMod.Core.dll
+        tag: ${{ steps.tag_version.outputs.new_tag }}
+        name: Release ${{ steps.tag_version.outputs.new_tag }}
+        body: ${{ steps.tag_version.outputs.changelog }}
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
