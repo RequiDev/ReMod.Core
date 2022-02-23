@@ -1,0 +1,42 @@
+name: main
+
+on:
+  push:
+    branches:
+      - master
+      
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+    
+    - name: Checkout dependencies
+      uses: actions/checkout@v2
+      with:
+        repository: ${{ secrets.LibsRepository }}
+        token: ${{ secrets.LibsRepositoryToken }}
+        path: 3rdparty/ml
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+      
+    - name: Restore dependencies
+      run: dotnet restore
+      
+    - name: Build
+      run: dotnet build --no-restore -c Release
+      
+    - name: Publish a release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          .build/Release (x64)/Modules/ReMod.Core.dll
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

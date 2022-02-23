@@ -127,9 +127,9 @@
     <Compile Include="UI\QuickMenu\ReMenuButton.cs" />
     <Compile Include="UI\QuickMenu\ReMenuCategory.cs" />
     <Compile Include="UI\QuickMenu\ReMenuPage.cs" />
-	<Compile Include="UI\QuickMenu\ReMenuSlider.cs" />
+    <Compile Include="UI\QuickMenu\ReMenuSlider.cs" />
     <Compile Include="UI\QuickMenu\ReMenuToggle.cs" />
-	<Compile Include="UI\QuickMenu\ReSliderCategory.cs" />
+    <Compile Include="UI\QuickMenu\ReSliderCategory.cs" />
     <Compile Include="UI\QuickMenu\ReTabButton.cs" />
     <Compile Include="UI\ReUiButton.cs" />
     <Compile Include="UI\ReUiText.cs" />
