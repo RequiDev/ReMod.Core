@@ -17,6 +17,10 @@ Modify ReMod.Core as you need it, test your changes and create a pull request to
 
 Please don't ILMerge ReMod.Core into your project as that can cause all sorts of problems with 2 ReMod.Core libraries existing in 1 process.
 
+## Documentation
+I'll be honest, read the code in [ReModCE](https://github.com/RequiDev/ReModCE). I wrote this library to use it for my projects. I'm fine with other people using it as long as they respect the [license](https://github.com/RequiDev/ReMod.Core/blob/master/LICENSE) behind it.  
+A few things are a bit convoluted, but that's because I tried my best to OOP the unity hierarchy of the UI objects behind it. It should still be easy enough to understand.
+
 ## Contribution
 In case you do have something to contribute, please create a pull request. Try to stay close to the current coding style.
 
