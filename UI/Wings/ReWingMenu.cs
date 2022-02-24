@@ -79,7 +79,7 @@ namespace ReMod.Core.UI.Wings
             var uiPage = GameObject.GetComponent<UIPage>();
             uiPage.field_Public_String_0 = _menuName;
             uiPage.field_Private_Boolean_1 = true;
-            uiPage.field_Private_MenuStateController_0 = menuStateCtrl;
+            uiPage.field_Protected_MenuStateController_0 = menuStateCtrl;
             uiPage.field_Private_List_1_UIPage_0 = new Il2CppSystem.Collections.Generic.List<UIPage>();
             uiPage.field_Private_List_1_UIPage_0.Add(uiPage);
 

@@ -71,7 +71,7 @@ namespace ReMod.Core.UI.QuickMenu
             UiPage = GameObject.AddComponent<UIPage>();
             UiPage.field_Public_String_0 = $"QuickMenuReMod{menuName}";
             UiPage.field_Private_Boolean_1 = true;
-            UiPage.field_Private_MenuStateController_0 = QuickMenuEx.MenuStateCtrl;
+            UiPage.field_Protected_MenuStateController_0 = QuickMenuEx.MenuStateCtrl;
             UiPage.field_Private_List_1_UIPage_0 = new Il2CppSystem.Collections.Generic.List<UIPage>();
             UiPage.field_Private_List_1_UIPage_0.Add(UiPage);
 
