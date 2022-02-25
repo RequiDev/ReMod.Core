@@ -41,7 +41,7 @@ namespace ReMod.Core
         public virtual void OnPlayerJoined(Player player){}
         public virtual void OnPlayerLeft(Player player){}
         public virtual void OnAvatarIsReady(VRCPlayer player){ }
-        public virtual void OnAvatarChanged(VRCPlayer vrcPlayer, ApiAvatar apiAvatar) { }
+        public virtual void OnAvatarChanged(APIUser apiUser, ApiAvatar apiAvatar) { }
         public virtual void OnEnterWorld(ApiWorld world, ApiWorldInstance instance){}
         public virtual void OnSelectUser(IUser user, bool isRemote){ }
         public virtual void OnSetupUserInfo(APIUser apiUser){ }
