@@ -88,7 +88,7 @@ namespace ReMod.Core.UI.Wings
 
         public void Open()
         {
-            _wing.field_Private_MenuStateController_0.Method_Public_Void_String_UIContext_Boolean_0(_menuName);
+            _wing.field_Private_MenuStateController_0.PushPage(_menuName);
         }
 
         public ReWingButton AddButton(string text, string tooltip, Action onClick, Sprite sprite = null, bool arrow = true, bool background = true, bool separator = false)
