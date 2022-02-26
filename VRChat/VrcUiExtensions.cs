@@ -30,17 +30,25 @@ namespace ReMod.Core.VRChat
         }
 
         private delegate void OnValueChangedDelegate(ToggleIcon toggleIcon, bool arg0);
-        private static OnValueChangedDelegate _onValueChanged;
+        private static List<OnValueChangedDelegate> _onValueChanged;
 
         public static void OnValueChanged(this ToggleIcon toggleIcon, bool arg0)
         {
             if (_onValueChanged == null)
             {
-                _onValueChanged = (OnValueChangedDelegate)Delegate.CreateDelegate(typeof(OnValueChangedDelegate),
-                    typeof(ToggleIcon).GetMethods().FirstOrDefault(m => m.Name.StartsWith("Method_Private_Void_Boolean_PDM_") && XrefUtils.CheckMethod(m, "Toggled")));
+                _onValueChanged = new List<OnValueChangedDelegate>();
+                foreach (var methodInfo in typeof(ToggleIcon).GetMethods().Where(m =>
+                    m.Name.StartsWith("Method_Private_Void_Boolean_PDM_") && XrefUtils.CheckMethod(m, "Toggled")))
+                {
+                    _onValueChanged.Add(
+                        (OnValueChangedDelegate) Delegate.CreateDelegate(typeof(OnValueChangedDelegate), methodInfo));
+                }
             }
-
-            _onValueChanged(toggleIcon, arg0);
+            
+            foreach (var onValueChanged in _onValueChanged)
+            {
+                onValueChanged(toggleIcon, arg0);
+            }
         }
 
         public static void QueueHudMessage(this VRCUiManager uiManager, string notification, Color color, float duration = 5f,
