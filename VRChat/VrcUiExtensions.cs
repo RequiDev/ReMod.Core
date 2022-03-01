@@ -51,7 +51,7 @@ namespace ReMod.Core.VRChat
             if (_pushPage == null)
             {
                 _pushPage = (PushPageDelegate)Delegate.CreateDelegate(typeof(PushPageDelegate),
-                    typeof(MenuStateController).GetMethods().FirstOrDefault(m => m.Name.StartsWith("Method_Public_Void_String_UIContext_Boolean_") && XrefUtils.CheckMethod(m, "No page named")));
+                    typeof(MenuStateController).GetMethods().FirstOrDefault(m => m.GetParameters().Length == 3 && m.Name.StartsWith("Method_Public_Void_String_UIContext_Boolean_") && XrefUtils.CheckMethod(m, "No page named")));
             }
 
             _pushPage(menuStateCtrl, pageName, uiContext, clearPageStack);
