@@ -4,14 +4,15 @@ using ReMod.Core.VRChat;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using VRC.UI.Core.Styles;
 using VRC.UI.Elements.Controls;
+using Object = UnityEngine.Object;
 
 namespace ReMod.Core.UI.QuickMenu
 {
     public class ReMenuToggle : UiElement
     {
         private readonly Toggle _toggleComponent;
-        private readonly ToggleIcon _toggleIcon;
 
         public bool Interactable
         {
@@ -26,13 +27,10 @@ namespace ReMod.Core.UI.QuickMenu
             var iconOn = RectTransform.Find("Icon_On").GetComponent<Image>();
             iconOn.sprite = QuickMenuEx.OnIconSprite;
 
-            GameObject.DestroyImmediate(GameObject.GetComponent<UIInvisibleGraphic>()); // Fix for having clickable area overlap main quickmenu ui
+            Object.DestroyImmediate(GameObject.GetComponent<UIInvisibleGraphic>()); // Fix for having clickable area overlap main quickmenu ui
             
-            _toggleIcon = GameObject.GetComponent<ToggleIcon>();
-
             _toggleComponent = GameObject.GetComponent<Toggle>();
             _toggleComponent.onValueChanged = new Toggle.ToggleEvent();
-            _toggleComponent.onValueChanged.AddListener(new Action<bool>(_toggleIcon.OnValueChanged));
             _toggleComponent.onValueChanged.AddListener(new Action<bool>(onToggle));
 
             var tmp = GameObject.GetComponentInChildren<TextMeshProUGUI>();
@@ -47,15 +45,10 @@ namespace ReMod.Core.UI.QuickMenu
             uiTooltip.field_Public_String_1 = tooltip;
             
             Toggle(defaultValue,false);
-
-            EnableDisableListener.RegisterSafe();
-            var edl = GameObject.AddComponent<EnableDisableListener>();
-            edl.OnEnableEvent += UpdateToggleIfNeeded;
         }
 
         public ReMenuToggle(Transform transform) : base(transform)
         {
-            _toggleIcon = GameObject.GetComponent<ToggleIcon>();
             _toggleComponent = GameObject.GetComponent<Toggle>();
         }
 
@@ -63,15 +56,6 @@ namespace ReMod.Core.UI.QuickMenu
         {
             _valueHolder = value;
             _toggleComponent.Set(value, callback);
-            if (updateVisually)
-            {
-                UpdateToggleIfNeeded();
-            }
-        }
-
-        private void UpdateToggleIfNeeded()
-        {
-            _toggleIcon.OnValueChanged(_valueHolder);
         }
     }
 }
