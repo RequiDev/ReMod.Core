@@ -26,7 +26,7 @@ namespace ReMod.Core.UI.QuickMenu
 
         private bool _valueHolder;
 
-        private Component _toggleIcon;
+        private object _toggleIcon;
 
         public ReMenuToggle(string text, string tooltip, Action<bool> onToggle, Transform parent, bool defaultValue = false) : base(QuickMenuEx.TogglePrefab, parent, $"Button_Toggle{text}")
         {
@@ -39,7 +39,7 @@ namespace ReMod.Core.UI.QuickMenu
 
             _toggleComponent = GameObject.GetComponent<Toggle>();
             _toggleComponent.onValueChanged = new Toggle.ToggleEvent();
-            // _toggleComponent.onValueChanged.AddListener(new Action<bool>(OnValueChanged));
+            _toggleComponent.onValueChanged.AddListener(new Action<bool>(OnValueChanged));
             _toggleComponent.onValueChanged.AddListener(new Action<bool>(onToggle));
 
             var tmp = GameObject.GetComponentInChildren<TextMeshProUGUI>();
@@ -77,7 +77,7 @@ namespace ReMod.Core.UI.QuickMenu
         }
         private void UpdateToggleIfNeeded()
         {
-           //  OnValueChanged(_valueHolder);
+           OnValueChanged(_valueHolder);
         }
 
         private void FindToggleIcon()
@@ -87,47 +87,42 @@ namespace ReMod.Core.UI.QuickMenu
 
             foreach (var c in components)
             {
-                var onlyHasOneField =
-                    c.GetIl2CppType().GetFields(BindingFlags.Public | BindingFlags.Instance).Count == 1;
-                if (!onlyHasOneField)
+                var il2CppType = c.GetIl2CppType();
+                var il2CppFields = il2CppType.GetFields(BindingFlags.Public | BindingFlags.Instance);
+                if (il2CppFields.Count != 1)
                     continue;
 
-                var gayType = c.GetIl2CppType().GetFields(BindingFlags.Public | BindingFlags.Instance)
-                    .SingleOrDefault(t => t.IsPublic && t.FieldType == Il2CppType.Of<Toggle>());
-                if (gayType == null)
+                if (!il2CppFields.Any(t => t.IsPublic && t.FieldType == Il2CppType.Of<Toggle>()))
                     continue;
 
-                _toggleIcon = c;
+                var realType = GetUnhollowedType(il2CppType);
+                if (realType == null)
+                {
+                    MelonLogger.Error("SHITS FUCKED!");
+                    break;
+                }
+                _toggleIcon = Activator.CreateInstance(realType, c.Pointer);
                 break;
             }
         }
 
-        private delegate void OnValueChangedDelegate(Component toggleIcon, bool arg0);
-        private static List<OnValueChangedDelegate> _onValueChanged;
+        private List<Action<bool>> _onValueChanged;
 
         private void OnValueChanged(bool arg0)
         {
             if (_onValueChanged == null)
             {
-                var realType = GetUnhollowedType(_toggleIcon.GetIl2CppType());
-                if (realType == null)
-                {
-                    MelonLogger.Error("SHITS FUCKED!");
-                    return;
-                }
-
-                _onValueChanged = new List<OnValueChangedDelegate>();
-                foreach (var methodInfo in realType.GetMethods().Where(m =>
+                _onValueChanged = new List<Action<bool>>();
+                foreach (var methodInfo in _toggleIcon.GetType().GetMethods().Where(m =>
                              m.Name.StartsWith("Method_Private_Void_Boolean_PDM_") && XrefUtils.CheckMethod(m, "Toggled")))
                 {
-                    _onValueChanged.Add(
-                        (OnValueChangedDelegate)Delegate.CreateDelegate(typeof(OnValueChangedDelegate), methodInfo));
+                    _onValueChanged.Add((Action<bool>)Delegate.CreateDelegate(typeof(Action<bool>), _toggleIcon, methodInfo));
                 }
             }
 
             foreach (var onValueChanged in _onValueChanged)
             {
-                onValueChanged(_toggleIcon, arg0);
+                onValueChanged(arg0);
             }
         }
 
