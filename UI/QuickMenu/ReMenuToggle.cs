@@ -39,7 +39,7 @@ namespace ReMod.Core.UI.QuickMenu
 
             _toggleComponent = GameObject.GetComponent<Toggle>();
             _toggleComponent.onValueChanged = new Toggle.ToggleEvent();
-            _toggleComponent.onValueChanged.AddListener(new Action<bool>(OnValueChanged));
+            // _toggleComponent.onValueChanged.AddListener(new Action<bool>(OnValueChanged));
             _toggleComponent.onValueChanged.AddListener(new Action<bool>(onToggle));
 
             var tmp = GameObject.GetComponentInChildren<TextMeshProUGUI>();
@@ -77,7 +77,7 @@ namespace ReMod.Core.UI.QuickMenu
         }
         private void UpdateToggleIfNeeded()
         {
-            OnValueChanged(_valueHolder);
+           //  OnValueChanged(_valueHolder);
         }
 
         private void FindToggleIcon()
