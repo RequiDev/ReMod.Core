@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Il2CppSystem.Reflection;
+using MelonLoader;
 using ReMod.Core.Unity;
 using ReMod.Core.VRChat;
 using TMPro;
+using UnhollowerBaseLib.Attributes;
+using UnhollowerRuntimeLib;
 using UnityEngine;
 using UnityEngine.UI;
-using VRC.UI.Core.Styles;
-using VRC.UI.Elements.Controls;
 using Object = UnityEngine.Object;
 
 namespace ReMod.Core.UI.QuickMenu
@@ -22,15 +26,20 @@ namespace ReMod.Core.UI.QuickMenu
 
         private bool _valueHolder;
 
+        private Component _toggleIcon;
+
         public ReMenuToggle(string text, string tooltip, Action<bool> onToggle, Transform parent, bool defaultValue = false) : base(QuickMenuEx.TogglePrefab, parent, $"Button_Toggle{text}")
         {
             var iconOn = RectTransform.Find("Icon_On").GetComponent<Image>();
             iconOn.sprite = QuickMenuEx.OnIconSprite;
 
             Object.DestroyImmediate(GameObject.GetComponent<UIInvisibleGraphic>()); // Fix for having clickable area overlap main quickmenu ui
-            
+
+            FindToggleIcon();
+
             _toggleComponent = GameObject.GetComponent<Toggle>();
             _toggleComponent.onValueChanged = new Toggle.ToggleEvent();
+            _toggleComponent.onValueChanged.AddListener(new Action<bool>(OnValueChanged));
             _toggleComponent.onValueChanged.AddListener(new Action<bool>(onToggle));
 
             var tmp = GameObject.GetComponentInChildren<TextMeshProUGUI>();
@@ -45,10 +54,15 @@ namespace ReMod.Core.UI.QuickMenu
             uiTooltip.field_Public_String_1 = tooltip;
             
             Toggle(defaultValue,false);
+
+            EnableDisableListener.RegisterSafe();
+            var edl = GameObject.AddComponent<EnableDisableListener>();
+            edl.OnEnableEvent += UpdateToggleIfNeeded;
         }
 
         public ReMenuToggle(Transform transform) : base(transform)
         {
+            FindToggleIcon();
             _toggleComponent = GameObject.GetComponent<Toggle>();
         }
 
@@ -56,6 +70,124 @@ namespace ReMod.Core.UI.QuickMenu
         {
             _valueHolder = value;
             _toggleComponent.Set(value, callback);
+            if (updateVisually)
+            {
+                UpdateToggleIfNeeded();
+            }
+        }
+        private void UpdateToggleIfNeeded()
+        {
+            OnValueChanged(_valueHolder);
+        }
+
+        private void FindToggleIcon()
+        {
+            var components = new Il2CppSystem.Collections.Generic.List<Component>();
+            GameObject.GetComponents(components);
+
+            foreach (var c in components)
+            {
+                var onlyHasOneField =
+                    c.GetIl2CppType().GetFields(BindingFlags.Public | BindingFlags.Instance).Count == 1;
+                if (!onlyHasOneField)
+                    continue;
+
+                var gayType = c.GetIl2CppType().GetFields(BindingFlags.Public | BindingFlags.Instance)
+                    .SingleOrDefault(t => t.IsPublic && t.FieldType == Il2CppType.Of<Toggle>());
+                if (gayType == null)
+                    continue;
+
+                _toggleIcon = c;
+                break;
+            }
+        }
+
+        private delegate void OnValueChangedDelegate(Component toggleIcon, bool arg0);
+        private static List<OnValueChangedDelegate> _onValueChanged;
+
+        private void OnValueChanged(bool arg0)
+        {
+            if (_onValueChanged == null)
+            {
+                var realType = GetUnhollowedType(_toggleIcon.GetIl2CppType());
+                if (realType == null)
+                {
+                    MelonLogger.Error("SHITS FUCKED!");
+                    return;
+                }
+
+                _onValueChanged = new List<OnValueChangedDelegate>();
+                foreach (var methodInfo in realType.GetMethods().Where(m =>
+                             m.Name.StartsWith("Method_Private_Void_Boolean_PDM_") && XrefUtils.CheckMethod(m, "Toggled")))
+                {
+                    _onValueChanged.Add(
+                        (OnValueChangedDelegate)Delegate.CreateDelegate(typeof(OnValueChangedDelegate), methodInfo));
+                }
+            }
+
+            foreach (var onValueChanged in _onValueChanged)
+            {
+                onValueChanged(_toggleIcon, arg0);
+            }
+        }
+
+
+        private static readonly Dictionary<string, Type> DeobfuscatedTypes = new Dictionary<string, Type>();
+        private static readonly Dictionary<string, string> ReverseDeobCache = new Dictionary<string, string>();
+
+        private static void BuildDeobfuscationCache()
+        {
+            if (DeobfuscatedTypes.Count > 0)
+                return;
+
+            foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                foreach (var type in asm.TryGetTypes())
+                    TryCacheDeobfuscatedType(type);
+            }
+        }
+
+        private static void TryCacheDeobfuscatedType(Type type)
+        {
+            try
+            {
+                if (!type.CustomAttributes.Any())
+                    return;
+
+                foreach (var att in type.CustomAttributes)
+                {
+                    // Thanks to Slaynash for this
+
+                    if (att.AttributeType == typeof(ObfuscatedNameAttribute))
+                    {
+                        string obfuscatedName = att.ConstructorArguments[0].Value.ToString();
+
+                        DeobfuscatedTypes.Add(obfuscatedName, type);
+                        ReverseDeobCache.Add(type.FullName, obfuscatedName);
+                    }
+                }
+            }
+            catch
+            {
+                // ignored
+            }
+        }
+        public static Type GetUnhollowedType(Il2CppSystem.Type cppType)
+        {
+            if (DeobfuscatedTypes.Count == 0)
+            {
+                BuildDeobfuscationCache();
+            }
+
+            var fullname = cppType.FullName;
+
+            if (DeobfuscatedTypes.TryGetValue(fullname, out var deob))
+                return deob;
+
+            if (fullname.StartsWith("System."))
+                fullname = $"Il2Cpp{fullname}";
+
+            return null;
         }
     }
 }
