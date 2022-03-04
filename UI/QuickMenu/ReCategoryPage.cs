@@ -141,10 +141,15 @@ namespace ReMod.Core.UI.QuickMenu
             var buttonContainer = new ReMenuButtonContainer(_container.Find($"Buttons_{GetCleanName(name)}"));
             return new ReMenuCategory(header, buttonContainer);
         }
-
+        
         public ReMenuSliderCategory AddSliderCategory(string title)
         {
-            return GetSliderCategory(title) ?? new ReMenuSliderCategory(title, _container);
+            return AddSliderCategory(title, true);
+        }
+
+        public ReMenuSliderCategory AddSliderCategory(string title, bool collapsable = true)
+        {
+            return GetSliderCategory(title) ?? new ReMenuSliderCategory(title, _container, collapsable);
         }
 
         public ReMenuSliderCategory GetSliderCategory(string name)
