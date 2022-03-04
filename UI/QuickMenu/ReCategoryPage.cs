@@ -147,9 +147,9 @@ namespace ReMod.Core.UI.QuickMenu
             return AddSliderCategory(title, true);
         }
 
-        public ReMenuSliderCategory AddSliderCategory(string title, bool collapsable = true)
+        public ReMenuSliderCategory AddSliderCategory(string title, bool collapsible = true)
         {
-            return GetSliderCategory(title) ?? new ReMenuSliderCategory(title, _container, collapsable);
+            return GetSliderCategory(title) ?? new ReMenuSliderCategory(title, _container, collapsible);
         }
 
         public ReMenuSliderCategory GetSliderCategory(string name)
