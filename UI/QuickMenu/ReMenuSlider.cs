@@ -27,7 +27,7 @@ namespace ReMod.Core.UI.QuickMenu
             _sliderComponent = GameObject.GetComponentInChildren<Slider>();
             _sliderComponent.onValueChanged = new Slider.SliderEvent();
             _sliderComponent.onValueChanged.AddListener(new Action<float>(onSlide));
-            _sliderComponent.onValueChanged.AddListener((Action<float>)delegate (float val) { value.text = val.ToString(); });
+            _sliderComponent.onValueChanged.AddListener((Action<float>)delegate (float val) { value.text = val.ToString("F"); });
             _sliderComponent.minValue = minValue;
             _sliderComponent.maxValue = maxValue;
             _sliderComponent.value = defaultValue;
