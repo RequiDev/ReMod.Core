@@ -177,6 +177,13 @@ namespace ReMod.Core.UI.QuickMenu
             var button = new ReMenuButton(text, tooltip, onClick, _buttonContainer.RectTransform, sprite);
             return button;
         }
+        
+        public ReMenuButton AddSpacer(Sprite sprite = null) {
+            var spacer = new ReMenuButton(string.Empty, string.Empty, null, _buttonContainer.RectTransform, sprite);
+            spacer.GameObject.name = "Button_Spacer";
+            spacer.Background.gameObject.SetActive(false);
+            return spacer;
+        }
 
         public ReMenuToggle AddToggle(string text, string tooltip, Action<bool> onToggle, bool defaultValue = false)
         {
