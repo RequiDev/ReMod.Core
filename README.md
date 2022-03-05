@@ -3,6 +3,8 @@
 [![main](https://img.shields.io/github/workflow/status/RequiDev/ReMod.Core/main?style=for-the-badge)](https://github.com/RequiDev/ReMod.Core/actions/workflows/main.yml)
 [![All Releases](https://img.shields.io/github/downloads/RequiDev/ReMod.Core/total.svg?style=for-the-badge&logo=appveyor)](https://github.com/RequiDev/ReMod.Core/releases)
 
+![ReMod Core Logo](https://github.com/RequiDev/ReMod.Core/raw/master/remod_core_logo.png)
+
 The core dependency of my VRChat mods **ReMod** and [ReModCE](https://github.com/RequiDev/ReModCE). This project contains several helper functions, wrappers and UI classes for VRChat, Unity and [MelonLoader](https://github.com/LavaGang/MelonLoader).
 
 ## Description
