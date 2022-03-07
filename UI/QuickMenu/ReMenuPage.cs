@@ -151,7 +151,8 @@ namespace ReMod.Core.UI.QuickMenu
 
         public ReMenuButton AddSpacer(Sprite sprite = null)
         {
-            var spacer = AddButton("Spacer", string.Empty, null, sprite);
+            var spacer = AddButton(string.Empty, string.Empty, null, sprite);
+            spacer.GameObject.name = "Button_Spacer";
             spacer.Background.gameObject.SetActive(false);
             return spacer;
         }
