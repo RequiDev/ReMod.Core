@@ -29,6 +29,7 @@ namespace ReMod.Core.UI.QuickMenu
         private static int SiblingIndex => QuickMenuEx.Instance.field_Public_Transform_0.Find("Window/QMParent/Modal_AddMessage").GetSiblingIndex();
 
         public event Action OnOpen;
+        public event Action OnClose;
         private readonly bool _isRoot;
 
         private readonly Transform _container;
@@ -98,7 +99,9 @@ namespace ReMod.Core.UI.QuickMenu
             }
 
             EnableDisableListener.RegisterSafe();
-            GameObject.AddComponent<EnableDisableListener>().OnEnableEvent += () => OnOpen?.Invoke();
+            var listener = GameObject.AddComponent<EnableDisableListener>();
+            listener.OnEnableEvent += () => OnOpen?.Invoke();
+            listener.OnDisableEvent += () => OnClose?.Invoke();
         }
 
         public ReCategoryPage(Transform transform) : base(transform)
