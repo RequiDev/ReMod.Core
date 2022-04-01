@@ -10,6 +10,9 @@ The core dependency of my VRChat mods **ReMod** and [ReModCE](https://github.com
 ## Description
 This library powers both my private VRChat mod and the public version of it. It's main use is to create UI elements for VRChat in an easy way without all the work behind it.
 
+## Discord
+Click [here](https://discord.gg/KdTSGU4jt3) to join the Discord!
+
 ## Usage
 If you don't intend to modify the project your best bet is to either download the latest release from [here](https://github.com/RequiDev/ReMod.Core/releases/latest) or [here](https://github.com/RequiDev/ReModCE/releases/latest). Both this project and ReModCE will have an automatically built version in their releases.  
 You'll want to link against that version and just supply it with your mod by either automatically load version from GitHub like [here](https://github.com/RequiDev/ReModCE/blob/master/ReModCE.Loader/ReMod.Loader.cs#L194)
