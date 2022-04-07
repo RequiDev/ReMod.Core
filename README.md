@@ -30,6 +30,7 @@ A few things are a bit convoluted, but that's because I tried my best to OOP the
 In case you do have something to contribute, please create a pull request. Try to stay close to the current coding style.
 
 ## Credits
-[Kiokuu](https://github.com/Kiokuu)  
-[imxLucid](https://github.com/imxLucid)  
-[DDAkebono](https://github.com/DDAkebono)  
+[@Kiokuu](https://github.com/Kiokuu)  
+[@imxLucid](https://github.com/imxLucid)  
+[@DDAkebono](https://github.com/DDAkebono)  
+[@MintLily](https://github.com/MintLily)
