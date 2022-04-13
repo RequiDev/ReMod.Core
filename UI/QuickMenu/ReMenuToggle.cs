@@ -10,6 +10,7 @@ using UnhollowerBaseLib.Attributes;
 using UnhollowerRuntimeLib;
 using UnityEngine;
 using UnityEngine.UI;
+using VRC.UI.Core.Styles;
 using Object = UnityEngine.Object;
 
 namespace ReMod.Core.UI.QuickMenu
@@ -21,10 +22,18 @@ namespace ReMod.Core.UI.QuickMenu
         public bool Interactable
         {
             get => _toggleComponent.interactable;
-            set => _toggleComponent.interactable = value;
+            set
+            {
+                _toggleComponent.interactable = value;
+                            
+                if(_toggleStyleElement != null)
+                    _toggleStyleElement.OnEnable();
+            }
         }
 
         private bool _valueHolder;
+        
+        private StyleElement _toggleStyleElement;
 
         private object _toggleIcon;
 
@@ -41,6 +50,8 @@ namespace ReMod.Core.UI.QuickMenu
             _toggleComponent.onValueChanged = new Toggle.ToggleEvent();
             _toggleComponent.onValueChanged.AddListener(new Action<bool>(OnValueChanged));
             _toggleComponent.onValueChanged.AddListener(new Action<bool>(onToggle));
+            
+            _toggleStyleElement = GameObject.GetComponent<StyleElement>();
 
             var tmp = GameObject.GetComponentInChildren<TextMeshProUGUI>();
             tmp.text = text;
