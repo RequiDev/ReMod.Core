@@ -154,7 +154,7 @@ namespace ReMod.Core.VRChat
                     color.a = 1f;
                     configValue.SetValue(color);
 
-                    button.Text = $"<color=#{ColorExtensions.ToHex(configValue.Value)}>{who}</color> Color";
+                    button.Text = $"<color=#{configValue.Value.ToHex()}>{who}</color> Color";
                 }, null);
         }
         
