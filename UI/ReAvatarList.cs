@@ -83,6 +83,7 @@ namespace ReMod.Core.UI
 
             var expandButton = GameObject.GetComponentInChildren<Button>(true);
             _textComponent = expandButton.GetComponentInChildren<Text>();
+            _textComponent.supportRichText = true;
             Title = title;
 
             var offset = 0f;

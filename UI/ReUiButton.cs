@@ -32,6 +32,7 @@ namespace ReMod.Core.UI
             _buttonComponent.onClick.AddListener(new Action(onClick));
 
             _textComponent = GameObject.GetComponentInChildren<Text>();
+            _textComponent.supportRichText = true;
             Text = text;
 
             var allTextComponents = GameObject.GetComponentsInChildren<Text>(true);
