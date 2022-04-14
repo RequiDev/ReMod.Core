@@ -10,7 +10,7 @@ The core dependency of my VRChat mods **ReMod** and [ReModCE](https://github.com
 ## DISCLAIMER! THIS IS NOT A MOD. THIS IS JUST A DEPENDENCY FOR MODS!
 
 ## Description
-This library powers both my private VRChat mod and the public version of it. It's main use is to create UI elements for VRChat in an easy way without all the work behind it.
+This library powers both my private VRChat mod and the public version of it. Its main use is to create UI elements for VRChat in an easy way without all the work behind it.
 
 ## Discord
 Click [here](https://discord.gg/KdTSGU4jt3) to join the Discord!
