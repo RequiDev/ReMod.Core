@@ -59,6 +59,29 @@ namespace ReMod.Core.VRChat
                 return _showConfirmDialogWithCancelDelegate;
             }
         }
+
+        public delegate void ShowAlertDialogDelegate(UIMenu uiMenu, string title, string body, Il2CppSystem.Action onClose);
+        private static ShowAlertDialogDelegate _showAlertDialogDelegate;
+
+        private static ShowAlertDialogDelegate ShowAlertDialogFn
+        {
+            get
+            {
+                if (_showAlertDialogDelegate != null)
+                    return _showAlertDialogDelegate;
+                
+                var showAlertDialogFn = typeof(UIMenu).GetMethods().FirstOrDefault(m =>
+                {
+                    if (!m.Name.Contains("Method_Public_Void_String_String_Action_PDM"))
+                        return false;
+                    
+                    return XrefUtils.CheckMethod(m, "ConfirmDialog");
+                });
+
+                _showAlertDialogDelegate = (ShowAlertDialogDelegate)Delegate.CreateDelegate(typeof(ShowAlertDialogDelegate), showAlertDialogFn);
+                return _showAlertDialogDelegate;
+            }
+        }
         
         public static void ShowConfirmDialog(this UIMenu uiMenu, string title, string body, Action onYes, Action onNo=null)
         {
@@ -68,6 +91,11 @@ namespace ReMod.Core.VRChat
         public static void ShowConfirmDialogWithCancel(this UIMenu uiMenu, string title, string body, string yesLabel, string noLabel, string cancelLabel, Action onYes, Action onNo, Action onCancel)
         {
             ShowConfirmDialogWithCancelFn.Invoke(uiMenu, title, body, yesLabel, noLabel, cancelLabel, onYes, onNo, onCancel);
+        }
+
+        public static void ShowAlertDialog(this UIMenu uiMenu, string title, string body, Action onClose = null)
+        {
+            ShowAlertDialogFn.Invoke(uiMenu, title, body, onClose);
         }
         
         private static MethodInfo _closeQuickMenuMethod;
