@@ -7,6 +7,8 @@
 
 The core dependency of my VRChat mods **ReMod** and [ReModCE](https://github.com/RequiDev/ReModCE). This project contains several helper functions, wrappers and UI classes for VRChat, Unity and [MelonLoader](https://github.com/LavaGang/MelonLoader).
 
+## DISCLAIMER! THIS IS NOT A MOD. THIS IS JUST A DEPENDENCY FOR MODS!
+
 ## Description
 This library powers both my private VRChat mod and the public version of it. It's main use is to create UI elements for VRChat in an easy way without all the work behind it.
 
