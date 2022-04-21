@@ -37,6 +37,13 @@ namespace ReMod.Core.UI.QuickMenu
 
         private object _toggleIcon;
 
+        private TextMeshProUGUI _textComponent;
+        public string Text
+        {
+            get => _textComponent.text;
+            set => _textComponent.text = value;
+        }
+
         public ReMenuToggle(string text, string tooltip, Action<bool> onToggle, Transform parent, bool defaultValue = false) : base(QuickMenuEx.TogglePrefab, parent, $"Button_Toggle{text}")
         {
             var iconOn = RectTransform.Find("Icon_On").GetComponent<Image>();
@@ -53,12 +60,12 @@ namespace ReMod.Core.UI.QuickMenu
             
             _toggleStyleElement = GameObject.GetComponent<StyleElement>();
 
-            var tmp = GameObject.GetComponentInChildren<TextMeshProUGUI>();
-            tmp.text = text;
-            tmp.richText = true;
-            tmp.color = new Color(0.4157f, 0.8902f, 0.9765f, 1f);
-            tmp.m_fontColor = new Color(0.4157f, 0.8902f, 0.9765f, 1f);
-            tmp.m_htmlColor = new Color(0.4157f, 0.8902f, 0.9765f, 1f);
+            _textComponent = GameObject.GetComponentInChildren<TextMeshProUGUI>();
+            _textComponent.text = text;
+            _textComponent.richText = true;
+            _textComponent.color = new Color(0.4157f, 0.8902f, 0.9765f, 1f);
+            _textComponent.m_fontColor = new Color(0.4157f, 0.8902f, 0.9765f, 1f);
+            _textComponent.m_htmlColor = new Color(0.4157f, 0.8902f, 0.9765f, 1f);
 
             var uiTooltip = GameObject.GetComponent<VRC.UI.Elements.Tooltips.UiToggleTooltip>();
             uiTooltip.field_Public_String_0 = tooltip;
