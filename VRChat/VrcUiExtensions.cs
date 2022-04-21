@@ -130,8 +130,8 @@ namespace ReMod.Core.VRChat
             { QuickMenu.MainMenuScreenIndex.UserDetailsMenu, "UserInterface/MenuContent/Screens/UserInfo" },
             { QuickMenu.MainMenuScreenIndex.DetailsMenu_Obsolete, "UserInterface/MenuContent/Screens/ImageDetails" },
             { QuickMenu.MainMenuScreenIndex.SafetyMenu, "UserInterface/MenuContent/Screens/Settings_Safety" },
-            { QuickMenu.MainMenuScreenIndex.CurrentUserPlaylistsMenu, "UserInterface/MenuContent/Screens/Playlists" },
-            { QuickMenu.MainMenuScreenIndex.OtherUserPlaylistsMenu, "UserInterface/MenuContent/Screens/Playlists" },
+            { QuickMenu.MainMenuScreenIndex.CurrentUserFavoriteListMenu, "UserInterface/MenuContent/Screens/Playlists" },
+            { QuickMenu.MainMenuScreenIndex.OtherUserFavoriteListMenu, "UserInterface/MenuContent/Screens/Playlists" },
             { QuickMenu.MainMenuScreenIndex.VRCPlusMenu, "UserInterface/MenuContent/Screens/VRC+" },
             { QuickMenu.MainMenuScreenIndex.GalleryMenu, "UserInterface/MenuContent/Screens/Gallery" },
         };
@@ -147,8 +147,8 @@ namespace ReMod.Core.VRChat
             { QuickMenu.MainMenuScreenIndex.UserDetailsMenu, "UserInfo" },
             { QuickMenu.MainMenuScreenIndex.DetailsMenu_Obsolete, "ImageDetails" },
             { QuickMenu.MainMenuScreenIndex.SafetyMenu, "Settings_Safety" },
-            { QuickMenu.MainMenuScreenIndex.CurrentUserPlaylistsMenu, "Playlists" },
-            { QuickMenu.MainMenuScreenIndex.OtherUserPlaylistsMenu, "Playlists" },
+            { QuickMenu.MainMenuScreenIndex.CurrentUserFavoriteListMenu, "Playlists" },
+            { QuickMenu.MainMenuScreenIndex.OtherUserFavoriteListMenu, "Playlists" },
             { QuickMenu.MainMenuScreenIndex.VRCPlusMenu, "VRC+" },
             { QuickMenu.MainMenuScreenIndex.GalleryMenu, "Gallery" },
         };
