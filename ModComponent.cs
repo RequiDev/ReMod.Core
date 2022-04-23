@@ -59,6 +59,7 @@ namespace ReMod.Core
         public virtual void OnOperationResponse(LoadBalancingClient loadBalancingClient, OperationResponse operationResponse) { }
         public virtual void OnJoinedRoom() { }
         public virtual void OnLeftRoom() { }
+        public virtual void OnModulesLoaded() { }
 
         protected HarmonyMethod GetLocalPatch(string methodName)
         {
