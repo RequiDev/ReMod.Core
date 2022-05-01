@@ -1,9 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup Condition="'$(VRCPath)'==''">
-    <VRCPath>..\3rdparty</VRCPath>
     <VRCPath Condition="Exists('C:/Program Files (x86)/Steam/steamapps/common/VRChat')">C:/Program Files (x86)/Steam/steamapps/common/VRChat</VRCPath>
     <VRCPath Condition="Exists('$(HOME)/.steam/steam/steamapps/common/VRChat')">$(HOME)/.steam/steam/steamapps/common/VRChat</VRCPath>
     <VRCPath Condition="Exists('S:\Games\steamapps\common\VRChat')">S:\Games\steamapps\common\VRChat</VRCPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(MlPath)'==''">
+    <MlPath>..\3rdparty\ml</MlPath>
+    <MlPath Condition="Exists('$(VRCPath)/MelonLoader')">$(VRCPath)/MelonLoader</MlPath>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -30,72 +34,72 @@
     <Reference Include="HarmonyLib">
       <Private>false</Private>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(VRCPath)\MelonLoader\0Harmony.dll</HintPath>
+      <HintPath>$(MlPath)\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>$(VRCPath)\MelonLoader\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>$(MlPath)\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DataModel">
-      <HintPath>$(VRCPath)\MelonLoader\Managed\DataModel.dll</HintPath>
+      <HintPath>$(MlPath)\Managed\DataModel.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Il2Cppmscorlib">
-      <HintPath>$(VRCPath)\MelonLoader\Managed\Il2Cppmscorlib.dll</HintPath>
+      <HintPath>$(MlPath)\Managed\Il2Cppmscorlib.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="MelonLoader">
-      <HintPath>$(VRCPath)\MelonLoader\MelonLoader.dll</HintPath>
+      <HintPath>$(MlPath)\MelonLoader.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Photon-DotNet">
-      <HintPath>$(VRCPath)\MelonLoader\Managed\Photon-DotNet.dll</HintPath>
+      <HintPath>$(MlPath)\Managed\Photon-DotNet.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="UnhollowerBaseLib">
-      <HintPath>$(VRCPath)\MelonLoader\Managed\UnhollowerBaseLib.dll</HintPath>
+      <HintPath>$(MlPath)\Managed\UnhollowerBaseLib.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>$(VRCPath)\MelonLoader\Managed\Unity.TextMeshPro.dll</HintPath>
+      <HintPath>$(MlPath)\Managed\Unity.TextMeshPro.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>$(VRCPath)\MelonLoader\Managed\UnityEngine.dll</HintPath>
+      <HintPath>$(MlPath)\Managed\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>$(VRCPath)\MelonLoader\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>$(MlPath)\Managed\UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.ImageConversionModule">
-      <HintPath>$(VRCPath)\MelonLoader\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
+      <HintPath>$(MlPath)\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
-      <HintPath>$(VRCPath)\MelonLoader\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+      <HintPath>$(MlPath)\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>$(VRCPath)\MelonLoader\Managed\UnityEngine.UI.dll</HintPath>
+      <HintPath>$(MlPath)\Managed\UnityEngine.UI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VRC.UI.Core">
-      <HintPath>$(VRCPath)\MelonLoader\Managed\VRC.UI.Core.dll</HintPath>
+      <HintPath>$(MlPath)\Managed\VRC.UI.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VRC.UI.Elements">
-      <HintPath>$(VRCPath)\MelonLoader\Managed\VRC.UI.Elements.dll</HintPath>
+      <HintPath>$(MlPath)\Managed\VRC.UI.Elements.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VRCCore-Standalone">
-      <HintPath>$(VRCPath)\MelonLoader\Managed\VRCCore-Standalone.dll</HintPath>
+      <HintPath>$(MlPath)\Managed\VRCCore-Standalone.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VRCSDKBase">
-      <HintPath>$(VRCPath)\MelonLoader\Managed\VRCSDKBase.dll</HintPath>
+      <HintPath>$(MlPath)\Managed\VRCSDKBase.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
