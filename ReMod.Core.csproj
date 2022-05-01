@@ -147,7 +147,7 @@
     <Compile Include="XrefUtils.cs" />
   </ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(CopyToVrc)'=='true'">
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="('$(CopyToVrc)'=='true') And (Exists('$(VRCPath)'))">
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(VRCPath)" />
     <Message Text="Copied $(TargetFileName) to $(VRCPath)" Importance="high" />
   </Target>
