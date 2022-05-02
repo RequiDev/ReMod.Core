@@ -1,112 +1,109 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup Condition="'$(VRCPath)'==''">
+    <VRCPath Condition="Exists('C:/Program Files (x86)/Steam/steamapps/common/VRChat')">C:/Program Files (x86)/Steam/steamapps/common/VRChat</VRCPath>
+    <VRCPath Condition="Exists('$(HOME)/.steam/steam/steamapps/common/VRChat')">$(HOME)/.steam/steam/steamapps/common/VRChat</VRCPath>
+    <VRCPath Condition="Exists('S:\Games\steamapps\common\VRChat')">S:\Games\steamapps\common\VRChat</VRCPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(MlPath)'==''">
+    <MlPath>..\3rdparty\ml</MlPath>
+    <MlPath Condition="Exists('$(VRCPath)/MelonLoader')">$(VRCPath)/MelonLoader</MlPath>
+  </PropertyGroup>
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{C87FE758-ACB9-4FA2-AF6F-10AA9AA0023C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ReMod.Core</RootNamespace>
     <AssemblyName>ReMod.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <TargetFramework>net472</TargetFramework>
+    <LangVersion>latest</LangVersion>
     <PlatformTarget>x64</PlatformTarget>
     <OutputPath>$(SolutionDir)\.build\$(Configuration) ($(PlatformTarget))\Modules\$(ProjectName)\</OutputPath>
-    <BaseIntermediateOutputPath>..\.build</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)\tmp\$(Configuration) ($(PlatformTarget))\$(ProjectName)\</IntermediateOutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <LangVersion>latest</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
-    <PlatformTarget>x64</PlatformTarget>
-    <OutputPath>$(SolutionDir)\.build\$(Configuration) ($(PlatformTarget))\Modules\$(ProjectName)\</OutputPath>
-    <BaseIntermediateOutputPath>..\.build</BaseIntermediateOutputPath>
-    <IntermediateOutputPath>$(BaseIntermediateOutputPath)\tmp\$(Configuration) ($(PlatformTarget))\$(ProjectName)\</IntermediateOutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <LangVersion>latest</LangVersion>
+
+    <CopyToVrc Condition="'$(CopyToVrc)'!='false'">true</CopyToVrc>
+    <DebugSymbols Condition="'$(Configuration)'=='Release'">false</DebugSymbols>
+    <DebugType Condition="'$(Configuration)'=='Release'">None</DebugType>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HarmonyLib">
+      <Private>false</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(MlPath)\0Harmony.dll</HintPath>
+    </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>$(SolutionDir)\3rdparty\ml\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>$(MlPath)\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DataModel">
-      <HintPath>$(SolutionDir)\3rdparty\ml\Managed\DataModel.dll</HintPath>
+      <HintPath>$(MlPath)\Managed\DataModel.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Il2Cppmscorlib">
-      <HintPath>$(SolutionDir)\3rdparty\ml\Managed\Il2Cppmscorlib.dll</HintPath>
+      <HintPath>$(MlPath)\Managed\Il2Cppmscorlib.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="MelonLoader">
-      <HintPath>$(SolutionDir)\3rdparty\ml\MelonLoader.dll</HintPath>
+      <HintPath>$(MlPath)\MelonLoader.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Photon-DotNet">
-      <HintPath>$(SolutionDir)\3rdparty\ml\Managed\Photon-DotNet.dll</HintPath>
+      <HintPath>$(MlPath)\Managed\Photon-DotNet.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="UnhollowerBaseLib">
-      <HintPath>$(SolutionDir)\3rdparty\ml\Managed\UnhollowerBaseLib.dll</HintPath>
+      <HintPath>$(MlPath)\Managed\UnhollowerBaseLib.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>$(SolutionDir)\3rdparty\ml\Managed\Unity.TextMeshPro.dll</HintPath>
+      <HintPath>$(MlPath)\Managed\Unity.TextMeshPro.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>$(SolutionDir)\3rdparty\ml\Managed\UnityEngine.dll</HintPath>
+      <HintPath>$(MlPath)\Managed\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>$(SolutionDir)\3rdparty\ml\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>$(MlPath)\Managed\UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.ImageConversionModule">
-      <HintPath>$(SolutionDir)\3rdparty\ml\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
+      <HintPath>$(MlPath)\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
-      <HintPath>$(SolutionDir)\3rdparty\ml\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+      <HintPath>$(MlPath)\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>$(SolutionDir)\3rdparty\ml\Managed\UnityEngine.UI.dll</HintPath>
+      <HintPath>$(MlPath)\Managed\UnityEngine.UI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VRC.UI.Core">
-      <HintPath>$(SolutionDir)\3rdparty\ml\Managed\VRC.UI.Core.dll</HintPath>
+      <HintPath>$(MlPath)\Managed\VRC.UI.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VRC.UI.Elements">
-      <HintPath>$(SolutionDir)\3rdparty\ml\Managed\VRC.UI.Elements.dll</HintPath>
+      <HintPath>$(MlPath)\Managed\VRC.UI.Elements.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VRCCore-Standalone">
-      <HintPath>$(SolutionDir)\3rdparty\ml\Managed\VRCCore-Standalone.dll</HintPath>
+      <HintPath>$(MlPath)\Managed\VRCCore-Standalone.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VRCSDKBase">
-      <HintPath>$(SolutionDir)\3rdparty\ml\Managed\VRCSDKBase.dll</HintPath>
+      <HintPath>$(MlPath)\Managed\VRCSDKBase.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
+
   <ItemGroup>
     <Compile Include="AssemblyExtensions.cs" />
     <Compile Include="EnumExtensions.cs" />
@@ -149,6 +146,9 @@
     <Compile Include="VRChat\VRCUiManagerEx.cs" />
     <Compile Include="XrefUtils.cs" />
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="('$(CopyToVrc)'=='true') And (Exists('$(VRCPath)'))">
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(VRCPath)" />
+    <Message Text="Copied $(TargetFileName) to $(VRCPath)" Importance="high" />
+  </Target>
 </Project>
