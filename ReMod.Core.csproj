@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(MlPath)'==''">
-    <MlPath>..\3rdparty\ml</MlPath>
-    <MlPath Condition="Exists('$(VRCPath)/MelonLoader')">$(VRCPath)/MelonLoader</MlPath>
+    <MlPath>$(SolutionDir)\3rdparty\ml</MlPath>
+    <MlPath Condition="!Exists('$(MlPath)') And Exists('$(VRCPath)/MelonLoader')">$(VRCPath)/MelonLoader</MlPath>
   </PropertyGroup>
 
   <PropertyGroup>
