@@ -23,7 +23,6 @@
     <TargetFrameworks>net472;net6</TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <PlatformTarget>x64</PlatformTarget>
-	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <OutputPath>$(SolutionDir)\.build\$(Configuration) ($(PlatformTarget))\Modules\$(ProjectName)\</OutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)\tmp\$(Configuration) ($(PlatformTarget))\$(ProjectName)\</IntermediateOutputPath>
 
