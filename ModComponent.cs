@@ -25,6 +25,8 @@ namespace ReMod.Core
 
     public class ModComponent
     {
+        public bool Enabled { get; set; } = true;
+
         public virtual void OnUiManagerInitEarly(){}
         public virtual void OnUiManagerInit(UiManager uiManager){}
         public virtual void OnFixedUpdate(){}
