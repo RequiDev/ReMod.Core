@@ -3,6 +3,7 @@
     <VRCPath Condition="Exists('C:/Program Files (x86)/Steam/steamapps/common/VRChat')">C:/Program Files (x86)/Steam/steamapps/common/VRChat</VRCPath>
     <VRCPath Condition="Exists('$(HOME)/.steam/steam/steamapps/common/VRChat')">$(HOME)/.steam/steam/steamapps/common/VRChat</VRCPath>
     <VRCPath Condition="Exists('S:\Games\steamapps\common\VRChat')">S:\Games\steamapps\common\VRChat</VRCPath>
+	<VRCPath Condition="Exists('G:\SteamLibrary\steamapps\common\VRChat')">G:\SteamLibrary\steamapps\common\VRChat</VRCPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(MlPath)'==''">
@@ -70,6 +71,14 @@
       <HintPath>$(MlPath)\Managed\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="UnityEngine.AnimationModule">
+      <HintPath>$(MlPath)\Managed\UnityEngine.AnimationModule.dll</HintPath>
+	  <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.AssetBundleModule">
+      <HintPath>$(MlPath)\Managed\UnityEngine.AssetBundleModule.dll</HintPath>
+	  <Private>False</Private>
+    </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>$(MlPath)\Managed\UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
@@ -108,6 +117,9 @@
     <Compile Include="AssemblyExtensions.cs" />
     <Compile Include="EnumExtensions.cs" />
     <Compile Include="Managers\ConfigManager.cs" />
+    <Compile Include="Notification\NotificationController.cs" />
+    <Compile Include="Notification\NotificationObject.cs" />
+    <Compile Include="Notification\NotificationSystem.cs" />
     <Compile Include="UI\QuickMenu\IButtonPage.cs" />
     <Compile Include="UI\Wings\ReMirroredWingButton.cs" />
     <Compile Include="UI\Wings\ReMirroredWingMenu.cs" />
@@ -145,6 +157,10 @@
     <Compile Include="VRChat\VrcUiExtensions.cs" />
     <Compile Include="VRChat\VRCUiManagerEx.cs" />
     <Compile Include="XrefUtils.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Notification\notification" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="('$(CopyToVrc)'=='true') And '$(TargetFramework)' == 'net472' And (Exists('$(VRCPath)'))">
