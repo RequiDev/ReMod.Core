@@ -33,9 +33,13 @@ namespace ReMod.Core.UI.QuickMenu
         public event Action OnOpen;
         public event Action OnClose;
         public event Action<Object> OnSelect;
-        
-        public TextMeshProUGUI TitleText;
-        
+
+        public string TitleText
+        {
+            set => _titleText.text = value;
+        }
+
+        private TextMeshProUGUI _titleText;
         private ListBinding ListBinding;
         private GameObject RadioButtonPrefab;
         private RadioButtonSelectorGroup RadioButtonSelectorGroup;
@@ -52,9 +56,9 @@ namespace ReMod.Core.UI.QuickMenu
         {
             var headerTransform = RectTransform.GetChild(0);
             
-            TitleText = headerTransform.GetComponentInChildren<TextMeshProUGUI>();
-            TitleText.text = name;
-            TitleText.richText = true;
+            _titleText = headerTransform.GetComponentInChildren<TextMeshProUGUI>();
+            _titleText.text = name;
+            _titleText.richText = true;
             
             _container = RectTransform.GetComponentInChildren<ScrollRect>().content;
 
