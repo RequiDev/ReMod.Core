@@ -160,7 +160,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Notification\notification" />
+    <EmbeddedResource Include="Notification\notification" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="('$(CopyToVrc)'=='true') And '$(TargetFramework)' == 'net472' And (Exists('$(VRCPath)'))">
