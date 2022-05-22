@@ -109,6 +109,7 @@
     <Compile Include="EnumExtensions.cs" />
     <Compile Include="Managers\ConfigManager.cs" />
     <Compile Include="UI\QuickMenu\IButtonPage.cs" />
+    <Compile Include="UI\QuickMenu\ReRadioTogglePage.cs" />
     <Compile Include="UI\Wings\ReMirroredWingButton.cs" />
     <Compile Include="UI\Wings\ReMirroredWingMenu.cs" />
     <Compile Include="UI\Wings\ReMirroredWingToggle.cs" />
