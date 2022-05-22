@@ -3,6 +3,7 @@
     <VRCPath Condition="Exists('C:/Program Files (x86)/Steam/steamapps/common/VRChat')">C:/Program Files (x86)/Steam/steamapps/common/VRChat</VRCPath>
     <VRCPath Condition="Exists('$(HOME)/.steam/steam/steamapps/common/VRChat')">$(HOME)/.steam/steam/steamapps/common/VRChat</VRCPath>
     <VRCPath Condition="Exists('S:\Games\steamapps\common\VRChat')">S:\Games\steamapps\common\VRChat</VRCPath>
+	<VRCPath Condition="Exists('G:\SteamLibrary\steamapps\common\VRChat')">G:\SteamLibrary\steamapps\common\VRChat</VRCPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(MlPath)'==''">

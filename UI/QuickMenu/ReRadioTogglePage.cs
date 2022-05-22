@@ -33,11 +33,12 @@ namespace ReMod.Core.UI.QuickMenu
         public event Action OnOpen;
         public event Action OnClose;
         public event Action<Object> OnSelect;
-        public ListBinding ListBinding;
-        public GameObject RadioButtonPrefab;
-        public RadioButtonSelectorGroup RadioButtonSelectorGroup;
+        
         public TextMeshProUGUI TitleText;
         
+        private ListBinding ListBinding;
+        private GameObject RadioButtonPrefab;
+        private RadioButtonSelectorGroup RadioButtonSelectorGroup;
         private Dictionary<string, Tuple<string, Object, Action>> _radioElementSource = new();
         private bool _isUpdated;
         
@@ -108,11 +109,7 @@ namespace ReMod.Core.UI.QuickMenu
                 if(newElement.Value.Item3 != null)
                     radioButtonSelector.field_Private_Button_0.onClick.AddListener(newElement.Value.Item3);
                 radioButtonSelector.field_Public_String_0 = newElement.Value.Item1;
-                //Fuck it let's just send it
-                radioButtonSelector.Method_Public_Void_String_String_PDM_0(newElement.Key, newElement.Value.Item1);
-                radioButtonSelector.Method_Public_Void_String_String_PDM_1(newElement.Key, newElement.Value.Item1);
-                radioButtonSelector.Method_Public_Void_String_String_PDM_2(newElement.Key, newElement.Value.Item1);
-                radioButtonSelector.Method_Public_Void_String_String_PDM_3(newElement.Key, newElement.Value.Item1);
+                radioButtonSelector.SetTitle(newElement.Key, newElement.Value.Item1);
                 radioButtonSelector.prop_RadioButtonSelectorGroup_0 = RadioButtonSelectorGroup;
                 ListBinding.field_Private_Dictionary_2_Object_GameObject_0.Add(newElement.Key, radioButton);
             }
