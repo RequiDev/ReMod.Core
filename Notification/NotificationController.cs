@@ -148,6 +148,7 @@ namespace ReMod.Core.Notification
             CloseNotification();
         }
 
+        [HideFromIl2Cpp]
         private bool IsInWorld()
         {
             return RoomManager.field_Internal_Static_ApiWorld_0 != null && PlayerManager.field_Private_Static_PlayerManager_0.field_Private_List_1_Player_0.Count > 0;
