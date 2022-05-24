@@ -42,6 +42,8 @@ namespace ReMod.Core.Notification
             //Instantiate prefab and let NotificationController setup!
             _notificationGO = Object.Instantiate(_notificationPrefab, _hudContent.transform);
             _controllerInstance = _notificationGO.AddComponent<NotificationController>();
+
+            _controllerInstance.defaultSprite = DefaultIcon;
         }
 
         /// <summary>
