@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using System.Text.RegularExpressions;
+using MelonLoader;
 using UnityEngine;
 
 namespace ReMod.Core.Managers
@@ -53,6 +57,24 @@ namespace ReMod.Core.Managers
         public static Sprite GetSprite(string resourceName)
         {
             return Sprites.ContainsKey(resourceName) ? Sprites[resourceName] : null;
+        }
+
+        public static void LoadImageResources(string prefix)
+        {
+            var assembly = Assembly.GetCallingAssembly();
+            var resources = assembly.GetManifestResourceNames();
+            foreach (var resource in resources)
+            {
+                if (!resource.EndsWith(".png") && !resource.EndsWith(".jpg"))
+                    continue;
+
+                var stream = assembly.GetManifestResourceStream(resource);
+
+                using var ms = new MemoryStream();
+                stream!.CopyTo(ms);
+                var resourceName = Regex.Match(resource, @"([a-zA-Z\d\-_]+)\.png").Groups[1].ToString();
+                LoadSprite(prefix, resourceName, ms.ToArray());
+            }
         }
     }
 }
