@@ -45,7 +45,7 @@ namespace ReMod.Core.UI.Wings
             set
             {
                 _button.interactable = value;
-                _styleElement.Method_Private_Void_Boolean_0(value);
+                _styleElement.Method_Private_Void_Boolean_Boolean_0(value);
             }
         }
 

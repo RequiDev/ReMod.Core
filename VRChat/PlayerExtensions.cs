@@ -14,7 +14,7 @@ namespace ReMod.Core.VRChat
     {
         public static Player[] GetPlayers(this PlayerManager playerManager)
         {
-            return playerManager.prop_ArrayOf_Player_0;
+            return playerManager.field_Private_List_1_Player_0.ToArray();
         }
 
         public static Player GetPlayer(this PlayerManager playerManager, string userId)
@@ -92,8 +92,9 @@ namespace ReMod.Core.VRChat
         {
             string avatarID = "avtr_00000000-0000-0000-0000-000000000000";
 
-            iUser.prop_ILoadable_1_IAvatar_0
-                .Method_Public_Abstract_Virtual_New_Void_Action_1_T_Action_1_String_0(new Action<IAvatar>(
+            iUser.prop_InterfacePublicAbstractVoAc1TStAc1UnT1Unique_1_InterfacePublicAbstractStBoSt1BoTeStDaBoObUnique_1
+                .Method_Public_Abstract_Virtual_New_Void_Action_1_T_Action_1_String_0(
+                    new Action<InterfacePublicAbstractStBoSt1BoTeStDaBoObUnique>(
                     activeAvatar => { avatarID = activeAvatar.prop_String_0; }));
 
             return avatarID;

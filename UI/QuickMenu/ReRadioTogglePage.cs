@@ -7,7 +7,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Controls;
-using ListBinding = MonoBehaviourPublicTrGaBoObAcObDi2GaBoUnique; //DataModel.dll
 using Object = Il2CppSystem.Object;
 
 namespace ReMod.Core.UI.QuickMenu
@@ -64,10 +63,10 @@ namespace ReMod.Core.UI.QuickMenu
 
             var inputMenu = RectTransform.GetComponent<AudioInputDeviceMenu>();
             RadioButtonPrefab = inputMenu.field_Public_GameObject_0;
-            ListBinding = inputMenu.field_Public_MonoBehaviourPublicTrGaBoObAcObDi2GaBoUnique_0;
+            ListBinding = inputMenu.field_Public_ListBinding_0;
             RadioButtonSelectorGroup = ListBinding.gameObject.GetComponent<RadioButtonSelectorGroup>();
 
-            ListBinding.field_Private_Dictionary_2_Object_GameObject_0 = new Il2CppSystem.Collections.Generic.Dictionary<Object, GameObject>();
+            ListBinding.field_Protected_Dictionary_2_Object_GameObject_0 = new Il2CppSystem.Collections.Generic.Dictionary<Object, GameObject>();
 
             //Get rid of the AudioInputDeviceMenu component
             UnityEngine.Object.DestroyImmediate(inputMenu);
@@ -97,9 +96,9 @@ namespace ReMod.Core.UI.QuickMenu
 
             _isUpdated = false;
             
-            foreach(var element in ListBinding.field_Private_Dictionary_2_Object_GameObject_0)
+            foreach(var element in ListBinding.field_Protected_Dictionary_2_Object_GameObject_0)
                 UnityEngine.Object.DestroyImmediate(element.value);
-            ListBinding.field_Private_Dictionary_2_Object_GameObject_0.Clear();
+            ListBinding.field_Protected_Dictionary_2_Object_GameObject_0.Clear();
 
             foreach (var newElement in _radioElementSource)
             {
@@ -115,7 +114,7 @@ namespace ReMod.Core.UI.QuickMenu
                 radioButtonSelector.field_Public_String_0 = newElement.Value.Item1;
                 radioButtonSelector.SetTitle(newElement.Key, newElement.Value.Item1);
                 radioButtonSelector.prop_RadioButtonSelectorGroup_0 = RadioButtonSelectorGroup;
-                ListBinding.field_Private_Dictionary_2_Object_GameObject_0.Add(newElement.Key, radioButton);
+                ListBinding.field_Protected_Dictionary_2_Object_GameObject_0.Add(newElement.Key, radioButton);
             }
         }
 

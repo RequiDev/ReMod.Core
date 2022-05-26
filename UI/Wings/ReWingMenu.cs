@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using VRC.UI.Elements;
+using VRC.UI.Shared;
 using Object = UnityEngine.Object;
 
 namespace ReMod.Core.UI.Wings
@@ -103,7 +104,7 @@ namespace ReMod.Core.UI.Wings
 
         public ReWingMenu AddSubMenu(string text, string tooltip)
         {
-            var menu = new ReWingMenu(text, _wing.field_Public_WingPanel_0 == Wing.WingPanel.Left);
+            var menu = new ReWingMenu(text, _wing._wingType == WingType.Left);
             AddButton(text, tooltip, menu.Open);
             return menu;
         }

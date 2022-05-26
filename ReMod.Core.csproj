@@ -103,6 +103,10 @@
       <HintPath>$(MlPath)\Managed\VRC.UI.Elements.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="VRC.UI.Shared">
+      <HintPath>$(MlPath)\Managed\VRC.UI.Shared.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="VRCCore-Standalone">
       <HintPath>$(MlPath)\Managed\VRCCore-Standalone.dll</HintPath>
       <Private>False</Private>
