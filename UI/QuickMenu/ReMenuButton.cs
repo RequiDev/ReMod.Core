@@ -98,10 +98,23 @@ namespace ReMod.Core.UI.QuickMenu
             Object.DestroyImmediate(RectTransform.Find("Badge_Close").gameObject);
             Object.DestroyImmediate(RectTransform.Find("Badge_MMJump").gameObject);
 
-            var uiTooltip = GameObject.GetComponent<VRC.UI.Elements.Tooltips.UiTooltip>();
-            uiTooltip.field_Public_String_0 = tooltip;
-            uiTooltip.field_Public_String_1 = tooltip;
-            
+            var uiTooltips = GameObject.GetComponents<VRC.UI.Elements.Tooltips.UiTooltip>();
+            VRC.UI.Elements.Tooltips.UiTooltip uiTooltip = null;
+            if (uiTooltips.Length > 0)
+            {
+                //Fuck tooltips, all my friends hate tooltips
+                uiTooltip = uiTooltips[0];
+                
+                for(int i=1; i<uiTooltips.Length; i++)
+                    Object.DestroyImmediate(uiTooltips[i]);
+            }
+
+            if (uiTooltip != null)
+            {
+                uiTooltip.field_Public_String_0 = tooltip;
+                uiTooltip.field_Public_String_1 = tooltip;
+            }
+
             if (onClick != null)
             {
                 _button = GameObject.GetComponent<Button>();

@@ -9,7 +9,7 @@ namespace ReMod.Core.VRChat
 {
     public static class QuickMenuExtensions
     {
-        public delegate void ShowConfirmDialogDelegate(UIMenu uiMenu, string title, string body, Il2CppSystem.Action onYes, Il2CppSystem.Action onNo=null);
+        public delegate void ShowConfirmDialogDelegate(UIMenu uiMenu, string title, string body, Il2CppSystem.Action onYes, Il2CppSystem.Action onNo=null, string confirmText = "Yes", string declineText = "No");
         private static ShowConfirmDialogDelegate _showConfirmDialogDelegate;
 
         private static ShowConfirmDialogDelegate ShowConfirmDialogFn
@@ -21,7 +21,7 @@ namespace ReMod.Core.VRChat
 
                 var showConfirmDialogFn = typeof(UIMenu).GetMethods().FirstOrDefault(m =>
                 {
-                    if (!m.Name.Contains("Public_Void_String_String_Action_Action_PDM_"))
+                    if (!m.Name.Contains("Public_Void_String_String_Action_Action_String_String_"))
                         return false;
                     
                     return XrefUtils.CheckMethod(m, "ConfirmDialog");
@@ -49,7 +49,7 @@ namespace ReMod.Core.VRChat
 
                 var showConfirmDialogWithCancelFn = typeof(UIMenu).GetMethods().FirstOrDefault(m =>
                 {
-                    if (!m.Name.Contains("Method_Public_Void_String_String_String_String_String_Action_Action_Action"))
+                    if (!m.Name.Contains("Method_Public_Void_String_String_String_String_String_Action_Action_Action_"))
                         return false;
                     
                     return XrefUtils.CheckMethod(m, "ConfirmDialog");
@@ -72,7 +72,7 @@ namespace ReMod.Core.VRChat
                 
                 var showAlertDialogFn = typeof(UIMenu).GetMethods().FirstOrDefault(m =>
                 {
-                    if (!m.Name.Contains("Method_Public_Void_String_String_Action_PDM"))
+                    if (!m.Name.Contains("Method_Public_Void_String_String_Action_String_Boolean_PDM"))
                         return false;
                     
                     return XrefUtils.CheckMethod(m, "ConfirmDialog");
@@ -82,10 +82,15 @@ namespace ReMod.Core.VRChat
                 return _showAlertDialogDelegate;
             }
         }
-        
-        public static void ShowConfirmDialog(this UIMenu uiMenu, string title, string body, Action onYes, Action onNo=null)
+
+        public static void ShowConfirmDialog(this UIMenu uiMenu, string title, string body, Action onYes, Action onNo = null)
         {
-            ShowConfirmDialogFn.Invoke(uiMenu, title, body, onYes, onNo);
+            ShowConfirmDialog(uiMenu, title, body, "Yes", "No", onYes, onNo);
+        }
+        
+        public static void ShowConfirmDialog(this UIMenu uiMenu, string title, string body, string confirmText, string declineText, Action onYes, Action onNo=null)
+        {
+            ShowConfirmDialogFn.Invoke(uiMenu, title, body, onYes, onNo, confirmText, declineText);
         }
         
         public static void ShowConfirmDialogWithCancel(this UIMenu uiMenu, string title, string body, string yesLabel, string noLabel, string cancelLabel, Action onYes, Action onNo, Action onCancel)
@@ -94,6 +99,11 @@ namespace ReMod.Core.VRChat
         }
 
         public static void ShowAlertDialog(this UIMenu uiMenu, string title, string body, Action onClose = null)
+        {
+            ShowAlertDialog(uiMenu, title, body, "Close", onClose);
+        }
+        
+        public static void ShowAlertDialog(this UIMenu uiMenu, string title, string body, string closeText, Action onClose = null)
         {
             ShowAlertDialogFn.Invoke(uiMenu, title, body, onClose);
         }

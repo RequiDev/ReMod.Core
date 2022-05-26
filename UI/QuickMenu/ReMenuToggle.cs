@@ -124,23 +124,23 @@ namespace ReMod.Core.UI.QuickMenu
             }
         }
 
-        private List<Action<bool>> _onValueChanged;
+        private List<Action> _onValueChanged;
 
         private void OnValueChanged(bool arg0)
         {
             if (_onValueChanged == null)
             {
-                _onValueChanged = new List<Action<bool>>();
+                _onValueChanged = new List<Action>();
                 foreach (var methodInfo in _toggleIcon.GetType().GetMethods().Where(m =>
-                             m.Name.StartsWith("Method_Private_Void_Boolean_PDM_") && XrefUtils.CheckMethod(m, "Toggled")))
+                             m.Name.StartsWith("Method_Public_Void_") && XrefUtils.CheckMethod(m, "Toggled")))
                 {
-                    _onValueChanged.Add((Action<bool>)Delegate.CreateDelegate(typeof(Action<bool>), _toggleIcon, methodInfo));
+                    _onValueChanged.Add((Action)Delegate.CreateDelegate(typeof(Action), _toggleIcon, methodInfo));
                 }
             }
 
             foreach (var onValueChanged in _onValueChanged)
             {
-                onValueChanged(arg0);
+                onValueChanged();
             }
         }
 

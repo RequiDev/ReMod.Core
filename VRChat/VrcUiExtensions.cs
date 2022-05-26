@@ -15,7 +15,7 @@ namespace ReMod.Core.VRChat
     {
         public static GameObject MenuContent(this VRCUiManager uiManager)
         {
-            return uiManager.field_Public_GameObject_0;
+            return uiManager.field_Private_Transform_0.gameObject;
         }
 
         public static void StartRenderElementsCoroutine(this UiVRCList instance, Il2CppSystem.Collections.Generic.List<ApiAvatar> avatarList, int offset = 0, bool endOfPickers = true, VRCUiContentButton contentHeaderElement = null)
@@ -44,19 +44,19 @@ namespace ReMod.Core.VRChat
         }
         
         private delegate void PushPageDelegate(MenuStateController menuStateCtrl, string pageName, UIContext uiContext,
-            bool clearPageStack);
+            bool clearPageStack, UIPage.TransitionType transitionType);
         private static PushPageDelegate _pushPage;
 
         public static void PushPage(this MenuStateController menuStateCtrl, string pageName, UIContext uiContext = null,
-            bool clearPageStack = false)
+            bool clearPageStack = false, UIPage.TransitionType transitionType = UIPage.TransitionType.Right)
         {
             if (_pushPage == null)
             {
                 _pushPage = (PushPageDelegate)Delegate.CreateDelegate(typeof(PushPageDelegate),
-                    typeof(MenuStateController).GetMethods().FirstOrDefault(m => m.GetParameters().Length == 3 && m.Name.StartsWith("Method_Public_Void_String_UIContext_Boolean_") && XrefUtils.CheckMethod(m, "No page named")));
+                    typeof(MenuStateController).GetMethods().FirstOrDefault(m => m.GetParameters().Length == 4 && m.Name.StartsWith("Method_Public_Void_String_UIContext_Boolean_TransitionType_") && XrefUtils.CheckMethod(m, "No page named")));
             }
 
-            _pushPage(menuStateCtrl, pageName, uiContext, clearPageStack);
+            _pushPage(menuStateCtrl, pageName, uiContext, clearPageStack, transitionType);
         }
         
         private delegate void SwitchToRootPageDelegate(MenuStateController menuStateCtrl, string pageName, UIContext uiContext,
