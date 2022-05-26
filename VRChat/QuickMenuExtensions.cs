@@ -60,7 +60,7 @@ namespace ReMod.Core.VRChat
             }
         }
 
-        public delegate void ShowAlertDialogDelegate(UIMenu uiMenu, string title, string body, Il2CppSystem.Action onClose);
+        public delegate void ShowAlertDialogDelegate(UIMenu uiMenu, string title, string body, Il2CppSystem.Action onClose, string closeText = "Close", bool unknown = false);
         private static ShowAlertDialogDelegate _showAlertDialogDelegate;
 
         private static ShowAlertDialogDelegate ShowAlertDialogFn
@@ -105,7 +105,7 @@ namespace ReMod.Core.VRChat
         
         public static void ShowAlertDialog(this UIMenu uiMenu, string title, string body, string closeText, Action onClose = null)
         {
-            ShowAlertDialogFn.Invoke(uiMenu, title, body, onClose);
+            ShowAlertDialogFn.Invoke(uiMenu, title, body, onClose, closeText, false);
         }
         
         private static MethodInfo _closeQuickMenuMethod;
