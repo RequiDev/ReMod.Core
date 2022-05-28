@@ -92,10 +92,12 @@ namespace ReMod.Core.VRChat
         {
             string avatarID = "avtr_00000000-0000-0000-0000-000000000000";
 
-            iUser.prop_InterfacePublicAbstractVoAc1TStAc1UnT1Unique_1_InterfacePublicAbstractStBoSt1BoTeStDaBoObUnique_1
+            iUser.prop_ILoadable_1_InterfacePublicAbstractStBoSt1BoTeStDaBoObUnique_0
                 .Method_Public_Abstract_Virtual_New_Void_Action_1_T_Action_1_String_0(
-                    new Action<InterfacePublicAbstractStBoSt1BoTeStDaBoObUnique>(
-                    activeAvatar => { avatarID = activeAvatar.prop_String_0; }));
+                    new Action<InterfacePublicAbstractStBoSt1BoTeStDaBoObUnique>(activeAvatar =>
+                    {
+                        avatarID = activeAvatar.prop_String_0;
+                    }));
 
             return avatarID;
         }
