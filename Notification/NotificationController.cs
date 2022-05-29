@@ -19,6 +19,7 @@ namespace ReMod.Core.Notification
         //Objects
         private Animator _notificationAnimator;
         private Image _iconImage;
+        private Image _backgroundImage;
         private TextMeshProUGUI _titleText;
         private TextMeshProUGUI _descriptionText;
 
@@ -68,6 +69,7 @@ namespace ReMod.Core.Notification
         private void Start()
         {
             _notificationAnimator = gameObject.GetComponent<Animator>();
+            _backgroundImage = gameObject.transform.Find("Content/Background").GetComponent<Image>();
             _iconImage = gameObject.transform.Find("Content/Icon").gameObject.GetComponent<Image>();
             _titleText = gameObject.transform.Find("Content/Title").gameObject.GetComponent<TextMeshProUGUI>();
             _descriptionText = gameObject.transform.Find("Content/Description").gameObject.GetComponent<TextMeshProUGUI>();
@@ -96,6 +98,8 @@ namespace ReMod.Core.Notification
             _descriptionText.text = _currentNotification.Description;
             _iconImage.sprite = _currentNotification.Icon == null ? defaultSprite : _currentNotification.Icon;
             _iconImage.enabled = true;
+            _currentNotification.BackgroundColor.a = NotificationSystem.NotificationAlpha.Value;
+            _backgroundImage.color = _currentNotification.BackgroundColor;
 
             OpenNotification();
         }
