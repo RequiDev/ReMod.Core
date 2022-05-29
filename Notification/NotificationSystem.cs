@@ -178,14 +178,14 @@ namespace ReMod.Core.Notification
         private static bool? _uixAvailable;
         private static MethodInfo _regSettingEnum;
         private static bool _methodsGetRan;
-        
-        public static bool IsUIXAvailable()
+
+        private static bool IsUIXAvailable()
         {
             _uixAvailable ??= MelonHandler.IsModAlreadyLoaded("UI Expansion Kit");
             return _uixAvailable.Value;
         }
-        
-        public static bool GetUIXMethods()
+
+        private static bool GetUIXMethods()
         {
             if (_methodsGetRan) return true;
 
@@ -194,11 +194,13 @@ namespace ReMod.Core.Notification
             if (expandedMenu == null) return false;
             
             _regSettingEnum = expandedMenu.GetMethod("RegisterSettingAsStringEnum", BindingFlags.Public | BindingFlags.Static);
+            
+            _methodsGetRan = true;
 
             return true;
         }
-        
-        public static bool RegSettingsEnum(string settingsCat, string settingsName, IList<(string value, string desc)> values)
+
+        private static bool RegSettingsEnum(string settingsCat, string settingsName, IList<(string value, string desc)> values)
         {
             if (!IsUIXAvailable()) return false;
             if (!GetUIXMethods()) return false;
