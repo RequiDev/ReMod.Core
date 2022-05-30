@@ -48,6 +48,7 @@ namespace ReMod.Core.Notification
         public void ClearNotifications()
         {
             _notificationQueue.Clear();
+            ClearNotification();
         }
         
         [HideFromIl2Cpp]
@@ -105,10 +106,9 @@ namespace ReMod.Core.Notification
         }
 
         [HideFromIl2Cpp]
-        private void ClearNotification()
+        public void ClearNotification()
         {
             _currentNotification = null;
-            _notificationQueue.Clear();
             CloseNotification();
         }
 

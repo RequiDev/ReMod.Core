@@ -103,6 +103,14 @@ namespace ReMod.Core.Notification
             _controllerInstance.ClearNotifications();
         }
 
+        public static void CloseNotification()
+        {
+            if (_controllerInstance == null)
+                SetupNotifications();
+
+            _controllerInstance.ClearNotification();
+        }
+
         private static void UpdateNotificationAlignment(string sender, string args)
         {
             if (_notificationRect == null) return;
