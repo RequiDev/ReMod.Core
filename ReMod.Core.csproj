@@ -97,6 +97,7 @@
     </Reference>
     <Reference Include="UnityEngine.UIModule">
       <HintPath>$(MlPath)\Managed\UnityEngine.UIModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="VRC.UI.Core">
       <HintPath>$(MlPath)\Managed\VRC.UI.Core.dll</HintPath>
