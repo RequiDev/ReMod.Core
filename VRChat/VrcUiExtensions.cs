@@ -83,7 +83,7 @@ namespace ReMod.Core.VRChat
             if (_closeUi == null)
             {
                 _closeUi = (CloseUiDelegate)Delegate.CreateDelegate(typeof(CloseUiDelegate),
-                    typeof(VRCUiManager).GetMethods().FirstOrDefault(m => m.Name.StartsWith("Method_Public_Void_Boolean_Boolean") && !m.Name.Contains("PDM") && XrefUtils.CheckUsing(m, "TrimCache")));
+                    typeof(VRCUiManager).GetMethods().FirstOrDefault(m => m.Name.StartsWith("Method_Public_Void_Boolean_Boolean") && !m.Name.Contains("PDM") && XrefUtils.CheckUsedBy(m, "ChangeToSelectedAvatar")));
             }
 
             _closeUi(uiManager, true, false);
