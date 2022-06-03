@@ -117,11 +117,10 @@ namespace ReMod.Core.VRChat
                     .First(method => method.Name.StartsWith("Method_Public_Virtual_Final_New_Void_") && XrefScanner.XrefScan(method).Count() == 2);
                 _closeQuickMenuMethod = typeof(UIManagerImpl).GetMethods()
                     .First(method => method.Name.StartsWith("Method_Public_Void_Boolean_") && XrefUtils.CheckUsedBy(method, closeMenuMethod.Name));
-                VRCUiCursorManager.field_Private_Static_VRCUiCursorManager_0.field_Private_Boolean_6 = false;
-                VRCUiCursorManager.field_Private_Static_VRCUiCursorManager_0.field_Private_Boolean_0 = true;
             }
-
             _closeQuickMenuMethod.Invoke(uiManager, new object[1] { false });
+            VRCUiCursorManager.field_Private_Static_VRCUiCursorManager_0.field_Private_Boolean_6 = false;
+            VRCUiCursorManager.field_Private_Static_VRCUiCursorManager_0.field_Private_Boolean_0 = true;
         }
     }
 }
