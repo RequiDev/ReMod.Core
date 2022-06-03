@@ -2,3 +2,4 @@
 /3rdparty/
 /.build/
 /obj
+.idea/
