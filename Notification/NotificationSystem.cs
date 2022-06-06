@@ -32,19 +32,20 @@ namespace ReMod.Core.Notification
             _hudContent = GameObject.Find("/UserInterface/UnscaledUI/HudContent_Old");
 
             var notificationTransform = _hudContent.transform.Find("Notification(Clone)");
+            
+            NotificationController.RegisterSafe();
+            
             if (notificationTransform != null)
             {
                 //Notification system already initialized
                 _notificationGO = notificationTransform.gameObject;
                 _controllerInstance = _notificationGO.GetComponent<NotificationController>();
-                
+                _notificationRect = _notificationGO.GetComponent<RectTransform>();
                 return;
             }
 
             LoadAssets();
             
-            NotificationController.RegisterSafe();
-
             MelonPreferences.CreateCategory("ReModCore", "ReMod.Core");
             NotificationAlpha = MelonPreferences.CreateEntry("ReModCore", "NotificationAlpha", .7f, "Notification Alpha", "Controls transparency of the notification system.");
             NotificationAlignment = MelonPreferences.CreateEntry("ReModCore", "NotificationAlignment", "centerMiddle", "Notification Alignment");
