@@ -31,7 +31,7 @@ namespace ReMod.Core.Notification
         {
             _hudContent = GameObject.Find("/UserInterface/UnscaledUI/HudContent_Old");
 
-            var notificationTransform = _hudContent.transform.Find("Notification");
+            var notificationTransform = _hudContent.transform.Find("Notification(Clone)");
             if (notificationTransform != null)
             {
                 //Notification system already initialized
