@@ -126,7 +126,7 @@ namespace ReMod.Core.Notification
         {
             if (_notificationRect == null) return;
             
-            if (NotificationCoordinateAlignment.Value == true)
+            if (NotificationCoordinateAlignment.Value)
             {
                 _notificationRect.anchorMin = new Vector2(NotificationX.Value, NotificationY.Value);
                 _notificationRect.anchorMax = new Vector2(NotificationX.Value, NotificationY.Value);
