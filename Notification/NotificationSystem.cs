@@ -31,10 +31,20 @@ namespace ReMod.Core.Notification
         {
             _hudContent = GameObject.Find("/UserInterface/UnscaledUI/HudContent_Old");
 
-            NotificationController.RegisterSafe();
+            var notificationTransform = _hudContent.transform.Find("Notification(Clone)");
+            if (notificationTransform != null)
+            {
+                //Notification system already initialized
+                _notificationGO = notificationTransform.gameObject;
+                _controllerInstance = _notificationGO.GetComponent<NotificationController>();
+                
+                return;
+            }
 
             LoadAssets();
             
+            NotificationController.RegisterSafe();
+
             MelonPreferences.CreateCategory("ReModCore", "ReMod.Core");
             NotificationAlpha = MelonPreferences.CreateEntry("ReModCore", "NotificationAlpha", .7f, "Notification Alpha", "Controls transparency of the notification system.");
             NotificationAlignment = MelonPreferences.CreateEntry("ReModCore", "NotificationAlignment", "centerMiddle", "Notification Alignment");
@@ -46,25 +56,6 @@ namespace ReMod.Core.Notification
 
             if (_notificationPrefab == null)
                 throw new Exception("NotificationSystem failed to load, prefab missing!");
-
-            /*
-             * Horrible bandaid
-             */
-            var notificationTransform = _hudContent.transform.Find("Notification(Clone)");
-            if (notificationTransform != null)
-            {
-                //Notification system already initialized
-                _notificationGO = notificationTransform.gameObject;
-                _notificationRect = notificationTransform.GetComponent<RectTransform>();
-                _controllerInstance = _notificationGO.GetComponent<NotificationController>();
-                if (_controllerInstance == null) // The other mod that initialized the notification system isn't using ReMod.Core.Notification.NotificationController.
-                {
-                    _controllerInstance = _notificationGO.AddComponent<NotificationController>(); // Add our own NotificationController, will cause odd visual bugs in the case of notifications from other mods overlapping.
-                    _controllerInstance.defaultSprite = DefaultIcon;
-                    UpdateNotificationAlignment(null, null);
-                }
-                return;
-            }
 
             //Instantiate prefab and let NotificationController setup!
             _notificationGO = Object.Instantiate(_notificationPrefab, _hudContent.transform);
