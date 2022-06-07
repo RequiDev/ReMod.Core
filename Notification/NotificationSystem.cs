@@ -57,7 +57,7 @@ namespace ReMod.Core.Notification
 
             NotificationAlignment.OnValueChanged += UpdateNotificationAlignment;
             NotificationCoordinateAlignment.OnValueChanged += (_, _) => UpdateNotificationAlignment(null, null);
-            NotificationX.OnValueChanged += (_ ,_) => UpdateNotificationAlignment(null, null);
+            NotificationX.OnValueChanged += (_, _) => UpdateNotificationAlignment(null, null);
             NotificationY.OnValueChanged += (_, _) => UpdateNotificationAlignment(null, null);
             
             //Create UIX settings enum
