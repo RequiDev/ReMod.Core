@@ -16,6 +16,9 @@ namespace ReMod.Core.Notification
         public static Color DefaultColour = new Color(0.1764f, 0.2549f, .3333f, 1f);
         public static MelonPreferences_Entry<float> NotificationAlpha;
         public static MelonPreferences_Entry<string> NotificationAlignment;
+        public static MelonPreferences_Entry<bool> NotificationCoordinateAlignment;
+        public static MelonPreferences_Entry<float> NotificationX;
+        public static MelonPreferences_Entry<float> NotificationY;
         public static bool UseVRChatNotificationSystem;
         
         //AssetBundle Parts
@@ -48,8 +51,14 @@ namespace ReMod.Core.Notification
             MelonPreferences.CreateCategory("ReModCore", "ReMod.Core");
             NotificationAlpha = MelonPreferences.CreateEntry("ReModCore", "NotificationAlpha", .7f, "Notification Alpha", "Controls transparency of the notification system.");
             NotificationAlignment = MelonPreferences.CreateEntry("ReModCore", "NotificationAlignment", "centerMiddle", "Notification Alignment");
+            NotificationCoordinateAlignment = MelonPreferences.CreateEntry("ReModCore", "NotificationCoordinateAlignment", false, "Use Coordinate Alignment");
+            NotificationX = MelonPreferences.CreateEntry("ReModCore", "NotificationX", .5f, "Notification X", "Controls the X position of the notification system.");
+            NotificationY = MelonPreferences.CreateEntry("ReModCore", "NotificationY", .5f, "Notification Y", "Controls the Y position of the notification system.");
 
             NotificationAlignment.OnValueChanged += UpdateNotificationAlignment;
+            NotificationCoordinateAlignment.OnValueChanged += (_, _) => UpdateNotificationAlignment(null, null);
+            NotificationX.OnValueChanged += (_, _) => UpdateNotificationAlignment(null, null);
+            NotificationY.OnValueChanged += (_, _) => UpdateNotificationAlignment(null, null);
             
             //Create UIX settings enum
             RegSettingsEnum("ReModCore", "NotificationAlignment", new[] {("centerMiddle", "Middle Centered"), ("topCenter", "Top Centered"), ("topLeft", "Top Left"), ("topRight", "Top Right"), ("bottomCenter", "Bottom Centered"), ("bottomLeft", "Bottom Left"), ("bottomRight", "Bottom Right")});
@@ -116,6 +125,14 @@ namespace ReMod.Core.Notification
         private static void UpdateNotificationAlignment(string sender, string args)
         {
             if (_notificationRect == null) return;
+            
+            if (NotificationCoordinateAlignment.Value)
+            {
+                _notificationRect.anchorMin = new Vector2(NotificationX.Value, NotificationY.Value);
+                _notificationRect.anchorMax = new Vector2(NotificationX.Value, NotificationY.Value);
+                _notificationRect.pivot = new Vector2(NotificationX.Value, NotificationY.Value);
+                return;
+            }
 
             switch (NotificationAlignment.Value)
             {
