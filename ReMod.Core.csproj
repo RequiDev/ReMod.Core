@@ -130,6 +130,7 @@
     <Compile Include="Notification\NotificationObject.cs" />
     <Compile Include="Notification\NotificationSystem.cs" />
     <Compile Include="UI\QuickMenu\IButtonPage.cs" />
+    <Compile Include="UI\QuickMenu\ReRadioToggle.cs" />
     <Compile Include="UI\QuickMenu\ReRadioTogglePage.cs" />
     <Compile Include="UI\Wings\ReMirroredWingButton.cs" />
     <Compile Include="UI\Wings\ReMirroredWingMenu.cs" />

@@ -122,19 +122,6 @@ namespace ReMod.Core.VRChat
             return uiManager.MenuContent().transform.Find($"Screens/{BigMenuIndexToNameTable[menuIndex]}");
         }
 
-        private static MethodInfo[] _radioSetTitleMethods; 
-
-        public static void SetTitle(this RadioButtonSelector selector, string key, string displayName)
-        {
-            _radioSetTitleMethods ??= typeof(RadioButtonSelector).GetMethods(BindingFlags.Public | BindingFlags.Instance)
-                .Where(x => x.Name.Contains("Method_Public_Void_String_String_PDM") && XrefScanner.UsedBy(x).Any()).ToArray();
-
-            foreach (var method in _radioSetTitleMethods)
-            {
-                method.Invoke(selector, new object[] {key, displayName});
-            }
-        }
-
         private static readonly Dictionary<QuickMenu.MainMenuScreenIndex, string> BigMenuIndexToPathTable = new Dictionary<QuickMenu.MainMenuScreenIndex, string>()
         {
             { QuickMenu.MainMenuScreenIndex.Unknown, "" },

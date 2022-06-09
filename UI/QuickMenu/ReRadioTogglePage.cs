@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MelonLoader;
 using ReMod.Core.Unity;
 using ReMod.Core.VRChat;
 using TMPro;
@@ -7,7 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Controls;
-using Object = Il2CppSystem.Object;
+using Object = System.Object;
 
 namespace ReMod.Core.UI.QuickMenu
 {
@@ -39,10 +40,9 @@ namespace ReMod.Core.UI.QuickMenu
         }
 
         private TextMeshProUGUI _titleText;
-        private ListBinding ListBinding;
-        private GameObject RadioButtonPrefab;
-        private RadioButtonSelectorGroup RadioButtonSelectorGroup;
-        private Dictionary<string, Tuple<string, Object, Action>> _radioElementSource = new();
+        private GameObject _toggleGroupRoot;
+        private List<Tuple<String, Object>> _radioElementSource = new();
+        private List<ReRadioToggle> _radioElements = new();
         private bool _isUpdated;
         
         private readonly bool _isRoot;
@@ -62,11 +62,11 @@ namespace ReMod.Core.UI.QuickMenu
             _container = RectTransform.GetComponentInChildren<ScrollRect>().content;
 
             var inputMenu = RectTransform.GetComponent<AudioInputDeviceMenu>();
-            RadioButtonPrefab = inputMenu.field_Public_GameObject_0;
-            ListBinding = inputMenu.field_Public_ListBinding_0;
-            RadioButtonSelectorGroup = ListBinding.gameObject.GetComponent<RadioButtonSelectorGroup>();
 
-            ListBinding.field_Protected_Dictionary_2_Object_GameObject_0 = new Il2CppSystem.Collections.Generic.Dictionary<Object, GameObject>();
+            _toggleGroupRoot = inputMenu.field_Public_ListBinding_0.gameObject;
+            
+            UnityEngine.Object.DestroyImmediate(_toggleGroupRoot.gameObject.GetComponent<ListBinding>());
+            UnityEngine.Object.DestroyImmediate(_toggleGroupRoot.gameObject.GetComponent<RadioButtonSelectorGroup>());
 
             //Get rid of the AudioInputDeviceMenu component
             UnityEngine.Object.DestroyImmediate(inputMenu);
@@ -87,35 +87,52 @@ namespace ReMod.Core.UI.QuickMenu
             listener.OnDisableEvent += () => OnClose?.Invoke();
         }
 
-        public void Open()
+        /// <summary>
+        /// Opens and configures the ReRadioTogglePage, optionally with default object to set toggles active
+        /// </summary>
+        /// <param name="selected">Default object matching ones on toggle elements</param>
+        public void Open(Object selected = null)
         {
             QuickMenuEx.MenuStateCtrl.PushPage(UiPage.field_Public_String_0);
 
-            if (!_isUpdated)
+            if (_isUpdated)
+            {
+                _isUpdated = false;
+
+                foreach (var element in _radioElements)
+                    UnityEngine.Object.DestroyImmediate(element.GameObject);
+                _radioElements.Clear();
+
+                foreach (var newElement in _radioElementSource)
+                {
+                    var toggle = new ReRadioToggle(_toggleGroupRoot.transform, newElement.Item1, newElement.Item1, newElement.Item2);
+                    toggle.ToggleStateUpdated += OnToggleSelect;
+                    _radioElements.Add(toggle);
+                }
+            }
+            
+            if(selected == null)
                 return;
 
-            _isUpdated = false;
-            
-            foreach(var element in ListBinding.field_Protected_Dictionary_2_Object_GameObject_0)
-                UnityEngine.Object.DestroyImmediate(element.value);
-            ListBinding.field_Protected_Dictionary_2_Object_GameObject_0.Clear();
-
-            foreach (var newElement in _radioElementSource)
+            //Update the toggles to display the current active state
+            foreach (var element in _radioElements)
             {
-                var radioButton = UnityEngine.Object.Instantiate(RadioButtonPrefab, ListBinding.gameObject.transform);
-                radioButton.active = true;
-                var radioButtonSelector = radioButton.GetComponent<RadioButtonSelector>();
-                radioButtonSelector.field_Public_TextMeshProUGUI_0 = radioButtonSelector.GetComponentInChildren<TextMeshProUGUI>();
-                radioButtonSelector.field_Private_Button_0 = radioButtonSelector.GetComponent<Button>();
-                UnityEngine.Object.DestroyImmediate(radioButtonSelector.GetComponent<AudioDeviceButton>());
-                radioButtonSelector.field_Private_Button_0.onClick.AddListener(new Action(() => OnSelect?.Invoke(newElement.Value.Item2)));
-                if(newElement.Value.Item3 != null)
-                    radioButtonSelector.field_Private_Button_0.onClick.AddListener(newElement.Value.Item3);
-                radioButtonSelector.field_Public_String_0 = newElement.Value.Item1;
-                radioButtonSelector.SetTitle(newElement.Key, newElement.Value.Item1);
-                radioButtonSelector.prop_RadioButtonSelectorGroup_0 = RadioButtonSelectorGroup;
-                ListBinding.field_Protected_Dictionary_2_Object_GameObject_0.Add(newElement.Key, radioButton);
+                if(element.ToggleData == selected)
+                    element.SetToggle(true);
             }
+        }
+
+        private void OnToggleSelect(ReRadioToggle toggle, bool state)
+        {
+            foreach (var element in _radioElements)
+            {
+                if(element == toggle)
+                    continue;
+                
+                element.SetToggle(false);
+            }
+            
+            OnSelect?.Invoke(toggle.ToggleData);
         }
 
         /// <summary>
@@ -123,10 +140,9 @@ namespace ReMod.Core.UI.QuickMenu
         /// </summary>
         /// <param name="name">Name that will appear on radio toggle</param>
         /// <param name="obj">Object to be send in OnSelect event</param>
-        /// <param name="onClick">OnClick when the toggle is selected in menu</param>
-        public void AddItem(string name, Object obj, Action onClick = null)
+        public void AddItem(string name, Object obj)
         {
-            _radioElementSource.Add($"{_radioElementSource.Count}_{name}", new Tuple<string, Object, Action>(name, obj, onClick));
+            _radioElementSource.Add(new Tuple<string, Object>(name, obj));
             _isUpdated = true;
         }
 
