@@ -33,6 +33,7 @@ namespace ReMod.Core.UI.QuickMenu
         public event Action OnOpen;
         public event Action OnClose;
         public event Action<Object> OnSelect;
+        public event Action<Object> OnClick;
 
         public string TitleText
         {
@@ -107,6 +108,7 @@ namespace ReMod.Core.UI.QuickMenu
                 {
                     var toggle = new ReRadioToggle(_toggleGroupRoot.transform, newElement.Item1, newElement.Item1, newElement.Item2);
                     toggle.ToggleStateUpdated += OnToggleSelect;
+                    toggle.OnClick += (obj) => OnClick?.Invoke(obj.ToggleData);
                     _radioElements.Add(toggle);
                 }
             }
