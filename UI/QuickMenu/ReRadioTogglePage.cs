@@ -150,5 +150,16 @@ namespace ReMod.Core.UI.QuickMenu
             _radioElementSource.Clear();
             _isUpdated = true;
         }
+        
+        public bool ClearItem(string name)
+        {
+            var index = _radioElementSource.FindIndex(x => x.Item1 == name);
+            if (index == -1)
+                return false;
+            
+            _radioElementSource.RemoveAt(index);
+            _isUpdated = true;
+            return true;
+        }
     }
 }
