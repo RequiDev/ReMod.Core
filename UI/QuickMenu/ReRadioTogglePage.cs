@@ -117,8 +117,7 @@ namespace ReMod.Core.UI.QuickMenu
             //Update the toggles to display the current active state
             foreach (var element in _radioElements)
             {
-                if(element.ToggleData == selected)
-                    element.SetToggle(true);
+                element.SetToggle(element.ToggleData.Equals(selected));
             }
         }
 
