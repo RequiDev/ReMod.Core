@@ -125,7 +125,7 @@ namespace ReMod.Core.VRChat
         private static readonly Dictionary<QuickMenu.MainMenuScreenIndex, string> BigMenuIndexToPathTable = new Dictionary<QuickMenu.MainMenuScreenIndex, string>()
         {
             { QuickMenu.MainMenuScreenIndex.Unknown, "" },
-            { QuickMenu.MainMenuScreenIndex.WorldsMenu, "UserInterface/MenuContent/Screens/WorldInfo" },
+            { QuickMenu.MainMenuScreenIndex.WorldsMenu, "UserInterface/MenuContent/Screens/Worlds" },
             { QuickMenu.MainMenuScreenIndex.AvatarMenu, "UserInterface/MenuContent/Screens/Avatar" },
             { QuickMenu.MainMenuScreenIndex.SocialMenu, "UserInterface/MenuContent/Screens/Social" },
             { QuickMenu.MainMenuScreenIndex.SettingsMenu, "UserInterface/MenuContent/Screens/Settings" },
@@ -142,7 +142,7 @@ namespace ReMod.Core.VRChat
         private static readonly Dictionary<QuickMenu.MainMenuScreenIndex, string> BigMenuIndexToNameTable = new Dictionary<QuickMenu.MainMenuScreenIndex, string>()
         {
             { QuickMenu.MainMenuScreenIndex.Unknown, "" },
-            { QuickMenu.MainMenuScreenIndex.WorldsMenu, "WorldInfo" },
+            { QuickMenu.MainMenuScreenIndex.WorldsMenu, "Worlds" },
             { QuickMenu.MainMenuScreenIndex.AvatarMenu, "Avatar" },
             { QuickMenu.MainMenuScreenIndex.SocialMenu, "Social" },
             { QuickMenu.MainMenuScreenIndex.SettingsMenu, "Settings" },
