@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using UnhollowerRuntimeLib.XrefScans;
+using UnityEngine;
 using VRC.UI;
 using VRC.UI.Elements;
 
@@ -113,14 +113,11 @@ namespace ReMod.Core.VRChat
         {
             if (_closeQuickMenuMethod == null)
             {
-                var closeMenuMethod = typeof(UIManagerImpl).GetMethods()
-                    .First(method => method.Name.StartsWith("Method_Public_Virtual_Final_New_Void_") && XrefScanner.XrefScan(method).Count() == 2);
+                var goSetActive = typeof(GameObject).GetMethod(nameof(GameObject.SetActive));
                 _closeQuickMenuMethod = typeof(UIManagerImpl).GetMethods()
-                    .First(method => method.Name.StartsWith("Method_Public_Void_Boolean_") && XrefUtils.CheckUsedBy(method, closeMenuMethod.Name));
+                    .First(method => method.Name.StartsWith("Method_Public_Void_Boolean_") && XrefUtils.CheckUsing(method, goSetActive?.Name));
             }
-            _closeQuickMenuMethod.Invoke(uiManager, new object[1] { false });
-            VRCUiCursorManager.field_Private_Static_VRCUiCursorManager_0.field_Private_Boolean_6 = false;
-            VRCUiCursorManager.field_Private_Static_VRCUiCursorManager_0.field_Private_Boolean_0 = true;
+            _closeQuickMenuMethod.Invoke(uiManager, new object[1] { true });
         }
     }
 }
