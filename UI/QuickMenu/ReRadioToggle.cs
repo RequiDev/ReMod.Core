@@ -32,7 +32,7 @@ namespace ReMod.Core.UI.QuickMenu
 
         public bool IsOn;
         public Action<ReRadioToggle, bool> ToggleStateUpdated;
-        public Action<ReRadioToggle> OnClick;
+        public Action OnClick;
         public System.Object ToggleData;
 
         private Button _button;
@@ -60,7 +60,7 @@ namespace ReMod.Core.UI.QuickMenu
             SetToggle(defaultState);
             
             _button.onClick.AddListener(new Action(ToggleOn));
-            _button.onClick.AddListener(new Action(() => OnClick?.Invoke(this)));
+            _button.onClick.AddListener(new Action(() => OnClick?.Invoke()));
         }
 
         public void SetToggle(bool state)
