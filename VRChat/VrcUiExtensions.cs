@@ -103,9 +103,18 @@ namespace ReMod.Core.VRChat
             _showUi(uiManager, showDefaultScreen, showBackdrop);
         }
 
-        public static void ShowScreen(this VRCUiManager uiManager, string screen, bool addToScreenStack = false)
+        private delegate void ShowScreenDelegate(VRCUiManager uiManager, string screen, bool addToScreenStack);
+        private static ShowScreenDelegate _showScreen;
+
+        public static void ShowScreen(this VRCUiManager uiManager, string screen, bool addToScreenStack = true)
         {
-            uiManager.Method_Public_Void_String_Boolean_0(screen, addToScreenStack);
+            if (_showScreen == null)
+            {
+                _showScreen = (ShowScreenDelegate)Delegate.CreateDelegate(typeof(ShowScreenDelegate),
+                    typeof(VRCUiManager).GetMethods().First(m => m.Name.StartsWith("Method_Public_Void_String_Boolean") && XrefUtils.CheckUsedBy(m, nameof(VRCUiPageTab.ShowPage))));
+            }
+
+            _showScreen(uiManager, screen, addToScreenStack);
         }
 
         public static void ShowScreen(this VRCUiManager uiManager, QuickMenu.MainMenuScreenIndex menuIndex,
