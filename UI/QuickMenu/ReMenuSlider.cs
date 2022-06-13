@@ -29,6 +29,7 @@ namespace ReMod.Core.UI.QuickMenu
             {
                 value.text = val.ToString("F");
             }));
+            _sliderComponent.m_OnValueChanged = _sliderComponent.onValueChanged;
 
             _sliderComponent.minValue = minValue;
             _sliderComponent.maxValue = maxValue;
