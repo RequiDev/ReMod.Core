@@ -13,5 +13,7 @@ namespace ReMod.Core.UI.QuickMenu
         ReCategoryPage AddCategoryPage(string text, string tooltip = "", Sprite sprite = null);
         ReMenuPage GetMenuPage(string name);
         ReCategoryPage GetCategoryPage(string name);
+        void AddCategoryPage(string text, string tooltip, Action<ReCategoryPage> onPageBuilt, Sprite sprite = null);
+        void AddMenuPage(string text, string tooltip, Action<ReMenuPage> onPageBuilt, Sprite sprite = null);
     }
 }
