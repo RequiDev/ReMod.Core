@@ -58,6 +58,16 @@ namespace ReMod.Core.UI.QuickMenu
             set => Header.Title = value;
         }
 
+        public bool Active
+        {
+            get => _sliderContainer.Active;
+            set
+            {
+                Header.Active = value;
+                _sliderContainer.Active = value;
+            }
+        }
+
         public ReMenuSliderCategory(string title, Transform parent = null, bool collapsible = true)
         {
             if (collapsible)
