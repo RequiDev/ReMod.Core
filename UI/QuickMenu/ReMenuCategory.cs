@@ -223,6 +223,16 @@ namespace ReMod.Core.UI.QuickMenu
             return menu;
         }
 
+        public void AddMenuPage(string text, string tooltip, Action<ReMenuPage> onPageBuilt, Sprite sprite = null)
+        {
+            onPageBuilt(AddMenuPage(text, tooltip, sprite));
+        }
+
+        public void AddCategoryPage(string text, string tooltip, Action<ReCategoryPage> onPageBuilt, Sprite sprite = null)
+        {
+            onPageBuilt(AddCategoryPage(text, tooltip, sprite));
+        }
+
         public RectTransform RectTransform => _buttonContainer.RectTransform;
 
         public ReMenuPage GetMenuPage(string name)
