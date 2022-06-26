@@ -11,6 +11,18 @@ namespace ReMod.Core.UI.QuickMenu
     public class ReMenuSlider : UiElement
     {
         private readonly Slider _sliderComponent;
+        
+        private VRC.UI.Elements.Tooltips.UiTooltip _tooltip;
+        
+        public string Tooltip {
+            get => _tooltip != null ? _tooltip.field_Public_String_0 : "";
+            set
+            {
+                if (_tooltip == null) return;
+                _tooltip.field_Public_String_0 = value;
+                _tooltip.field_Public_String_1 = value;
+            }
+        }
 
         public ReMenuSlider(string text, string tooltip, Action<float> onSlide, Transform parent, float defaultValue = 0, float minValue = 0, float maxValue = 10) : base(QuickMenuEx.SliderPrefab, parent, $"Slider_{text}")
         {
@@ -35,9 +47,9 @@ namespace ReMod.Core.UI.QuickMenu
             _sliderComponent.maxValue = maxValue;
             _sliderComponent.value = defaultValue;
 
-            var uiTooltip = GameObject.GetComponent<VRC.UI.Elements.Tooltips.UiTooltip>();
-            uiTooltip.field_Public_String_0 = tooltip;
-            uiTooltip.field_Public_String_1 = tooltip;
+            _tooltip = GameObject.GetComponent<VRC.UI.Elements.Tooltips.UiTooltip>();
+            _tooltip.field_Public_String_0 = tooltip;
+            _tooltip.field_Public_String_1 = tooltip;
             
             Slide(defaultValue,false);
 

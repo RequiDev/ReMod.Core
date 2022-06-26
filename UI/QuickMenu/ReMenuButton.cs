@@ -33,6 +33,18 @@ namespace ReMod.Core.UI.QuickMenu
             get => _text.text;
             set => _text.SetText(value);
         }
+        
+        private VRC.UI.Elements.Tooltips.UiTooltip _tooltip;
+
+        public string Tooltip {
+            get => _tooltip != null ? _tooltip.field_Public_String_0 : "";
+            set
+            {
+                if (_tooltip == null) return;
+                _tooltip.field_Public_String_0 = value;
+                _tooltip.field_Public_String_1 = value;
+            }
+        }
 
         private readonly StyleElement _styleElement;
         private readonly Button _button;
@@ -99,20 +111,19 @@ namespace ReMod.Core.UI.QuickMenu
             Object.DestroyImmediate(RectTransform.Find("Badge_MMJump").gameObject);
 
             var uiTooltips = GameObject.GetComponents<VRC.UI.Elements.Tooltips.UiTooltip>();
-            VRC.UI.Elements.Tooltips.UiTooltip uiTooltip = null;
             if (uiTooltips.Length > 0)
             {
                 //Fuck tooltips, all my friends hate tooltips
-                uiTooltip = uiTooltips[0];
+                _tooltip = uiTooltips[0];
                 
-                for(int i=1; i<uiTooltips.Length; i++)
+                for(int i = 1; i < uiTooltips.Length; i++)
                     Object.DestroyImmediate(uiTooltips[i]);
             }
 
-            if (uiTooltip != null)
+            if (_tooltip != null)
             {
-                uiTooltip.field_Public_String_0 = tooltip;
-                uiTooltip.field_Public_String_1 = tooltip;
+                _tooltip.field_Public_String_0 = tooltip;
+                _tooltip.field_Public_String_1 = tooltip;
             }
 
             if (onClick != null)

@@ -43,6 +43,18 @@ namespace ReMod.Core.UI.QuickMenu
             get => _textComponent.text;
             set => _textComponent.text = value;
         }
+        
+        private VRC.UI.Elements.Tooltips.UiToggleTooltip _tooltip;
+        
+        public string Tooltip {
+            get => _tooltip != null ? _tooltip.field_Public_String_0 : "";
+            set
+            {
+                if (_tooltip == null) return;
+                _tooltip.field_Public_String_0 = value;
+                _tooltip.field_Public_String_1 = value;
+            }
+        }
 
         public ReMenuToggle(string text, string tooltip, Action<bool> onToggle, Transform parent, bool defaultValue = false) : base(QuickMenuEx.TogglePrefab, parent, $"Button_Toggle{text}")
         {
@@ -67,9 +79,9 @@ namespace ReMod.Core.UI.QuickMenu
             _textComponent.m_fontColor = new Color(0.4157f, 0.8902f, 0.9765f, 1f);
             _textComponent.m_htmlColor = new Color(0.4157f, 0.8902f, 0.9765f, 1f);
 
-            var uiTooltip = GameObject.GetComponent<VRC.UI.Elements.Tooltips.UiToggleTooltip>();
-            uiTooltip.field_Public_String_0 = tooltip;
-            uiTooltip.field_Public_String_1 = tooltip;
+            _tooltip = GameObject.GetComponent<VRC.UI.Elements.Tooltips.UiToggleTooltip>();
+            _tooltip.field_Public_String_0 = tooltip;
+            _tooltip.field_Public_String_1 = tooltip;
             
             Toggle(defaultValue,false);
 
