@@ -85,8 +85,6 @@ namespace ReMod.Core.VRChat
         private static Wing _leftWing;
         private static Wing _rightWing;
 
-        private static Transform _cameraMenu;
-
         public static Wing[] Wings
         {
             get
@@ -124,17 +122,6 @@ namespace ReMod.Core.VRChat
             }
         }
 
-        public static Transform CameraMenu
-        {
-            get
-            {
-                if (_cameraMenu == null)
-                {
-                    _cameraMenu = Instance.field_Public_Transform_0.Find("Window/QMParent/Menu_Camera");
-                }
-                return _cameraMenu;
-            }
-        }
 
         private static Sprite _onIconSprite;
         public static Sprite OnIconSprite
