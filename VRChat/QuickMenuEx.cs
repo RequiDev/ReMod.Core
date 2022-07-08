@@ -121,6 +121,8 @@ namespace ReMod.Core.VRChat
                 return _rightWing;
             }
         }
+        public static Transform WingMenuContent(this Wing wing) =>
+            wing.transform.Find("Container/InnerContainer/WingMenu/ScrollRect/Viewport/VerticalLayoutGroup");
 
 
         private static Sprite _onIconSprite;
