@@ -32,6 +32,11 @@ namespace ReMod.Core.UI.QuickMenu
         }
 
         private bool _valueHolder;
+        public bool Value
+        {
+            get => _valueHolder;
+            set => Toggle(value);
+        }
         
         private StyleElement _toggleStyleElement;
 
@@ -149,7 +154,7 @@ namespace ReMod.Core.UI.QuickMenu
                     _onValueChanged.Add((Action)Delegate.CreateDelegate(typeof(Action), _toggleIcon, methodInfo));
                 }
             }
-
+            _valueHolder = arg0;
             foreach (var onValueChanged in _onValueChanged)
             {
                 onValueChanged();
