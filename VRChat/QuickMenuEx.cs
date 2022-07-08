@@ -37,6 +37,20 @@ namespace ReMod.Core.VRChat
             }
         }
 
+        private static Transform _menuTabs;
+
+        public static Transform MenuTabs
+        {
+            get
+            {
+                if (_menuTabs == null)
+                {
+                    _menuTabs = Instance.field_Public_Transform_0.Find("Window/Page_Buttons_QM/HorizontalLayoutGroup");
+                }
+                return _menuTabs;
+            }
+        }
+
         private static MenuStateController _menuStateCtrl;
 
         public static MenuStateController MenuStateCtrl
