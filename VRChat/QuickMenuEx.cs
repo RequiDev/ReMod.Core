@@ -37,6 +37,20 @@ namespace ReMod.Core.VRChat
             }
         }
 
+        private static Transform _menuTabs;
+
+        public static Transform MenuTabs
+        {
+            get
+            {
+                if (_menuTabs == null)
+                {
+                    _menuTabs = Instance.field_Public_Transform_0.Find("Window/Page_Buttons_QM/HorizontalLayoutGroup");
+                }
+                return _menuTabs;
+            }
+        }
+
         private static MenuStateController _menuStateCtrl;
 
         public static MenuStateController MenuStateCtrl
@@ -67,11 +81,94 @@ namespace ReMod.Core.VRChat
             }
         }
 
+        private static Transform _dashboardMenu;
+        public static Transform DashboardMenu
+        {
+            get
+            {
+                if (_dashboardMenu == null)
+                {
+                    _dashboardMenu = MenuParent.Find("Menu_Dashboard");
+                }
+                return _dashboardMenu;
+            }
+        }
+        private static Transform _notificationMenu;
+        public static Transform NotificationMenu
+        {
+            get
+            {
+                if (_notificationMenu == null)
+                {
+                    _notificationMenu = MenuParent.Find("Menu_Notifications");
+                }
+                return _notificationMenu;
+            }
+        }
+        private static Transform _hereMenu;
+        public static Transform HereMenu
+        {
+            get
+            {
+                if (_hereMenu == null)
+                {
+                    _hereMenu = MenuParent.Find("Menu_Here");
+                }
+                return _hereMenu;
+            }
+        }
+        private static Transform _cameraMenu;
+        public static Transform CameraMenu
+        {
+            get
+            {
+                if (_cameraMenu == null)
+                {
+                    _cameraMenu = MenuParent.Find("Menu_Camera");
+                }
+                return _cameraMenu;
+            }
+        }
+        private static Transform _audiosettingsMenu;
+        public static Transform AudioSettingsMenu
+        {
+            get
+            {
+                if (_audiosettingsMenu == null)
+                {
+                    _audiosettingsMenu = MenuParent.Find("Menu_AudioSettings");
+                }
+                return _audiosettingsMenu;
+            }
+        }
+        private static Transform _settingsMenu;
+        public static Transform SettingsMenu
+        {
+            get
+            {
+                if (_settingsMenu == null)
+                {
+                    _settingsMenu = MenuParent.Find("Menu_Settings");
+                }
+                return _settingsMenu;
+            }
+        }
+        private static Transform _devtoolsMenu;
+        public static Transform DevToolsMenu
+        {
+            get
+            {
+                if (_devtoolsMenu == null)
+                {
+                    _devtoolsMenu = MenuParent.Find("Menu_DevTools");
+                }
+                return _devtoolsMenu;
+            }
+        }
+
         private static Wing[] _wings;
         private static Wing _leftWing;
         private static Wing _rightWing;
-
-        private static Transform _cameraMenu;
 
         public static Wing[] Wings
         {
@@ -109,18 +206,9 @@ namespace ReMod.Core.VRChat
                 return _rightWing;
             }
         }
+        public static Transform WingMenuContent(this Wing wing) =>
+            wing.transform.Find("Container/InnerContainer/WingMenu/ScrollRect/Viewport/VerticalLayoutGroup");
 
-        public static Transform CameraMenu
-        {
-            get
-            {
-                if (_cameraMenu == null)
-                {
-                    _cameraMenu = Instance.field_Public_Transform_0.Find("Window/QMParent/Menu_Camera");
-                }
-                return _cameraMenu;
-            }
-        }
 
         private static Sprite _onIconSprite;
         public static Sprite OnIconSprite
