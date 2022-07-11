@@ -11,8 +11,8 @@ namespace ReMod.Core.UI.QuickMenu
         ReCategoryPage AddCategoryPage(string text, string tooltip = "", Sprite sprite = null);
         ReMenuToggle AddToggle(string text, string tooltip, Action<bool> onToggle, bool defaultValue = false);
         ReMenuToggle AddToggle(string text, string tooltip, ConfigValue<bool> configValue);
-        ReMenuToggle AddToggle(string text, string tooltip, Action<bool> onToggle, bool defaultValue = false, Sprite iconOn = null, Sprite iconOff = null);
-        ReMenuToggle AddToggle(string text, string tooltip, ConfigValue<bool> configValue, Sprite iconOn = null, Sprite iconOff = null);
+        ReMenuToggle AddToggle(string text, string tooltip, Action<bool> onToggle, bool defaultValue, Sprite iconOn, Sprite iconOff);
+        ReMenuToggle AddToggle(string text, string tooltip, ConfigValue<bool> configValue, Sprite iconOn, Sprite iconOff);
         ReMenuPage GetMenuPage(string name);
         ReCategoryPage GetCategoryPage(string name);
         void AddCategoryPage(string text, string tooltip, Action<ReCategoryPage> onPageBuilt, Sprite sprite = null);
