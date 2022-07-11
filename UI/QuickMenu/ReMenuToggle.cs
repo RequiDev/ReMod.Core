@@ -60,7 +60,7 @@ namespace ReMod.Core.UI.QuickMenu
                 _tooltip.field_Public_String_1 = value;
             }
         }
-
+        public ReMenuToggle(string text, string tooltip, Action<bool> onToggle, Transform parent, bool defaultValue = false) : this(text, tooltip, onToggle, parent, defaultValue, null, null) { }
         public ReMenuToggle(string text, string tooltip, Action<bool> onToggle, Transform parent, bool defaultValue = false, Sprite iconOn = null, Sprite iconOff = null) : base(QuickMenuEx.TogglePrefab, parent, $"Button_Toggle{text}")
         {
             var icon = RectTransform.Find("Icon_On").GetComponent<Image>();
