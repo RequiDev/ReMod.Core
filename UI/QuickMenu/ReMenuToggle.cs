@@ -60,11 +60,13 @@ namespace ReMod.Core.UI.QuickMenu
                 _tooltip.field_Public_String_1 = value;
             }
         }
-
-        public ReMenuToggle(string text, string tooltip, Action<bool> onToggle, Transform parent, bool defaultValue = false) : base(QuickMenuEx.TogglePrefab, parent, $"Button_Toggle{text}")
+        public ReMenuToggle(string text, string tooltip, Action<bool> onToggle, Transform parent, bool defaultValue = false) : this(text, tooltip, onToggle, parent, defaultValue, null, null) { }
+        public ReMenuToggle(string text, string tooltip, Action<bool> onToggle, Transform parent, bool defaultValue = false, Sprite iconOn = null, Sprite iconOff = null) : base(QuickMenuEx.TogglePrefab, parent, $"Button_Toggle{text}")
         {
-            var iconOn = RectTransform.Find("Icon_On").GetComponent<Image>();
-            iconOn.sprite = QuickMenuEx.OnIconSprite;
+            var icon = RectTransform.Find("Icon_On").GetComponent<Image>();
+            icon.sprite = iconOn ?? QuickMenuEx.OnIconSprite;
+            icon = RectTransform.Find("Icon_Off").GetComponent<Image>();
+            icon.sprite = iconOff ?? QuickMenuEx.OffIconSprite;
 
             Object.DestroyImmediate(GameObject.GetComponent<UIInvisibleGraphic>()); // Fix for having clickable area overlap main quickmenu ui
 
