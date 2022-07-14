@@ -74,8 +74,8 @@ namespace ReMod.Core.UI.Wings
 
         public void Destroy()
         {
-            UnityEngine.Object.Destroy(_leftMenu.GameObject);
-            UnityEngine.Object.Destroy(_rightMenu.GameObject);
+            _leftMenu.Destroy();
+            _rightMenu.Destroy();
 
             _leftMenu = null;
             _rightMenu = null;

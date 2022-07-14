@@ -48,7 +48,7 @@ namespace ReMod.Core.UI
             RectTransform = GameObject.GetComponent<RectTransform>();
         }
 
-        public void Destroy()
+        public virtual void Destroy()
         {
             Object.Destroy(GameObject);
         }

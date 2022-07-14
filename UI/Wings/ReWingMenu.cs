@@ -37,7 +37,7 @@ namespace ReMod.Core.UI.Wings
 
         private readonly Wing _wing;
         private readonly string _menuName;
-
+        
         public ReWingMenu(string text, bool left = true) : base(WingMenuPrefab, (left ? QuickMenuEx.LeftWing : QuickMenuEx.RightWing).field_Public_RectTransform_0, text, false)
         {
             _menuName = GetCleanName(text);
@@ -82,31 +82,55 @@ namespace ReMod.Core.UI.Wings
             uiPage.field_Private_Boolean_1 = true;
             uiPage.field_Protected_MenuStateController_0 = menuStateCtrl;
             uiPage.field_Private_List_1_UIPage_0 = new Il2CppSystem.Collections.Generic.List<UIPage>();
-            uiPage.field_Private_List_1_UIPage_0.Add(uiPage);
+            uiPage.field_Private_List_1_UIPage_0.Add(uiPage); // what is this for? I forgot
 
             menuStateCtrl.field_Private_Dictionary_2_String_UIPage_0.Add(uiPage.field_Public_String_0, uiPage);
         }
 
         public void Open()
         {
+            if (!GameObject)
+                throw new NullReferenceException("This wing menu has been destroyed.");
+
             _wing.field_Private_MenuStateController_0.PushPage(_menuName);
         }
 
         public ReWingButton AddButton(string text, string tooltip, Action onClick, Sprite sprite = null, bool arrow = true, bool background = true, bool separator = false)
         {
+            if (!GameObject)
+                throw new NullReferenceException("This wing menu has been destroyed.");
+
             return new ReWingButton(text, tooltip, onClick, Container, sprite, arrow, background, separator);
         }
 
         public ReWingToggle AddToggle(string text, string tooltip, Action<bool> onToggle, bool defaultValue = false)
         {
+            if (!GameObject)
+                throw new NullReferenceException("This wing menu has been destroyed.");
+
             return new ReWingToggle(text, tooltip, onToggle, Container, defaultValue);
         }
 
         public ReWingMenu AddSubMenu(string text, string tooltip)
         {
+            if (!GameObject)
+                throw new NullReferenceException("This wing menu has been destroyed.");
+
             var menu = new ReWingMenu(text, _wing._wingType == WingType.Left);
             AddButton(text, tooltip, menu.Open);
             return menu;
+        }
+
+        public override void Destroy()
+        {
+            if (!GameObject)
+                return;
+
+            var menuStateCtrl = _wing.GetComponent<MenuStateController>();
+            var uiPage = GameObject.GetComponent<UIPage>();
+            menuStateCtrl.field_Private_Dictionary_2_String_UIPage_0.Remove(uiPage.field_Public_String_0);
+            
+            UnityEngine.Object.Destroy(GameObject);
         }
     }
 }
