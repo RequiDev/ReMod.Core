@@ -1,13 +1,14 @@
 ﻿using System;
 using ReMod.Core.VRChat;
 using UnityEngine;
+using Object = System.Object;
 
 namespace ReMod.Core.UI.Wings
 {
     public class ReMirroredWingMenu
     {
-        private readonly ReWingMenu _leftMenu;
-        private readonly ReWingMenu _rightMenu;
+        private ReWingMenu _leftMenu;
+        private ReWingMenu _rightMenu;
 
         public bool Active
         {
@@ -40,11 +41,21 @@ namespace ReMod.Core.UI.Wings
         public ReMirroredWingButton AddButton(string text, string tooltip, Action onClick, Sprite sprite = null, bool arrow = true, bool background = true,
             bool separator = false)
         {
+            if (_leftMenu == null || _rightMenu == null)
+            {
+                throw new NullReferenceException("This wing menu has been destroyed.");
+            }
+
             return new ReMirroredWingButton(text, tooltip, onClick, _leftMenu.Container, _rightMenu.Container, sprite, arrow, background, separator);
         }
 
         public ReMirroredWingToggle AddToggle(string text, string tooltip, Action<bool> onToggle, bool defaultValue)
         {
+            if (_leftMenu == null || _rightMenu == null)
+            {
+                throw new NullReferenceException("This wing menu has been destroyed.");
+            }
+
             return new ReMirroredWingToggle(text, tooltip, onToggle, _leftMenu.Container, _rightMenu.Container,
                 defaultValue);
         }
@@ -52,8 +63,22 @@ namespace ReMod.Core.UI.Wings
         public ReMirroredWingMenu AddSubMenu(string text, string tooltip, Sprite sprite = null, bool arrow = true,
             bool background = true, bool separator = false)
         {
+            if (_leftMenu == null || _rightMenu == null)
+            {
+                throw new NullReferenceException("This wing menu has been destroyed.");
+            }
+
             return new ReMirroredWingMenu(text, tooltip, _leftMenu.Container, _rightMenu.Container, sprite, arrow,
                 background, separator);
+        }
+
+        public void Destroy()
+        {
+            UnityEngine.Object.Destroy(_leftMenu.GameObject);
+            UnityEngine.Object.Destroy(_rightMenu.GameObject);
+
+            _leftMenu = null;
+            _rightMenu = null;
         }
     }
 }
