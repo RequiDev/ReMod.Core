@@ -41,7 +41,7 @@ namespace ReMod.Core.UI.QuickMenu
 
         private TextMeshProUGUI _titleText;
         private GameObject _toggleGroupRoot;
-        private List<Tuple<String, Object>> _radioElementSource = new();
+        private List<Tuple<String, Object, Action>> _radioElementSource = new();
         private List<ReRadioToggle> _radioElements = new();
         private bool _isUpdated;
         
@@ -107,6 +107,8 @@ namespace ReMod.Core.UI.QuickMenu
                 {
                     var toggle = new ReRadioToggle(_toggleGroupRoot.transform, newElement.Item1, newElement.Item1, newElement.Item2);
                     toggle.ToggleStateUpdated += OnToggleSelect;
+                    if (newElement.Item3 != null)
+                        toggle.OnClick += newElement.Item3;
                     _radioElements.Add(toggle);
                 }
             }
@@ -141,7 +143,19 @@ namespace ReMod.Core.UI.QuickMenu
         /// <param name="obj">Object to be send in OnSelect event</param>
         public void AddItem(string name, Object obj)
         {
-            _radioElementSource.Add(new Tuple<string, Object>(name, obj));
+            _radioElementSource.Add(new Tuple<string, Object, Action>(name, obj, null));
+            _isUpdated = true;
+        }
+
+        /// <summary>
+        /// Adds a item to the radio element source
+        /// </summary>
+        /// <param name="name">Name that will appear on radio toggle</param>
+        /// <param name="obj">Object to be send in OnSelect event</param>
+        /// <param name="onClick">OnClick when the toggle is clicked on</param>
+        public void AddItem(string name, Object obj, Action onClick = null)
+        {
+            _radioElementSource.Add(new Tuple<string, Object, Action>(name, obj, onClick));
             _isUpdated = true;
         }
 
@@ -149,6 +163,17 @@ namespace ReMod.Core.UI.QuickMenu
         {
             _radioElementSource.Clear();
             _isUpdated = true;
+        }
+        
+        public bool ClearItem(string name)
+        {
+            var index = _radioElementSource.FindIndex(x => x.Item1 == name);
+            if (index == -1)
+                return false;
+            
+            _radioElementSource.RemoveAt(index);
+            _isUpdated = true;
+            return true;
         }
     }
 }
